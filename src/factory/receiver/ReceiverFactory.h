@@ -22,7 +22,7 @@ public:
     void setConnectionHandler(ReceiverConnectionHandlerInterface *receiverConnectionHandler);
     void setStateHandler(ReceiverStateHandlerInterface *receiverStateHandler);
 
-    void init();
+    void createAccessPoint();
     void setState(bool state);
     bool isConnected();
 

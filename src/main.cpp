@@ -45,7 +45,7 @@ void setup()
 
     container->wifiFactory()->setHandler(container->networkHandler());
     container->receiverFactory()->setConnectionHandler(container->networkHandler());
-    container->receiverFactory()->init();
+    container->receiverFactory()->createAccessPoint();
     container->wifiFactory()->connect();
 }
 

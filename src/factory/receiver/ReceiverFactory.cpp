@@ -16,10 +16,10 @@ ReceiverFactory::ReceiverFactory(
     _connected = false;
 }
 
-void ReceiverFactory::init()
+void ReceiverFactory::createAccessPoint()
 {
     #ifdef DEBUG
-        Serial.println("Receiver : init AP");
+        Serial.println("Receiver : create access point");
     #endif
 
     WiFi.softAP(_ssid, _password);
@@ -55,7 +55,7 @@ void ReceiverFactory::loop()
 
     if(!_connected && _receiverState) {
         _receiverState = false;
-        
+
         if(_receiverStateHandler != nullptr) {
             _receiverStateHandler->receiverStateChanged(_receiverState);
         }
