@@ -11,24 +11,31 @@
 #include "factory/clock/ClockFactory.h"
 #include "factory/mqtt/MqttFactory.h"
 #include "factory/wifi/WifiFactory.h"
+#include "factory/receiver/ReceiverFactory.h"
 #include "factory/mqtt/MqttConnectionHandlerInterface.h"
 #include "factory/wifi/WifiConnectionHandlerInterface.h"
-#include "factory/relay/RelayFactory.h"
+#include "factory/receiver/ReceiverConnectionHandlerInterface.h"
+
 #include "factory/dht/DhtFactory.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
 
-class NetworkHandler : public MqttConnectionHandlerInterface, public WifiConnectionHandlerInterface, public NtpHandlerInterface {
-
+class NetworkHandler : 
+    public MqttConnectionHandlerInterface, 
+    public WifiConnectionHandlerInterface, 
+    public NtpHandlerInterface,
+    public ReceiverConnectionHandlerInterface
+    
+{
 public:
 
     NetworkHandler(
         ClockFactory *clockFactory,
-        WifiFactory *wifiFactory, 
+        WifiFactory *wifiFactory,
+        ReceiverFactory *receiverFactory,
         MqttFactory *mqttFactory, 
         DhtFactory *dhtFactory,
-        RelayFactory *relayFactory,
         TopicService *topicService,
         MessageParserService *messageParserService
     );
@@ -41,12 +48,15 @@ public:
     void wifiConnected() override;
     void wifiDisconnected() override;
 
+    void receiverConnected() override;
+    void receiverDisconnected() override;
+
 private:
     ClockFactory *_clockFactory;
-    WifiFactory *_wifiFactory; 
+    WifiFactory *_wifiFactory;
+    ReceiverFactory *_receiverFactory;
     DhtFactory *_dhtFactory;
     MqttFactory *_mqttFactory;
-    RelayFactory *_relayFactory;
     
     TopicService *_topicService;
     MessageParserService *_messageParserService;

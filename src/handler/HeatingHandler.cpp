@@ -4,18 +4,18 @@ HeatingHandler::HeatingHandler(
     Programme *programme,
     Device *device,
     DhtFactory *dhtFactory,
-    RelayFactory *relayFactory,
     MqttFactory *mqttFactory,
+    ReceiverFactory *receiverFactory,
     MessageParserService *messageParserService,
     TopicService *topicService
 ) {
     _programme = programme;
     _device = device;
     _dhtFactory = dhtFactory;
-    _relayFactory = relayFactory;
     _mqttFactory = mqttFactory;
     _messageParserService = messageParserService;
     _topicService = topicService;
+    _receiverFactory = receiverFactory;
 }
 
 void HeatingHandler::orderUpdated(Order *order)
@@ -37,7 +37,7 @@ void HeatingHandler::orderUpdated(Order *order)
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
-    _relayFactory->setStatus(regulationStatus);
+    _receiverFactory->setState(regulationStatus);
 
     delete heating;
 }
@@ -59,7 +59,7 @@ void HeatingHandler::untilDateHit()
         Heating *heating = Heating::getMode(_device, _programme);
         bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
-        _relayFactory->setStatus(regulationStatus);
+        _receiverFactory->setState(regulationStatus);
 
         delete heating;
     }
@@ -77,7 +77,7 @@ void HeatingHandler::temperatureChanged(float temperature)
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(temperature);
-    _relayFactory->setStatus(regulationStatus);
+    _receiverFactory->setState(regulationStatus);
     delete heating;
 }
 
@@ -92,7 +92,7 @@ void HeatingHandler::temperatureIsNan()
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(99); //temperature NaN
-    _relayFactory->setStatus(regulationStatus);
+    _receiverFactory->setState(regulationStatus);
     delete heating;
 }
 
@@ -123,6 +123,6 @@ void HeatingHandler::messageReceived(char *topic, char *message)
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
-    _relayFactory->setStatus(regulationStatus);
+    _receiverFactory->setState(regulationStatus);
     delete heating;
 }

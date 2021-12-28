@@ -25,6 +25,12 @@ Container::Container()
         WIFI_SSID, WIFI_PASSWORD
     );
 
+    _receiverFactory = new ReceiverFactory(
+        RECEIVER_SSID, RECEIVER_PASSWORD,
+        30000,
+        new AsyncWebServer(RECEIVER_WEB_PORT)
+    );
+
     _mqttFactory = new MqttFactory(
         new AsyncMqttClient(),
         MQTT_SERVER,  MQTT_PORT, 
@@ -35,43 +41,40 @@ Container::Container()
         10, 60000
     );
 
-    _relayFactory = new RelayFactory();
-
     _topicService = new TopicService(DEVICE_NAME);
 
     _messageParserService = new MessageParserService();
 
     _networkHandler = new NetworkHandler(
-        _clockFactory,_wifiFactory, _mqttFactory, 
-        _dhtFactory, _relayFactory, _topicService, _messageParserService
+        _clockFactory,_wifiFactory, _receiverFactory, _mqttFactory, 
+        _dhtFactory, _topicService, _messageParserService
     );
 
     _thermometerAnimationHandler = new ThermometerAnimationHandler();
 
-    _relayHandler = new RelayHandler(
-        _mqttFactory,
-        _messageParserService, _topicService
-    );
-
     _heatingHandler = new HeatingHandler(
         _programme, _device, 
-        _dhtFactory, _relayFactory, _mqttFactory, 
+        _dhtFactory, _mqttFactory, _receiverFactory, 
         _messageParserService, 
         _topicService
+    );
+
+    _receiverStateHandler = new ReceiverStateHandler(
+        _mqttFactory, _messageParserService, _topicService
     );
 }
 
 ProgrammeFactory *Container::programmeFactory() { return _programmeFactory; }
 ClockFactory *Container::clockFactory() { return _clockFactory; }
 WifiFactory *Container::wifiFactory() { return _wifiFactory; }
+ReceiverFactory *Container::receiverFactory() { return _receiverFactory; }
 MqttFactory *Container::mqttFactory() { return _mqttFactory; }
 DhtFactory *Container::dhtFactory() { return _dhtFactory; }
-RelayFactory *Container::relayFactory() { return _relayFactory; }
 
 NetworkHandler *Container::networkHandler() { return _networkHandler; }
-RelayHandler *Container::relayHandler() { return _relayHandler; }
 ThermometerAnimationHandler *Container::thermometerAnimationHandler() { return _thermometerAnimationHandler; }
 HeatingHandler *Container::heatingHandler() { return _heatingHandler; }
+ReceiverStateHandler *Container::receiverStateHandler() { return _receiverStateHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }

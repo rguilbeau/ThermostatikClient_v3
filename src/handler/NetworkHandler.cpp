@@ -2,19 +2,19 @@
 
 NetworkHandler::NetworkHandler(
     ClockFactory *clockFactory,
-    WifiFactory *wifiFactory, 
+    WifiFactory *wifiFactory,
+    ReceiverFactory *receiverFactory,
     MqttFactory *mqttFactory, 
     DhtFactory *dhtFactory,
-    RelayFactory *relayFactory,
     TopicService *topicService,
     MessageParserService *messageParserService
 ) {
     _wifiFactory = wifiFactory; 
     _mqttFactory = mqttFactory;
     _dhtFactory = dhtFactory;
-    _relayFactory = relayFactory;
     _topicService = topicService;
     _messageParserService = messageParserService;
+    _receiverFactory = receiverFactory;
 }
 
 void NetworkHandler::ntpInitialized()
@@ -37,7 +37,7 @@ void NetworkHandler::mqttConnected()
 
     // send relay status
     String payloadHeating = _messageParserService->heatingToPayload(
-        _relayFactory->isEnable()
+        _receiverFactory->getReceiverState()
     );
     _mqttFactory->publish(_topicService->getHeating(), payloadHeating.c_str());
 
@@ -66,4 +66,19 @@ void NetworkHandler::wifiDisconnected()
 {
     _mqttReconnectTimer.detach();
     _wifiReconnectTimer.once(2, std::bind(&WifiFactory::connect, _wifiFactory));
+}
+
+
+void NetworkHandler::receiverConnected()
+{
+    #ifdef DEBUG
+        Serial.println("Receiver connected");
+    #endif
+}
+
+void NetworkHandler::receiverDisconnected()
+{
+    #ifdef DEBUG
+        Serial.println("Receiver disconnected");
+    #endif
 }

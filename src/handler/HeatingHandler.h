@@ -7,9 +7,9 @@
 #include "factory/programme/OrderHandlerInterface.h"
 #include "factory/dht/DhtFactory.h"
 #include "factory/dht/DhtHandlerInterface.h"
-#include "factory/relay/RelayFactory.h"
 #include "factory/mqtt/MqttFactory.h"
 #include "factory/mqtt/MqttMessageHandlerInterface.h"
+#include "factory/receiver/ReceiverFactory.h"
 
 #include "model/Programme.h"
 #include "model/Device.h"
@@ -32,8 +32,8 @@ public:
         Programme *programme,
         Device *device,
         DhtFactory *dhtFactory,
-        RelayFactory *relayFactory,
         MqttFactory *mqttFactory,
+        ReceiverFactory *receiverFactory,
         MessageParserService *messageParserService,
         TopicService *topicService
     );
@@ -49,8 +49,8 @@ private:
     Device *_device;
 
     DhtFactory *_dhtFactory;
-    RelayFactory *_relayFactory;
     MqttFactory *_mqttFactory;
+    ReceiverFactory *_receiverFactory;
     MessageParserService *_messageParserService;
     TopicService *_topicService;
 };

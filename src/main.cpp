@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <AsyncMqttClient.h>
+#include "ESP8266WiFi.h"
 
 #include "Container.h"
 #include "Debug.h"
@@ -26,6 +27,8 @@ void setup()
         startSerial();
     #endif
 
+    WiFi.mode(WIFI_AP_STA);
+
     container = Container::get();
 
     container->programmeFactory()->setOrderHandler(container->heatingHandler());
@@ -35,11 +38,14 @@ void setup()
     container->clockFactory()->setNtpHandler(container->networkHandler());
 
     container->wifiFactory()->setHandler(container->networkHandler());
+    container->receiverFactory()->setStateHandler(container->receiverStateHandler());
     container->mqttFactory()->setConnectionHandler(container->networkHandler());
     container->mqttFactory()->setMessageHandler(container->heatingHandler());
     container->dhtFactory()->setHandler(container->heatingHandler());
-    container->relayFactory()->setHandler(container->relayHandler());
 
+    container->wifiFactory()->setHandler(container->networkHandler());
+    container->receiverFactory()->setConnectionHandler(container->networkHandler());
+    container->receiverFactory()->init();
     container->wifiFactory()->connect();
 }
 
@@ -48,6 +54,7 @@ void loop()
     container->dhtFactory()->loop();
     container->programmeFactory()->loop();
     container->clockFactory()->loop();
+    container->receiverFactory()->loop();
 
     #ifdef DISPLAY_FREE_MEMORY
         freeMemoryService->loop();

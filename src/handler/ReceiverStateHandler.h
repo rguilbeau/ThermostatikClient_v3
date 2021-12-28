@@ -1,29 +1,24 @@
-#ifndef T_RELAY_HANDLER_H
-#define T_RELAY_HANDLER_H
+#ifndef T_RECEIVER_STATE_HANDLER_H
+#define T_RECEIVER_STATE_HANDLER_H
 
 #include <Arduino.h>
 
-#include "Debug.h"
-
-#include "factory/relay/RelayHandlerInterface.h"
+#include "factory/receiver/ReceiverStateHandlerInterface.h"
 #include "factory/mqtt/MqttFactory.h"
-#include "factory/dht/DhtFactory.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
 
-
-class RelayHandler : public RelayHandlerInterface {
+class ReceiverStateHandler : public ReceiverStateHandlerInterface {
 
 public:
-
-    RelayHandler(
+    ReceiverStateHandler(
         MqttFactory *mqttFactory,
         MessageParserService *messageParserService,
         TopicService *topicService
     );
-
-    void relayChanged(bool enable) override;
+    
+    void receiverStateChanged(bool state) override;
 
 private:
     MqttFactory *_mqttFactory;
