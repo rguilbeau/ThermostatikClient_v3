@@ -27,7 +27,7 @@ Container::Container()
 
     _receiverFactory = new ReceiverFactory(
         RECEIVER_SSID, RECEIVER_PASSWORD,
-        30000,
+        6000,
         new AsyncWebServer(RECEIVER_WEB_PORT)
     );
 
