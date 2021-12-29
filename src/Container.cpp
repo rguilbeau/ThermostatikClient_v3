@@ -43,7 +43,9 @@ Container::Container()
 
     _topicService = new TopicService(DEVICE_NAME);
 
-    _messageParserService = new MessageParserService();
+    _messageParserService = new MessageParserService(
+        _dhtFactory
+    );
 
     _networkHandler = new NetworkHandler(
         _clockFactory,_wifiFactory, _receiverFactory, _mqttFactory, 

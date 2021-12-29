@@ -11,6 +11,8 @@
 
 #include "Debug.h"
 
+#include "factory/dht/DhtFactory.h"
+
 #include "utils/Date.h"
 
 #include "model/Programme.h"
@@ -23,7 +25,7 @@ class MessageParserService {
 public:
 
     MessageParserService(
-
+        DhtFactory *dhtFactory
     );
 
     void parseDevice(char *payload, Device *device);
@@ -34,7 +36,7 @@ public:
     String heatingToPayload(bool heating);
     
 private:
-
+    DhtFactory *_dhtFactory;
     size_t _json_Capacity;
 
 };

@@ -20,6 +20,8 @@ public:
 
     void loop();
 
+    void setTare(float tare);
+
 private:
 
     unsigned short _pin;
@@ -27,6 +29,8 @@ private:
     float _lastTemperature;
     unsigned long _lastCheck;
     bool _isNan;
+
+    float _tare;
 
     bool _readTemperature();
 

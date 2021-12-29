@@ -8,11 +8,17 @@ DhtFactory::DhtFactory(unsigned short pin, unsigned short delay)
     _isNan = true;
     _dhtHandler = nullptr;
     _lastTemperature = 99;
+    _tare = 0;
 }
 
 void DhtFactory::setHandler(DhtHandlerInterface *dhtHandler)
 {
     _dhtHandler = dhtHandler;
+}
+
+void DhtFactory::setTare(float tare)
+{
+    _tare = tare;
 }
 
 void DhtFactory::loop()
@@ -47,6 +53,8 @@ bool DhtFactory::_readTemperature()
     } else {
         temperature = 21;
     }
+
+    temperature = temperature + _tare;
 
     _isNan = false; 
     // gerer plusieurs echec de lecture avant de passer à isNan=true
