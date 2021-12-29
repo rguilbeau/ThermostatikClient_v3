@@ -87,9 +87,9 @@ void ReceiverFactory::onRequestReceiver(AsyncWebServerRequest *request)
     _lastRequest = millis();
     
     if(_state) {
-        request->send(200, F("application/json"), F("{\"state\": true}"));
+        request->send(200, F("text/plain"), F("true"));
     } else {
-        request->send(200, F("application/json"), F("{\"state\": false}"));
+        request->send(200, F("text/plain"), F("false"));
     }
 
     if(_receiverState != _state) {
