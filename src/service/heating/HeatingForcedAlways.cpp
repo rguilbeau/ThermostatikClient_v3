@@ -18,3 +18,15 @@ bool HeatingForcedAlways::regulationStatus(float currentTemperature)
 
     return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature);
 }
+
+bool HeatingForcedAlways::nextMode()
+{
+    _device->setPowerOn(false);
+    return true;
+}
+
+bool HeatingForcedAlways::forceTemperature(float increment)
+{
+    _device->setForcedTemperature(_device->getForcedTemperature() + increment);
+    return true;
+}

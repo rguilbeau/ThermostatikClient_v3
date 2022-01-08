@@ -10,6 +10,7 @@
 #include "factory/mqtt/MqttFactory.h"
 #include "factory/mqtt/MqttMessageHandlerInterface.h"
 #include "factory/receiver/ReceiverFactory.h"
+#include "factory/programme/ModeHandlerInterface.h"
 
 #include "model/Programme.h"
 #include "model/Device.h"
@@ -23,7 +24,8 @@ class HeatingHandler :
     public UntilDateHandlerInterface, 
     public OrderHandlerInterface,
     public DhtHandlerInterface,
-    public MqttMessageHandlerInterface
+    public MqttMessageHandlerInterface,
+    public ModeHandlerInterface
 {
 
 public:
@@ -43,6 +45,7 @@ public:
     void temperatureChanged(float temperature) override;
     void temperatureIsNan() override; 
     void messageReceived(char *topic, char *message) override;
+    void modeUpdated() override;
 
 private:
     Programme *_programme;

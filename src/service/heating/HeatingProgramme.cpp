@@ -29,3 +29,28 @@ bool HeatingProgramme::regulationStatus(float currentTemperature)
         return false;
     }
 }
+
+bool HeatingProgramme::nextMode()
+{
+    _device->setPowerOn(true);
+    _device->setForced(true);
+    
+    Order *order = _programme->getLastOrder();
+
+    if(order != nullptr) {
+        _device->setForcedUntil(0);
+        _device->setForcedTemperature(order->getTemperature());
+    } else {
+        _device->setForcedUntil(-1);
+        _device->setForcedTemperature(20.5);
+    }
+
+    return true;
+}
+
+bool HeatingProgramme::forceTemperature(float increment)
+{
+    nextMode();
+    _device->setForcedTemperature(_device->getForcedTemperature() + increment);
+    return true;
+}

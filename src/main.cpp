@@ -51,6 +51,7 @@ void setup()
     container->buttonMore()->setHandler(container->buttonHandler());
     container->buttonMinus()->setHandler(container->buttonHandler());
     container->buttonOk()->setHandler(container->buttonHandler());
+    container->buttonHandler()->setHeatingHandler(container->heatingHandler());
 }
 
 void loop()

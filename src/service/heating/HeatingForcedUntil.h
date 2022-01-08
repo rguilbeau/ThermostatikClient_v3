@@ -10,6 +10,8 @@ public:
     ~HeatingForcedUntil();
 
     bool regulationStatus(float currentTemperature) override;
+    bool nextMode() override;
+    bool forceTemperature(float increment) override;
 
 private:
 

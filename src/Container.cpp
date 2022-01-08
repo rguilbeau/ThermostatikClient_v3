@@ -47,7 +47,9 @@ Container::Container()
 
     _topicService = new TopicService(DEVICE_NAME);
 
-    _buttonHandler = new ButtonHandler();
+    _buttonHandler = new ButtonHandler(
+        _programme, _device
+    );
 
     _messageParserService = new MessageParserService(
         _dhtFactory

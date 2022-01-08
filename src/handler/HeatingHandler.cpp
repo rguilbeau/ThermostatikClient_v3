@@ -126,3 +126,14 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     _receiverFactory->setState(regulationStatus);
     delete heating;
 }
+
+void HeatingHandler::modeUpdated()
+{
+    String payload = _messageParserService->deviceToPayload(_device);
+    _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
+
+    Heating *heating = Heating::getMode(_device, _programme);
+    bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+    _receiverFactory->setState(regulationStatus);
+    delete heating;
+}

@@ -15,6 +15,8 @@ public:
 
     virtual bool regulationStatus(float currentTemperature) = 0;
 
+    virtual bool nextMode() = 0;
+    virtual bool forceTemperature(float increment) = 0;
 
 protected:
     Device *_device;
