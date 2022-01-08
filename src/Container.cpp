@@ -41,7 +41,13 @@ Container::Container()
         10, 60000
     );
 
+    _buttonMore = new Button(D5, ButtonType::BUTTON_MORE, 50);
+    _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 50);
+    _buttonOk = new Button(D7, ButtonType::BUTTON_OK, 50);
+
     _topicService = new TopicService(DEVICE_NAME);
+
+    _buttonHandler = new ButtonHandler();
 
     _messageParserService = new MessageParserService(
         _dhtFactory
@@ -72,11 +78,15 @@ WifiFactory *Container::wifiFactory() { return _wifiFactory; }
 ReceiverFactory *Container::receiverFactory() { return _receiverFactory; }
 MqttFactory *Container::mqttFactory() { return _mqttFactory; }
 DhtFactory *Container::dhtFactory() { return _dhtFactory; }
+Button *Container::buttonMore() { return _buttonMore; }
+Button *Container::buttonMinus() { return _buttonMinus; }
+Button *Container::buttonOk() { return _buttonOk; }
 
 NetworkHandler *Container::networkHandler() { return _networkHandler; }
 ThermometerAnimationHandler *Container::thermometerAnimationHandler() { return _thermometerAnimationHandler; }
 HeatingHandler *Container::heatingHandler() { return _heatingHandler; }
 ReceiverStateHandler *Container::receiverStateHandler() { return _receiverStateHandler; }
+ButtonHandler *Container::buttonHandler() { return _buttonHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }

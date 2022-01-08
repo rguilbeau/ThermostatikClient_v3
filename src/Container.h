@@ -13,11 +13,13 @@
 #include "factory/dht/DhtFactory.h"
 #include "factory/clock/ClockFactory.h"
 #include "factory/programme/ProgrammeFactory.h"
+#include "factory/button/Button.h"
 
 #include "handler/NetworkHandler.h"
 #include "handler/ThermometerAnimationHandler.h"
 #include "handler/HeatingHandler.h"
 #include "handler/ReceiverStateHandler.h"
+#include "handler/ButtonHandler.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
@@ -42,6 +44,10 @@ public:
     ThermometerAnimationHandler *thermometerAnimationHandler();
     HeatingHandler *heatingHandler();
     ReceiverStateHandler *receiverStateHandler();
+    ButtonHandler *buttonHandler();
+    Button *buttonMore();
+    Button *buttonMinus();
+    Button *buttonOk();
 
     Programme *programme();
     Device *device();
@@ -57,11 +63,15 @@ private:
     ReceiverFactory *_receiverFactory;
     MqttFactory *_mqttFactory;
     DhtFactory *_dhtFactory;
+    Button *_buttonMore;
+    Button *_buttonMinus;
+    Button *_buttonOk;
 
     NetworkHandler *_networkHandler;
     ThermometerAnimationHandler *_thermometerAnimationHandler;
     HeatingHandler *_heatingHandler;
     ReceiverStateHandler *_receiverStateHandler;
+    ButtonHandler *_buttonHandler;
 
     MessageParserService *_messageParserService;
     TopicService *_topicService;

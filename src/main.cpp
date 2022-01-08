@@ -47,10 +47,17 @@ void setup()
     container->receiverFactory()->setConnectionHandler(container->networkHandler());
     container->receiverFactory()->createAccessPoint();
     container->wifiFactory()->connect();
+
+    container->buttonMore()->setHandler(container->buttonHandler());
+    container->buttonMinus()->setHandler(container->buttonHandler());
+    container->buttonOk()->setHandler(container->buttonHandler());
 }
 
 void loop()
 {
+    container->buttonMore()->loop();
+    container->buttonMinus()->loop();
+    container->buttonOk()->loop();
     container->dhtFactory()->loop();
     container->programmeFactory()->loop();
     container->clockFactory()->loop();
