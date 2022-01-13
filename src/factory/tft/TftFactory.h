@@ -12,6 +12,8 @@ public:
         uint8_t pinBrightness
     );
 
+    void setBrightness(int percent);
+
 private:
     TFT_eSPI *_driver;
     uint8_t _pinBrightness;
