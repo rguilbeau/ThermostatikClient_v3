@@ -10,6 +10,11 @@ HeatingPowerOff::~HeatingPowerOff()
 
 }
 
+HeatingType HeatingPowerOff::getType()
+{
+    return HeatingType::HEATING_POWER_OFF;
+}
+
 bool HeatingPowerOff::regulationStatus(float currentTemperature)
 {
     #ifdef DEBUG

@@ -10,6 +10,11 @@ HeatingForcedAlways::~HeatingForcedAlways()
 
 }
 
+HeatingType HeatingForcedAlways::getType()
+{
+    return HeatingType::HEATING_FORCED_ALWAYS;
+}
+
 bool HeatingForcedAlways::regulationStatus(float currentTemperature)
 {
     #ifdef DEBUG

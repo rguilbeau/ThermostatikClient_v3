@@ -10,6 +10,11 @@ HeatingProgramme::~HeatingProgramme()
 
 }
 
+HeatingType HeatingProgramme::getType()
+{
+    return HeatingType::HEATING_PROGRAMME;
+}
+
 bool HeatingProgramme::regulationStatus(float currentTemperature)
 {
     Order *order = _programme->getLastOrder();

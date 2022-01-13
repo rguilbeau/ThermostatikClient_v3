@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+#include "HeatingType.h"
 #include "model/Device.h"
 #include "model/Programme.h"
 
@@ -18,10 +19,12 @@ public:
     virtual bool nextMode() = 0;
     virtual bool forceTemperature(float increment) = 0;
 
+    virtual HeatingType getType() = 0;
+
 protected:
     Device *_device;
     Programme *_programme;
-
+    
     Heating(Device *device, Programme *programme);
     bool _regulateByTemperature(float requestTemperature, float currentTemperature);
 
