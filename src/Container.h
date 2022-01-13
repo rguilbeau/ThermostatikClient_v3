@@ -14,6 +14,7 @@
 #include "factory/clock/ClockFactory.h"
 #include "factory/programme/ProgrammeFactory.h"
 #include "factory/button/Button.h"
+#include "factory/tft/TftFactory.h"
 
 #include "handler/NetworkHandler.h"
 #include "handler/ThermometerAnimationHandler.h"
@@ -39,12 +40,14 @@ public:
     ReceiverFactory *receiverFactory();
     MqttFactory *mqttFactory();
     DhtFactory *dhtFactory();
+    TftFactory *tftFactory();
 
     NetworkHandler *networkHandler();
     ThermometerAnimationHandler *thermometerAnimationHandler();
     HeatingHandler *heatingHandler();
     ReceiverStateHandler *receiverStateHandler();
     ButtonHandler *buttonHandler();
+
     Button *buttonMore();
     Button *buttonMinus();
     Button *buttonOk();
@@ -63,15 +66,17 @@ private:
     ReceiverFactory *_receiverFactory;
     MqttFactory *_mqttFactory;
     DhtFactory *_dhtFactory;
-    Button *_buttonMore;
-    Button *_buttonMinus;
-    Button *_buttonOk;
+    TftFactory *_tftFactory;
 
     NetworkHandler *_networkHandler;
     ThermometerAnimationHandler *_thermometerAnimationHandler;
     HeatingHandler *_heatingHandler;
     ReceiverStateHandler *_receiverStateHandler;
     ButtonHandler *_buttonHandler;
+
+    Button *_buttonMore;
+    Button *_buttonMinus;
+    Button *_buttonOk;
 
     MessageParserService *_messageParserService;
     TopicService *_topicService;

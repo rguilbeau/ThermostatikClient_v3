@@ -1,6 +1,5 @@
 #include <Arduino.h>
-#include <AsyncMqttClient.h>
-#include "ESP8266WiFi.h"
+#include <SPI.h> // required for TFT
 
 #include "Container.h"
 #include "Debug.h"

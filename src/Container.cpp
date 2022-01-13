@@ -41,6 +41,11 @@ Container::Container()
         10, 60000
     );
 
+    _tftFactory = new TftFactory(
+        new TFT_eSPI(),
+        8
+    );
+
     _buttonMore = new Button(D5, ButtonType::BUTTON_MORE, 50);
     _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 50);
     _buttonOk = new Button(D7, ButtonType::BUTTON_OK, 50);
@@ -80,6 +85,8 @@ WifiFactory *Container::wifiFactory() { return _wifiFactory; }
 ReceiverFactory *Container::receiverFactory() { return _receiverFactory; }
 MqttFactory *Container::mqttFactory() { return _mqttFactory; }
 DhtFactory *Container::dhtFactory() { return _dhtFactory; }
+TftFactory *Container::tftFactory() { return _tftFactory; }
+
 Button *Container::buttonMore() { return _buttonMore; }
 Button *Container::buttonMinus() { return _buttonMinus; }
 Button *Container::buttonOk() { return _buttonOk; }
