@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <SPI.h> // required for TFT
+#include "FS.h"
 
 #include "Container.h"
 #include "Debug.h"
@@ -25,6 +26,12 @@ void setup()
     #elif DISPLAY_FREE_MEMORY
         startSerial();
     #endif
+
+    if(!SPIFFS.begin()) {
+        #ifdef DEBUG
+            Serial.println("Unable to mount filesysteme !");
+        #endif
+    }
 
     WiFi.mode(WIFI_AP_STA);
 
