@@ -10,7 +10,7 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
 
     #ifdef DEBUG
         bool font_missing = false;
-        if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH)))
+        if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH))
             font_missing = true;
         if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH))
             font_missing = true;
