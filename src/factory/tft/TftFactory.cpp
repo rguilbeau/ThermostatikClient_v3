@@ -49,40 +49,40 @@ void TftFactory::draw(int x, int y, TftImage image)
 {
     switch(image) {
         case TftImage::IMAGE_THERMOMETER:
-            drawFromSpiff(x, y, "/img/thermometer.bmp");
+            drawFromSpiff(x, y, "/img/th.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_FULL:
-            drawFromSpiff(x, y, "/img/thermometer_full.bmp");
+            drawFromSpiff(x, y, "/img/th4.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_THREE_QUARTER:
-            drawFromSpiff(x, y, "/img/thermometer_three_quarter.bmp");
+            drawFromSpiff(x, y, "/img/th3.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_HALF:
-            drawFromSpiff(x, y, "/img/thermometer_half.bmp");
+            drawFromSpiff(x, y, "/img/th2.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_QUARTER:
-            drawFromSpiff(x, y, "/img/thermometer_quarter.bmp");
+            drawFromSpiff(x, y, "/img/th1.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_EMPTY:
-            drawFromSpiff(x, y, "/img/thermometer_empty.bmp");
+            drawFromSpiff(x, y, "/img/th0.bmp");
             break;
         case TftImage::IMAGE_WIFI_OFF:
-            drawFromSpiff(x, y, "/img/wifi_off.bmp");
+            drawFromSpiff(x, y, "/img/wifi.bmp");
             break;
         case TftImage::IMAGE_SERVER_OFF:
-            drawFromSpiff(x, y, "/img/server_off.bmp");
+            drawFromSpiff(x, y, "/img/server.bmp");
             break;
         case TftImage::IMAGE_RECEIVER_OFF:
-            drawFromSpiff(x, y, "/img/receiver_off.bmp");
+            drawFromSpiff(x, y, "/img/tower.bmp");
             break;
         case TftImage::IMAGE_ORDER_PROGRAMME:
-            drawFromSpiff(x, y, "/img/order_programme.bmp");
+            drawFromSpiff(x, y, "/img/arrow.bmp");
             break;
         case TftImage::IMAGE_ORDER_FORCED:
-            drawFromSpiff(x, y, "/img/order_forced.bmp");
+            drawFromSpiff(x, y, "/img/hand.bmp");
             break;
         case TftImage::IMAGE_ORDER_POWER_OFF:
-            drawFromSpiff(x, y, "/img/order_power_off.bmp");
+            drawFromSpiff(x, y, "/img/off.bmp");
             break;
     }
 }
