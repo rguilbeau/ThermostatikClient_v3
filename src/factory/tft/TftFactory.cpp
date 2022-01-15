@@ -37,37 +37,37 @@ void TftFactory::draw(int x, int y, TftImage image)
             drawFromSpiff(x, y, "/img/thermometer.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_FULL:
-            drawFromSpiff(x, y, "/img/thermometer_full.bmp")
+            drawFromSpiff(x, y, "/img/thermometer_full.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_THREE_QUARTER:
-            drawFromSpiff(x, y, "/img/thermometer_three_quarter.bmp")
+            drawFromSpiff(x, y, "/img/thermometer_three_quarter.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_HALF:
-            drawFromSpiff(x, y, "/img/thermometer_half.bmp")
+            drawFromSpiff(x, y, "/img/thermometer_half.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_QUARTER:
-            drawFromSpiff(x, y, "/img/thermometer_quarter.bmp")
+            drawFromSpiff(x, y, "/img/thermometer_quarter.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_EMPTY:
-            drawFromSpiff(x, y, "/img/thermometer_empty.bmp")
+            drawFromSpiff(x, y, "/img/thermometer_empty.bmp");
             break;
         case TftImage::IMAGE_WIFI_OFF:
-            drawFromSpiff(x, y, "/img/wifi_off.bmp")
+            drawFromSpiff(x, y, "/img/wifi_off.bmp");
             break;
         case TftImage::IMAGE_SERVER_OFF:
-            drawFromSpiff(x, y, "/img/server_off.bmp")
+            drawFromSpiff(x, y, "/img/server_off.bmp");
             break;
         case TftImage::IMAGE_RECEIVER_OFF:
-            drawFromSpiff(x, y, "/img/receiver_off.bmp")
+            drawFromSpiff(x, y, "/img/receiver_off.bmp");
             break;
         case TftImage::IMAGE_ORDER_PROGRAMME:
-            drawFromSpiff(x, y, "/img/order_programme.bmp")
+            drawFromSpiff(x, y, "/img/order_programme.bmp");
             break;
         case TftImage::IMAGE_ORDER_FORCED:
-            drawFromSpiff(x, y, "/img/order_forced.bmp")
+            drawFromSpiff(x, y, "/img/order_forced.bmp");
             break;
         case TftImage::IMAGE_ORDER_POWER_OFF:
-            drawFromSpiff(x, y, "/img/order_power_off.bmp")
+            drawFromSpiff(x, y, "/img/order_power_off.bmp");
             break;
     }
 }
@@ -116,10 +116,9 @@ int TftFactory::getHeight(TftFont font)
 }
 
 void TftFactory::drawFromSpiff(int x, int y, String filename)
-{   
+{
     // @see https://github.com/Bodmer/TFT_eSPI/tree/master/examples/Generic/TFT_SPIFFS_BMP
-    
-    if ((x >= _driver->width()) || (y >= _driver->height())) return;
+    if ((x >= _driver -> width()) || (y >= _driver -> height())) return;
 
     fs::File bmpFS;
 
@@ -134,8 +133,8 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
     }
 
     uint32_t seekOffset;
-    uint16_t w, h, row, col;
-    uint8_t  r, g, b;
+    uint16_t w, h, row;
+    uint8_t r, g, b;
 
     uint32_t startTime = millis();
 
@@ -150,55 +149,55 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
         if ((read16(bmpFS) == 1) && (read16(bmpFS) == 24) && (read32(bmpFS) == 0)) {
             y += h - 1;
 
-            bool oldSwapBytes = _driver->getSwapBytes();
-            _driver->setSwapBytes(true);
+            bool oldSwapBytes = _driver -> getSwapBytes();
+            _driver -> setSwapBytes(true);
             bmpFS.seek(seekOffset);
 
             uint16_t padding = (4 - ((w * 3) & 3)) & 3;
             uint8_t lineBuffer[w * 3 + padding];
 
             for (row = 0; row < h; row++) {
-        
+
                 bmpFS.read(lineBuffer, sizeof(lineBuffer));
-                uint8_t*  bptr = lineBuffer;
-                uint16_t* tptr = (uint16_t*)lineBuffer;
+                uint8_t * bptr = lineBuffer;
+                uint16_t * tptr = (uint16_t * ) lineBuffer;
                 // Convert 24 to 16 bit colours
                 for (uint16_t col = 0; col < w; col++) {
-                    b = *bptr++;
-                    g = *bptr++;
-                    r = *bptr++;
-                    *tptr++ = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+                    b = * bptr++;
+                    g = * bptr++;
+                    r = * bptr++;
+                    * tptr++ = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
                 }
 
                 // Push the pixel row to screen, pushImage will crop the line if needed
                 // y is decremented as the BMP image is drawn bottom up
-                _driver->pushImage(x, y--, w, 1, (uint16_t*)lineBuffer);
+                _driver -> pushImage(x, y--, w, 1, (uint16_t * ) lineBuffer);
             }
-      
-        _driver->setSwapBytes(oldSwapBytes);
 
-        #ifdef DEBUG
-            Serial.print("BMP image " + filename + "loaded in "); 
-            Serial.print(millis() - startTime);
-            Serial.println(" ms");
-        #endif
-    } else {
-        #ifdef DEBUG
-            Serial.println("BMP format not recognized for file : " + filename);
-        #endif 
+            _driver->setSwapBytes(oldSwapBytes);
+
+            #ifdef DEBUG
+                Serial.print("BMP image " + filename + "loaded in ");
+                Serial.print(millis() - startTime);
+                Serial.println(" ms");
+            #endif
+        } else {
+            #ifdef DEBUG
+                Serial.println("BMP format not recognized for file : " + filename);
+            #endif
+        }
     }
-  
     bmpFS.close();
 }
 
-uint16_t TftFactory::read16(fs::File &f) {
+uint16_t TftFactory::read16(File &f) {
     uint16_t result;
     ((uint8_t *)&result)[0] = f.read(); // LSB
     ((uint8_t *)&result)[1] = f.read(); // MSB
     return result;
 }
 
-uint32_t TftFactory::read32(fs::File &f) {
+uint32_t TftFactory::read32(File &f) {
     uint32_t result;
     ((uint8_t *)&result)[0] = f.read(); // LSB
     ((uint8_t *)&result)[1] = f.read();

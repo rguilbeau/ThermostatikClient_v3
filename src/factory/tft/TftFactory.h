@@ -2,6 +2,8 @@
 #define T_TFT_FACTORY_H
 
 #include <Arduino.h>
+#include "FS.h"
+
 #include "TFT_eSPI.h"
 #include "type/TftFont.h"
 #include "type/TftText.h"
@@ -17,7 +19,7 @@ public:
 
     void setBrightness(int percent);
     void print(TftText text);
-    void draw(TftImage image);
+    void draw(int x, int y, TftImage image);
     void loop();
 
 private:
@@ -28,8 +30,8 @@ private:
     void drawFromSpiff(int x, int y, String image);
     int getColor(TftColor color);
     int getHeight(TftFont font);
-    uint16_t read16(fs::File &f);
-    uint32_t read32(fs::File &f);
+    uint16_t read16(File &f);
+    uint32_t read32(File &f);
 };
 
 #endif
