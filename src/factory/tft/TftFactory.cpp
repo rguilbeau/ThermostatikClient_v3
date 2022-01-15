@@ -104,14 +104,12 @@ int TftFactory::getColor(TftColor color)
 
 void TftFactory::loadFont(TftFont font)
 {
-    String fontStr = "NotoSansBold15";
-
     switch (font) {
-        case TftFont::FONT_NOTO_15:
-            _driver->loadFont("NotoSansBold15");
+        case TftFont::SMALL:
+            _driver->loadFont(TftFactory::FONT_NOTO_15_PATH);
             break;
-        case TftFont::FONT_NOTO_36:
-            _driver->loadFont("NotoSansBold36");
+        case TftFont::LARGE:
+            _driver->loadFont(TftFactory::FONT_NOTO_36_PATH);
             break;
         default:
             break;
