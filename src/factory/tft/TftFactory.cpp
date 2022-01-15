@@ -119,9 +119,9 @@ void TftFactory::loadFont(TftFont font)
 int TftFactory::getHeight(TftFont font)
 {
     switch (font) {
-        case TftFont::FONT_NOTO_15:
+        case TftFont::SMALL:
             return 18;
-        case TftFont::FONT_NOTO_36:
+        case TftFont::LARGE:
             return 31;
         default:
             return 0;

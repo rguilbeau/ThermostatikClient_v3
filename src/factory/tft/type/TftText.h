@@ -10,7 +10,7 @@ struct TftText
     int width = 0;
     TftColor color = TftColor::COLOR_WHITE;
     TftColor background = TftColor::BG_DARK;
-    TftFont font = TftFont::FONT_NOTO_15;
+    TftFont font = TftFont::SMALL;
     String text = "";
 };
 
