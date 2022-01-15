@@ -23,6 +23,9 @@ public:
     void loop();
 
 private:
+    static const String FONT_NOTO_15_PATH;
+    static const String FONT_NOTO_36_PATH;
+    
     TFT_eSPI *_driver;
     uint8_t _pinBrightness;
 

@@ -1,9 +1,24 @@
 #include "TftFactory.h"
 
+const String TftFactory::FONT_NOTO_15_PATH = "/font/NotoSansBold15.vlw";
+const String TftFactory::FONT_NOTO_36_PATH = "/font/NotoSansBold36.vlw";
+
 TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
 {
     _driver = driver;
     _pinBrightness = pinBrightness;
+
+    #ifdef DEBUG
+        bool font_missing = false;
+        if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH)))
+            font_missing = true;
+        if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH))
+            font_missing = true;
+
+        if (font_missing) {
+            Serial.println(F("ERROR : Font missing in SPIFFS, did you upload it?"));
+        }
+    #endif
 }
 
 void TftFactory::setBrightness(int percent) {
