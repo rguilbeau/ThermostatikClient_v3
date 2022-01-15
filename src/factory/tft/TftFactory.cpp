@@ -14,7 +14,7 @@ void TftFactory::setBrightness(int percent) {
     analogWrite(_pinBrightness, analogValue);
 }
 
-void TftFactory::print(TftText text)
+void TftFactory::print(int x, int y, TftText text)
 {
     int height = getHeight(text.font);
     int color = getColor(text.color);
@@ -22,10 +22,10 @@ void TftFactory::print(TftText text)
 
     loadFont(text.font);
     _driver->fillRect(
-        text.x, text.y, text.width, 
+        x, y, text.width, 
         height, color
     );
-    _driver->setCursor(text.x, text.y);
+    _driver->setCursor(x, y);
     _driver->setTextColor(color, backgroundColor);
     _driver->print(text.text);
 }

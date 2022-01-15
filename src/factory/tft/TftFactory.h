@@ -18,7 +18,7 @@ public:
     );
 
     void setBrightness(int percent);
-    void print(TftText text);
+    void print(int x, int y, TftText text);
     void draw(int x, int y, TftImage image);
     void loop();
 
