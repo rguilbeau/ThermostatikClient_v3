@@ -4,7 +4,6 @@
 enum TftColor {
     COLOR_WHITE, 
     COLOR_GRAY,
-
     BG_DARK 
 };
 
