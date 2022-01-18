@@ -3,7 +3,7 @@
 const String TftFactory::FONT_NOTO_15_PATH = "/font/NotoSansBold15.vlw";
 const String TftFactory::FONT_NOTO_36_PATH = "/font/NotoSansBold36.vlw";
 
-String TftFactory::formatTemperature(float temperaure)
+String TftFactory::formatTemperature(float temperature)
 {
     char buff[6];
     dtostrf(temperature, 4, 1, buff);
