@@ -35,3 +35,15 @@ bool HeatingForcedUntil::forceTemperature(float increment)
     _device->setForcedTemperature(_device->getForcedTemperature() + increment);
     return true;
 }
+
+OrderRender HeatingForcedUntil::getRender()
+{
+    Date until(_device->getForcedUntil());
+
+    OrderRender render;
+    render.icon = TftImage::IMAGE_ORDER_FORCED;
+    render.temperature = TftFactory::formatTemperature(_device->getForcedTemperature());
+    render.label = "Manuelle jusqu'au";
+    render.info = until.toShortFormat();
+    return render;
+}

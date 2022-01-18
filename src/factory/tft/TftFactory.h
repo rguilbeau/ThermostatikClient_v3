@@ -22,6 +22,8 @@ public:
     void draw(int x, int y, TftImage image);
     void loop();
 
+    static String formatTemperature(float temperature);
+
 private:
     static const String FONT_NOTO_15_PATH;
     static const String FONT_NOTO_36_PATH;

@@ -7,6 +7,11 @@
 #include "model/Device.h"
 #include "model/Programme.h"
 
+#include "factory/tft/TftFactory.h"
+#include "factory/tft/type/TftImage.h"
+
+#include "render/OrderRender.h"
+
 class Heating {
 public:
 
@@ -20,6 +25,7 @@ public:
     virtual bool forceTemperature(float increment) = 0;
 
     virtual HeatingType getType() = 0;
+    virtual OrderRender getRender() = 0;
 
 protected:
     Device *_device;
