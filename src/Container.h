@@ -24,6 +24,7 @@
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
+#include "service/TftService.h"
 
 #include "model/Device.h"
 #include "model/Programme.h"
@@ -80,6 +81,7 @@ private:
 
     MessageParserService *_messageParserService;
     TopicService *_topicService;
+    TftService *_tftService;
 
     Programme *_programme;
     Device *_device;
