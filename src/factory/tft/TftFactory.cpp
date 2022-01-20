@@ -52,6 +52,11 @@ void TftFactory::print(int x, int y, TftText text)
     _driver->print(text.text);
 }
 
+void TftFactory::fillRect(int x, int y, int width, int height, TftColor color)
+{
+    _driver->fillRect(x, y, width, height, getColor(color));
+}
+
 void TftFactory::draw(int x, int y, TftImage image)
 {
     switch(image) {

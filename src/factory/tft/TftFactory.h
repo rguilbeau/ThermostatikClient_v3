@@ -20,6 +20,7 @@ public:
     void setBrightness(int percent);
     void print(int x, int y, TftText text);
     void draw(int x, int y, TftImage image);
+    void fillRect(int x, int y, int width, int height, TftColor color);
     void loop();
 
     static String formatTemperature(float temperature);
