@@ -8,6 +8,7 @@
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
+#include "service/TftService.h"
 
 class ReceiverStateHandler : public ReceiverStateHandlerInterface {
 
@@ -15,15 +16,18 @@ public:
     ReceiverStateHandler(
         MqttFactory *mqttFactory,
         MessageParserService *messageParserService,
-        TopicService *topicService
+        TopicService *topicService,
+        TftService *tftService
     );
     
     void receiverStateChanged(bool state) override;
 
 private:
+    Device *_device;
     MqttFactory *_mqttFactory;
     MessageParserService *_messageParserService;
     TopicService *_topicService;
+    TftService *_tftService;
 };
 
 #endif

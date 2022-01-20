@@ -66,7 +66,7 @@ Container::Container()
 
     _networkHandler = new NetworkHandler(
         _clockFactory,_wifiFactory, _receiverFactory, _mqttFactory, 
-        _dhtFactory, _topicService, _messageParserService
+        _dhtFactory, _topicService, _messageParserService, _tftService
     );
 
     _thermometerAnimationHandler = new ThermometerAnimationHandler();
@@ -75,11 +75,12 @@ Container::Container()
         _programme, _device, 
         _dhtFactory, _mqttFactory, _receiverFactory, 
         _messageParserService, 
-        _topicService
+        _topicService, _tftService
     );
 
     _receiverStateHandler = new ReceiverStateHandler(
-        _mqttFactory, _messageParserService, _topicService
+        _mqttFactory, _messageParserService, _topicService,
+        _tftService
     );
 }
 

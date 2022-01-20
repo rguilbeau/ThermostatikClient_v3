@@ -7,7 +7,8 @@ HeatingHandler::HeatingHandler(
     MqttFactory *mqttFactory,
     ReceiverFactory *receiverFactory,
     MessageParserService *messageParserService,
-    TopicService *topicService
+    TopicService *topicService,
+    TftService *tftService
 ) {
     _programme = programme;
     _device = device;
@@ -16,6 +17,7 @@ HeatingHandler::HeatingHandler(
     _messageParserService = messageParserService;
     _topicService = topicService;
     _receiverFactory = receiverFactory;
+    _tftService = tftService;
 }
 
 void HeatingHandler::orderUpdated(Order *order)
@@ -27,19 +29,28 @@ void HeatingHandler::orderUpdated(Order *order)
 
     _programme->setLastOrder(order);
     
+    bool hasMuted = _device->isProgrammeMode();
+
     if(order != nullptr && _device->isForcedNextOrder()) {
         _device->setForced(false);
 
         String payload = _messageParserService->deviceToPayload(_device);
         _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
+        hasMuted = true;
     }
 
-    Heating *heating = Heating::getMode(_device, _programme);
-    bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
-    _receiverFactory->setState(regulationStatus);
+    if(hasMuted) {
+        Heating *heating = Heating::getMode(_device, _programme);
+        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
-    delete heating;
+        _receiverFactory->setState(regulationStatus);
+        
+        OrderRender render = heating->getRender();
+        _tftService->setOrderRender(render);
+
+        delete heating;
+    }
 }
 
 void HeatingHandler::untilDateHit()
@@ -61,6 +72,9 @@ void HeatingHandler::untilDateHit()
 
         _receiverFactory->setState(regulationStatus);
 
+        OrderRender render = heating->getRender();
+        _tftService->setOrderRender(render);
+
         delete heating;
     }
 }
@@ -78,6 +92,12 @@ void HeatingHandler::temperatureChanged(float temperature)
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(temperature);
     _receiverFactory->setState(regulationStatus);
+
+    TemperatureRender render;
+    render.isNan = false;
+    render.temperature = temperature;
+    _tftService->setTemperatureRender(render);
+
     delete heating;
 }
 
@@ -93,6 +113,12 @@ void HeatingHandler::temperatureIsNan()
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(99); //temperature NaN
     _receiverFactory->setState(regulationStatus);
+
+    TemperatureRender render;
+    render.isNan = true;
+    render.temperature = 99;
+    _tftService->setTemperatureRender(render);
+
     delete heating;
 }
 
@@ -124,6 +150,10 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
     _receiverFactory->setState(regulationStatus);
+
+    OrderRender render = heating->getRender();
+    _tftService->setOrderRender(render);
+
     delete heating;
 }
 
@@ -135,5 +165,9 @@ void HeatingHandler::modeUpdated()
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
     _receiverFactory->setState(regulationStatus);
+
+    OrderRender render = heating->getRender();
+    _tftService->setOrderRender(render);
+
     delete heating;
 }

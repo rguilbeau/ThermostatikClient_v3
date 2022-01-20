@@ -7,7 +7,8 @@ NetworkHandler::NetworkHandler(
     MqttFactory *mqttFactory, 
     DhtFactory *dhtFactory,
     TopicService *topicService,
-    MessageParserService *messageParserService
+    MessageParserService *messageParserService,
+    TftService *tftService
 ) {
     _wifiFactory = wifiFactory; 
     _mqttFactory = mqttFactory;
@@ -15,6 +16,7 @@ NetworkHandler::NetworkHandler(
     _topicService = topicService;
     _messageParserService = messageParserService;
     _receiverFactory = receiverFactory;
+    _tftService = tftService;
 }
 
 void NetworkHandler::ntpInitialized()
@@ -24,6 +26,10 @@ void NetworkHandler::ntpInitialized()
 
 void NetworkHandler::mqttConnected()
 {
+    ServerStateRender render;
+    render.connected = true;
+    _tftService->setServerStateRender(render);
+
     // subscribe to channels
     _mqttFactory->subscribe(_topicService->getProgramme());
     _mqttFactory->subscribe(_topicService->getDevice());
@@ -47,6 +53,10 @@ void NetworkHandler::mqttConnected()
 
 void NetworkHandler::mqttDisconnected()
 {
+    ServerStateRender render;
+    render.connected = false;
+    _tftService->setServerStateRender(render);
+
     if(_wifiFactory->isConnected()) {
         _mqttReconnectTimer.once(2, std::bind(&MqttFactory::connect, _mqttFactory));
     } else {
@@ -58,12 +68,20 @@ void NetworkHandler::mqttDisconnected()
 
 void NetworkHandler::wifiConnected()
 {
+    WifiStateRender render;
+    render.connected = true;
+    _tftService->setWifiStateRender(render);
+
     _clockFactory->initNtp();
     _mqttReconnectTimer.once(1, std::bind(&MqttFactory::connect, _mqttFactory));
 }
 
 void NetworkHandler::wifiDisconnected()
 {
+    WifiStateRender render;
+    render.connected = false;
+    _tftService->setWifiStateRender(render);
+
     _mqttReconnectTimer.detach();
     _wifiReconnectTimer.once(2, std::bind(&WifiFactory::connect, _wifiFactory));
 }
@@ -74,6 +92,10 @@ void NetworkHandler::receiverConnected()
     #ifdef DEBUG
         Serial.println("Receiver connected");
     #endif
+
+    ReceiverStateRender render;
+    render.connected = true;
+    _tftService->setReceiverStateRender(render);
 }
 
 void NetworkHandler::receiverDisconnected()
@@ -81,4 +103,8 @@ void NetworkHandler::receiverDisconnected()
     #ifdef DEBUG
         Serial.println("Receiver disconnected");
     #endif
+
+    ReceiverStateRender render;
+    render.connected = false;
+    _tftService->setReceiverStateRender(render);
 }

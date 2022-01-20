@@ -19,6 +19,7 @@
 #include "service/heating/Heating.h"
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
+#include "service/TftService.h"
 
 class HeatingHandler : 
     public UntilDateHandlerInterface, 
@@ -37,7 +38,8 @@ public:
         MqttFactory *mqttFactory,
         ReceiverFactory *receiverFactory,
         MessageParserService *messageParserService,
-        TopicService *topicService
+        TopicService *topicService,
+        TftService *tftService
     );
 
     void orderUpdated(Order *order) override;
@@ -54,8 +56,10 @@ private:
     DhtFactory *_dhtFactory;
     MqttFactory *_mqttFactory;
     ReceiverFactory *_receiverFactory;
+
     MessageParserService *_messageParserService;
     TopicService *_topicService;
+    TftService *_tftService;
 };
 
 #endif

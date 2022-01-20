@@ -20,13 +20,13 @@
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
+#include "service/TftService.h"
 
 class NetworkHandler : 
     public MqttConnectionHandlerInterface, 
     public WifiConnectionHandlerInterface, 
     public NtpHandlerInterface,
     public ReceiverConnectionHandlerInterface
-    
 {
 public:
 
@@ -37,7 +37,8 @@ public:
         MqttFactory *mqttFactory, 
         DhtFactory *dhtFactory,
         TopicService *topicService,
-        MessageParserService *messageParserService
+        MessageParserService *messageParserService,
+        TftService *tftService
     );
 
     void ntpInitialized() override;
@@ -60,6 +61,7 @@ private:
     
     TopicService *_topicService;
     MessageParserService *_messageParserService;
+    TftService *_tftService;
 
     Ticker _mqttReconnectTimer;
     Ticker _wifiReconnectTimer;
