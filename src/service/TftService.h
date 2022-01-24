@@ -1,6 +1,8 @@
 #ifndef T_TFT_SERVICE_H
 #define T_TFT_SERVICE_H
 
+#include <Arduino.h>
+
 #include "factory/tft/TftFactory.h"
 #include "render/MessageRender.h"
 #include "render/OrderRender.h"
@@ -11,13 +13,17 @@
 #include "render/ThermometerRender.h"
 #include "render/WifiStateRender.h"
 
+#include "handler/TftDateHandler.h"
 
 class TftService {
 
 public:
     TftService(
-        TftFactory *tftFactory
+        TftFactory *tftFactory,
+        TftDateHandler *tftDateHandler
     );
+
+    void displayDefault();
 
     void setThermometerRender(ThermometerRender render);
     void setTemperatureRender(TemperatureRender render);
@@ -28,8 +34,12 @@ public:
     void setOrderRender(OrderRender render);
     void setMessageRender(MessageRender render);
 
+    void message(String message);
+
 private:
     TftFactory *_tftFactory;
+
+    TftDateHandler *_tftDateHandler;
 };
 
 #endif

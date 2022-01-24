@@ -49,6 +49,7 @@ void NetworkHandler::mqttConnected()
 
     // ask to refresh programme
     _mqttFactory->publish(_topicService->getAsker(), "update requested");
+    _tftService->message("Chargement du programme...");
 }
 
 void NetworkHandler::mqttDisconnected()
@@ -58,6 +59,8 @@ void NetworkHandler::mqttDisconnected()
     _tftService->setServerStateRender(render);
 
     if(_wifiFactory->isConnected()) {
+        _tftService->message("Reconnexion au serveur...");
+
         _mqttReconnectTimer.once(2, std::bind(&MqttFactory::connect, _mqttFactory));
     } else {
         #ifdef DEBUG
@@ -73,6 +76,8 @@ void NetworkHandler::wifiConnected()
     _tftService->setWifiStateRender(render);
 
     _clockFactory->initNtp();
+
+    _tftService->message("Connexion au serveur...");
     _mqttReconnectTimer.once(1, std::bind(&MqttFactory::connect, _mqttFactory));
 }
 
@@ -81,7 +86,8 @@ void NetworkHandler::wifiDisconnected()
     WifiStateRender render;
     render.connected = false;
     _tftService->setWifiStateRender(render);
-
+    
+    _tftService->message("Reconnexion au wifi...");
     _mqttReconnectTimer.detach();
     _wifiReconnectTimer.once(2, std::bind(&WifiFactory::connect, _wifiFactory));
 }

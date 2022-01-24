@@ -17,7 +17,8 @@
 #include "factory/tft/TftFactory.h"
 
 #include "handler/NetworkHandler.h"
-#include "handler/ThermometerAnimationHandler.h"
+#include "handler/TftAnimationHandler.h"
+#include "handler/TftDateHandler.h"
 #include "handler/HeatingHandler.h"
 #include "handler/ReceiverStateHandler.h"
 #include "handler/ButtonHandler.h"
@@ -44,10 +45,11 @@ public:
     TftFactory *tftFactory();
 
     NetworkHandler *networkHandler();
-    ThermometerAnimationHandler *thermometerAnimationHandler();
     HeatingHandler *heatingHandler();
     ReceiverStateHandler *receiverStateHandler();
     ButtonHandler *buttonHandler();
+    TftAnimationHandler *tftAnimationHandler();
+    TftDateHandler *tftDateHandler();
 
     Button *buttonMore();
     Button *buttonMinus();
@@ -55,6 +57,8 @@ public:
 
     Programme *programme();
     Device *device();
+
+    TftService *tftService();
 
 private:
     Container();
@@ -70,10 +74,11 @@ private:
     TftFactory *_tftFactory;
 
     NetworkHandler *_networkHandler;
-    ThermometerAnimationHandler *_thermometerAnimationHandler;
     HeatingHandler *_heatingHandler;
     ReceiverStateHandler *_receiverStateHandler;
     ButtonHandler *_buttonHandler;
+    TftAnimationHandler *_tftAnimationHandler;
+    TftDateHandler *_tftDateHandler;
 
     Button *_buttonMore;
     Button *_buttonMinus;

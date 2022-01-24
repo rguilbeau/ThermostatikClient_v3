@@ -140,6 +140,7 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     } else if(topicStr == String(_topicService->getProgramme())) {
         _messageParserService->parseProgramme(message, _programme);        
         _programme->setLastOrder(_programme->findOrderAt(now));
+        _tftService->message("");
     } else {
         #ifdef DEBUG
             Serial.println("Error : Unkonw topic");

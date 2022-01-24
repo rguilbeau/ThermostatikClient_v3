@@ -37,10 +37,13 @@ void setup()
 
     container = Container::get();
 
+    container->tftService()->message("Connexion au wifi...");
+
     container->programmeFactory()->setOrderHandler(container->heatingHandler());
     container->programmeFactory()->setUntilDateHandler(container->heatingHandler());
-    container->clockFactory()->setHandlerSize(1);
-    container->clockFactory()->setHandler(0, 1000, container->thermometerAnimationHandler());
+    container->clockFactory()->setHandlerSize(2);
+    container->clockFactory()->setHandler(0, 500, container->tftAnimationHandler());
+    container->clockFactory()->setHandler(0, 1000, container->tftDateHandler());
     container->clockFactory()->setNtpHandler(container->networkHandler());
 
     container->wifiFactory()->setHandler(container->networkHandler());
@@ -51,13 +54,16 @@ void setup()
 
     container->wifiFactory()->setHandler(container->networkHandler());
     container->receiverFactory()->setConnectionHandler(container->networkHandler());
-    container->receiverFactory()->createAccessPoint();
-    container->wifiFactory()->connect();
 
     container->buttonMore()->setHandler(container->buttonHandler());
     container->buttonMinus()->setHandler(container->buttonHandler());
     container->buttonOk()->setHandler(container->buttonHandler());
     container->buttonHandler()->setHeatingHandler(container->heatingHandler());
+
+    container->tftService()->displayDefault();
+
+    container->receiverFactory()->createAccessPoint();
+    container->wifiFactory()->connect();
 }
 
 void loop()

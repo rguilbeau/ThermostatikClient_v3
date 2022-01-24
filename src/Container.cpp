@@ -53,7 +53,7 @@ Container::Container()
     _topicService = new TopicService(DEVICE_NAME);
 
     _tftService = new TftService(
-        _tftFactory
+        _tftFactory, _tftDateHandler
     );
 
     _buttonHandler = new ButtonHandler(
@@ -69,7 +69,9 @@ Container::Container()
         _dhtFactory, _topicService, _messageParserService, _tftService
     );
 
-    _thermometerAnimationHandler = new ThermometerAnimationHandler();
+    _tftAnimationHandler = new TftAnimationHandler(_tftService);
+
+    _tftDateHandler = new TftDateHandler(_tftService);
 
     _heatingHandler = new HeatingHandler(
         _programme, _device, 
@@ -97,10 +99,13 @@ Button *Container::buttonMinus() { return _buttonMinus; }
 Button *Container::buttonOk() { return _buttonOk; }
 
 NetworkHandler *Container::networkHandler() { return _networkHandler; }
-ThermometerAnimationHandler *Container::thermometerAnimationHandler() { return _thermometerAnimationHandler; }
+TftAnimationHandler *Container::tftAnimationHandler() { return _tftAnimationHandler; }
 HeatingHandler *Container::heatingHandler() { return _heatingHandler; }
 ReceiverStateHandler *Container::receiverStateHandler() { return _receiverStateHandler; }
 ButtonHandler *Container::buttonHandler() { return _buttonHandler; }
+TftDateHandler *Container::tftDateHandler() { return _tftDateHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }
+
+TftService *Container::tftService() { return _tftService; }

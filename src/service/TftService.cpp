@@ -1,9 +1,30 @@
 #include "TftService.h"
 
 TftService::TftService (
-    TftFactory *tftFactory
+    TftFactory *tftFactory,
+    TftDateHandler *tftDateHandler
 ) {
     _tftFactory = tftFactory;
+    _tftDateHandler = tftDateHandler;
+}
+
+void TftService::displayDefault()
+{
+    ThermometerRender thermometerRender;
+    TemperatureRender temperatureRender;
+    TemperatureLabelRender temperatureLabelRender;
+    ReceiverStateRender receiverStateRender;
+    ServerStateRender serverStateRender;
+    WifiStateRender wifiStateRender;
+    OrderRender orderRender;
+    
+    setThermometerRender(thermometerRender);
+    setTemperatureRender(temperatureRender);
+    setTemperatureLabelRender(temperatureLabelRender);
+    setReceiverStateRender(receiverStateRender);
+    setServerStateRender(serverStateRender);
+    setWifiStateRender(wifiStateRender);
+    setOrderRender(orderRender);
 }
 
 void TftService::setThermometerRender(ThermometerRender render) 
@@ -101,6 +122,19 @@ void TftService::setOrderRender(OrderRender render)
     infoText.width = 200;
     infoText.text = render.info;
     _tftFactory->print(85, 125, infoText);
+}
+
+void TftService::message(String message)
+{
+    if(message == "") {
+        _tftDateHandler->enable();
+        _tftDateHandler->clockHandle();
+    } else {
+        _tftDateHandler->disable();
+        MessageRender render;
+        render.message = message; 
+        setMessageRender(render);
+    }
 }
 
 void TftService::setMessageRender(MessageRender render) 
