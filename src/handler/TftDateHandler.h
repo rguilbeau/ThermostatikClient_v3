@@ -13,13 +13,13 @@ class TftDateHandler : public ClockHandlerInterface {
 
 public:
     TftDateHandler(TftService *tftService);
-
     void clockHandle() override;
 
 private:
     TftService *_tftService;
     
     long _lastTimeMin;
+    bool _dateUpdateEnabled;
 };
 
 #endif

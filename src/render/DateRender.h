@@ -4,9 +4,8 @@
 #include <Arduino.h>
 #include "utils/Date.h"
 
-struct MessageRender {
-    String message = "Initialisation";
-    Date date;
+struct DateRender {
+    String date = "Initialisation de la date...";
 };
 
 

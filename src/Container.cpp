@@ -53,7 +53,7 @@ Container::Container()
     _topicService = new TopicService(DEVICE_NAME);
 
     _tftService = new TftService(
-        _tftFactory, _tftDateHandler
+        _tftFactory
     );
 
     _buttonHandler = new ButtonHandler(

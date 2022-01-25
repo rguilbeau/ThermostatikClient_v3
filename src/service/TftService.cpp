@@ -1,11 +1,9 @@
 #include "TftService.h"
 
 TftService::TftService (
-    TftFactory *tftFactory,
-    TftDateHandler *tftDateHandler
+    TftFactory *tftFactory
 ) {
     _tftFactory = tftFactory;
-    _tftDateHandler = tftDateHandler;
 }
 
 void TftService::displayDefault()
@@ -124,31 +122,12 @@ void TftService::setOrderRender(OrderRender render)
     _tftFactory->print(85, 125, infoText);
 }
 
-void TftService::message(String message)
+void TftService::setMessageRender(DateRender render) 
 {
-    if(message == "") {
-        _tftDateHandler->enable();
-        _tftDateHandler->clockHandle();
-    } else {
-        _tftDateHandler->disable();
-        MessageRender render;
-        render.message = message; 
-        setMessageRender(render);
-    }
-}
-
-void TftService::setMessageRender(MessageRender render) 
-{
-    TftText message;
-    message.font = TftFont::SMALL;
-    message.color = TftColor::COLOR_WHITE;
-    message.width = 250;
-    
-    if(render.message != "") {
-        message.text = render.message;
-    } else {
-        message.text = render.date.toLongFormat();
-    }
-
-    _tftFactory->print(20, 220, message);
+    TftText date;
+    date.font = TftFont::SMALL;
+    date.color = TftColor::COLOR_WHITE;
+    date.width = 250;
+    date.text = render.date;
+    _tftFactory->print(20, 220, date);
 }

@@ -37,8 +37,6 @@ void setup()
 
     container = Container::get();
 
-    container->tftService()->message("Connexion au wifi...");
-
     container->programmeFactory()->setOrderHandler(container->heatingHandler());
     container->programmeFactory()->setUntilDateHandler(container->heatingHandler());
     container->clockFactory()->setHandlerSize(2);

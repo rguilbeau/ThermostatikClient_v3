@@ -6,26 +6,15 @@ TftDateHandler::TftDateHandler(TftService *tftService)
     _lastTimeMin = -1;
 }
 
-void TftDateHandler::enable()
-{
-    _dateUpdateEnabled = true;
-    _lastTimeMin = -1;
-}
-
-void TftDateHandler::disable()
-{
-    _dateUpdateEnabled = false;
-}
-
 void TftDateHandler::clockHandle()
 {
-    if(Date::timeInitialized && _dateUpdateEnabled) {
+    if(Date::timeInitialized) {
         Date now;
         if(now.getTimeMin() != _lastTimeMin) {
             _lastTimeMin = now.getTimeMin();
 
-            MessageRender render;
-            render.date = now;
+            DateRender render;
+            render.date = now.toLongFormat();
             _tftService->setMessageRender(render);
         }
     }
