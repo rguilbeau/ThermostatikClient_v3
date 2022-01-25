@@ -82,7 +82,7 @@ Container::Container()
 
     _receiverStateHandler = new ReceiverStateHandler(
         _mqttFactory, _messageParserService, _topicService,
-        _tftService
+        _tftService, _tftAnimationHandler
     );
 }
 

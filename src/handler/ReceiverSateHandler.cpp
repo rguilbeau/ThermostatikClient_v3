@@ -4,12 +4,14 @@ ReceiverStateHandler::ReceiverStateHandler(
     MqttFactory *mqttFactory,
     MessageParserService *messageParserService,
     TopicService *topicService,
-    TftService *tftService
+    TftService *tftService,
+    TftAnimationHandler *tftAnimationHandler
 ) {
     _mqttFactory = mqttFactory;
     _messageParserService = messageParserService;
     _topicService = topicService;
     _tftService = tftService;
+    _tftAnimationHandler = tftAnimationHandler;
 }
 
 void ReceiverStateHandler::receiverStateChanged(bool state)
@@ -26,7 +28,8 @@ void ReceiverStateHandler::receiverStateChanged(bool state)
     ThermometerRender thermometerRender;
     thermometerRender.image = state ? TftImage::IMAGE_THERMOMETER_EMPTY : TftImage::IMAGE_THERMOMETER;
     _tftService->setThermometerRender(thermometerRender);
-
+    _tftAnimationHandler->animateThermometer(state);
+    
     String payload = _messageParserService->heatingToPayload(state);
     _mqttFactory->publish(_topicService->getHeating(), payload.c_str());
 }
