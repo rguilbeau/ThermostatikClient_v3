@@ -1,14 +1,17 @@
 #include "DhtFactory.h"
 
-DhtFactory::DhtFactory(unsigned short pin, unsigned short delay)
+DhtFactory::DhtFactory(DHTesp *dht, unsigned short pin, unsigned short delay)
 {
+    _dht = dht;
     _pin = pin;
     _delay = delay;
     _lastCheck = 0;
-    _isNan = true;
     _dhtHandler = nullptr;
     _lastTemperature = 99;
     _tare = 0;
+
+    pinMode(_pin, INPUT);
+    _dht->setup(_pin, DHTesp::DHT22);
 }
 
 void DhtFactory::setHandler(DhtHandlerInterface *dhtHandler)
@@ -30,6 +33,11 @@ void DhtFactory::loop()
         _lastCheck = millis();
     }
 
+    if(isNan() && _dhtHandler != nullptr) {
+        _dhtHandler->temperatureIsNan();
+        hasMuted = false;
+    }
+    
     if(hasMuted) {
         #ifdef DEBUG
             Serial.print(F("DHT temperature muted : "));
@@ -44,25 +52,33 @@ void DhtFactory::loop()
 
 bool DhtFactory::_readTemperature()
 {
-    
-    // DEBUG
-    float temperature;
+    bool hasMuted = false;
 
-    if(_lastTemperature == 21) {
-        temperature = 20.5;
+    float temperature = fixDecimal(_dht->getTemperature() + _tare);
+    _lastTemperature = _lastTemperature == 99 ? temperature : _lastTemperature; 
+
+    if(_dht->getStatus() == 0 && !isnan(temperature)) {
+        _isNanCnt = 0;
+        
+        float smoothTemperature = smooth(temperature, _lastTemperature, 0.16);
+        hasMuted = smoothTemperature != _lastTemperature;
+        _lastTemperature = smoothTemperature;
     } else {
-        temperature = 21;
+        _isNanCnt += 1;
+        hasMuted = false;
     }
 
-    temperature = temperature + _tare;
-
-    _isNan = false; 
-    // gerer plusieurs echec de lecture avant de passer à isNan=true
-    // _dhtHandler->temperatureIsNan();
-
-    bool hasMuted = _lastTemperature != temperature;
-    _lastTemperature = temperature;
     return hasMuted;
+}
+
+float DhtFactory::fixDecimal(float temperature)
+{
+    return round(temperature * 10) / 10;
+}
+
+float DhtFactory::smooth(float temperature, float lastSmoothTemperature, float factor)
+{
+    return fixDecimal((factor * temperature) + (1 - factor) * lastSmoothTemperature);
 }
 
 float DhtFactory::getTemperature()
@@ -72,5 +88,5 @@ float DhtFactory::getTemperature()
 
 bool DhtFactory::isNan()
 {
-    return _isNan;
+    return _isNanCnt >= 5;
 }

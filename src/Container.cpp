@@ -38,7 +38,7 @@ Container::Container()
     );
 
     _dhtFactory = new DhtFactory(
-        10, 60000
+        new DHTesp(), 10, 60000
     );
 
     _tftFactory = new TftFactory(

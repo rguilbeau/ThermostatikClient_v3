@@ -2,6 +2,7 @@
 #define T_DHT_FACTORY_H
 
 #include <Arduino.h>
+#include <DHTesp.h>
 
 #include "Debug.h"
 
@@ -10,7 +11,7 @@
 class DhtFactory {
 
 public:   
-    DhtFactory(unsigned short pin, unsigned short delay);
+    DhtFactory(DHTesp *dht, unsigned short pin, unsigned short delay);
 
     void setHandler(DhtHandlerInterface *dhtHandler);
 
@@ -24,15 +25,19 @@ public:
 
 private:
 
+    DHTesp *_dht;
+
     unsigned short _pin;
     unsigned short _delay;
     float _lastTemperature;
     unsigned long _lastCheck;
-    bool _isNan;
+    int _isNanCnt;
 
     float _tare;
 
     bool _readTemperature();
+    float fixDecimal(float temperature);
+    float smooth(float temperature, float lastSmoothTemperature, float factor);
 
     DhtHandlerInterface *_dhtHandler;
 };
