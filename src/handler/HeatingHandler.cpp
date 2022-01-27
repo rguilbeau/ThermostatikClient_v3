@@ -152,8 +152,12 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     if(topicStr == String(_topicService->getDevice())) {
         _messageParserService->parseDevice(message, _device);
     } else if(topicStr == String(_topicService->getProgramme())) {
-        _messageParserService->parseProgramme(message, _programme);        
-        _programme->setLastOrder(_programme->findOrderAt(now));
+        _messageParserService->parseProgramme(message, _programme);   
+        
+        Date anticipatingDate(now.getTime() + _device->getHeatingAnticipation());
+        Order *currentOrder = _programme->findOrderAt(now);
+        _programme->setLastOrder(currentOrder);
+        _programme->setAnticipatingOrder(_programme->findAnticipatingOrderAt(currentOrder, anticipatingDate));
     } else {
         #ifdef DEBUG
             Serial.println("Error : Unkonw topic");

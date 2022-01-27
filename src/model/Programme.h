@@ -17,6 +17,8 @@ public:
     Programme();
 
     Order *findOrderAt(Date date);
+    Order *findAnticipatingOrderAt(Order *currentOrder, Date date);
+    
     Order *getLastOrder();
     Order *getAnticipatingOrder();
 

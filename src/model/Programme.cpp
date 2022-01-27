@@ -70,6 +70,16 @@ void Programme::setLabel(String label)
     _label = label;
 }
 
+Order *Programme::findAnticipatingOrderAt(Order *currentOrder, Date date)
+{
+    Order *anticipatingOrder = findOrderAt(date);
+    if(anticipatingOrder != nullptr && anticipatingOrder->isUsed() && currentOrder->getTemperature() < anticipatingOrder->getTemperature()) {
+        return anticipatingOrder;
+    } else {
+        return nullptr;
+    }
+}
+
 Order *Programme::findOrderAt(Date date)
 {
     int dayIndex = date.findDayIndex();

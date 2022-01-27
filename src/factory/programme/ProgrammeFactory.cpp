@@ -38,13 +38,10 @@ void ProgrammeFactory::loop()
         
         if(_device->getHeatingAnticipation() > 0 && _programme->getAnticipatingOrder() != nullptr && lastOrder != nullptr) {
             Date anticipatingDate(now.getTime() + _device->getHeatingAnticipation());
-            Order *anticipatingOrder = _programme->findOrderAt(anticipatingDate);
+            Order *anticipatingOrder = _programme->findAnticipatingOrderAt(lastOrder, anticipatingDate);
 
-            if(anticipatingOrder->getTemperature() > lastOrder->getTemperature()) {
-
-                if(_orderHandlerInterface != nullptr) {
-                    _orderHandlerInterface->orderAnticipating(currentOrder);
-                }
+            if(anticipatingOrder != nullptr && _orderHandlerInterface != nullptr) {
+                _orderHandlerInterface->orderAnticipating(currentOrder);
             }
         }
 
