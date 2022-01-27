@@ -30,18 +30,15 @@ void HeatingHandler::orderUpdated(Order *order)
     _programme->setLastOrder(order);
     _programme->setAnticipatingOrder(nullptr);
 
-    bool hasMuted = _device->isProgrammeMode();
-
     if(order != nullptr && _device->isForcedNextOrder()) {
         _device->setForced(false);
 
         String payload = _messageParserService->deviceToPayload(_device);
         _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
-        hasMuted = true;
     }
 
 
-    if(hasMuted) {
+    if(_device->isProgrammeMode()) {
         Heating *heating = Heating::getMode(_device, _programme);
         bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
