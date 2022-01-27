@@ -19,6 +19,7 @@ public:
     long getForcedUntil();
     unsigned short getBrightnessMax();
     unsigned short getBrightnessMin();
+    unsigned short getHeatingAnticipation();
 
     void setPowerOn(bool powerOn);
     void setForced(bool forced);
@@ -26,6 +27,7 @@ public:
     void setForcedUntil(long forcedUntil);
     void setBrightnessMax(unsigned short brightnessMax);
     void setBrightnessMin(unsigned short brightnessMin);
+    void setHeatingAnticipation(unsigned short heatingAnticipation);
 
 private:
     bool _powerOn;
@@ -34,6 +36,7 @@ private:
     long _forcedUntil;
     unsigned short _brightnessMax;
     unsigned short _brightnessMin;
+    unsigned short _heatingAnticipation;
 };
 
 #endif

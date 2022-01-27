@@ -10,11 +10,6 @@ HeatingForcedUntil::~HeatingForcedUntil()
 
 }
 
-HeatingType HeatingForcedUntil::getType()
-{
-    return HeatingType::HEATING_FORCED_UNTIL;
-}
-
 bool HeatingForcedUntil::regulationStatus(float currentTemperature)
 {
     #ifdef DEBUG

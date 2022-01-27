@@ -5,6 +5,7 @@
 #include "HeatingForcedUntil.h"
 #include "HeatingPowerOff.h"
 #include "HeatingProgramme.h"
+#include "HeatingAnticipating.h"
 
 Heating *Heating::getMode(Device *device, Programme *programme) {
     if(device->isForcedAlways()) {
@@ -13,8 +14,10 @@ Heating *Heating::getMode(Device *device, Programme *programme) {
         return new HeatingForcedNextOrder(device, programme);
     } else if(device->isForcedUntilDate()) {
         return new HeatingForcedUntil(device, programme);
-    } else if(device->isProgrammeMode()) {
+    } else if(device->isProgrammeMode() && programme->getAnticipatingOrder() == nullptr) {
         return new HeatingProgramme(device, programme);
+    } else if(device->isProgrammeMode() && programme->getAnticipatingOrder() != nullptr) {
+        return new HeatingAnticipating(device, programme);
     } else {
         return new HeatingPowerOff(device, programme);
     }

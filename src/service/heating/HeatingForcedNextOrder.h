@@ -9,7 +9,6 @@ public:
     HeatingForcedNextOrder(Device *device, Programme *programme);
     ~HeatingForcedNextOrder();
 
-    HeatingType getType() override;
     bool regulationStatus(float currentTemperature) override;
     bool nextMode() override;
     bool forceTemperature(float increment) override;

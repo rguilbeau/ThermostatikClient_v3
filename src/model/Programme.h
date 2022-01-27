@@ -18,7 +18,10 @@ public:
 
     Order *findOrderAt(Date date);
     Order *getLastOrder();
+    Order *getAnticipatingOrder();
+
     void setLastOrder(Order *order);
+    void setAnticipatingOrder(Order *order);
 
     String getLabel();
     void setLabel(String label);
@@ -30,6 +33,7 @@ private:
 
     String _label;
     Order *_lastOrder;
+    Order *_anticipatingOrder;
     OrderTime *_ordersTimes[PROGRAMME_MAX_TIMES_ORDERS]{};
     Order *_orders[PROGRAMME_MAX_ORDERS]{};
 };

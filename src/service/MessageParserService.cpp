@@ -70,6 +70,7 @@ void MessageParserService::parseDevice(char *payload, Device *device)
     device->setPowerOn(json["powerOn"].as<bool>());
     device->setForcedTemperature(json["forcedTemperature"].as<float>());
     device->setForcedUntil(json["forcedUntil"].as<long>());
+    device->setHeatingAnticipation(json["heatingAnticipation"].as<unsigned short>());
 
     Date::timezone = json["timezoneOffset"].as<int>();
     Date::summerTime = json["summerTime"].as<bool>();

@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 
-#include "HeatingType.h"
 #include "model/Device.h"
 #include "model/Programme.h"
 
@@ -24,7 +23,6 @@ public:
     virtual bool nextMode() = 0;
     virtual bool forceTemperature(float increment) = 0;
 
-    virtual HeatingType getType() = 0;
     virtual OrderRender getRender() = 0;
 
 protected:

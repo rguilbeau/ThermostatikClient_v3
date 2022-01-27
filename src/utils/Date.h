@@ -19,13 +19,14 @@ public:
     String toShortFormat();
     String toLongFormat();
 
+    long getTime();
+
     static int timezone;
     static bool summerTime;
     static bool timeInitialized;
 private:
     long mTime;
     bool mNow;
-    long getTime();
 
     static const String sDaysOfWeek[7];
     static const String sDaysOfWeekShort[7];

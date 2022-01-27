@@ -43,6 +43,8 @@ public:
     );
 
     void orderUpdated(Order *order) override;
+    void orderAnticipating(Order *order) override;
+    
     void untilDateHit() override;
     void temperatureChanged(float temperature) override;
     void temperatureIsNan() override; 

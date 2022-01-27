@@ -10,7 +10,7 @@ class OrderHandlerInterface {
 public:
 
     virtual void orderUpdated(Order *order) = 0;
-
+    virtual void orderAnticipating(Order *order) = 0;
 };
 
 #endif

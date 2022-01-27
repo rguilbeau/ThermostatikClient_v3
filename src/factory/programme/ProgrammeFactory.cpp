@@ -30,9 +30,21 @@ void ProgrammeFactory::loop()
         Order *currentOrder = _programme->findOrderAt(now);
         Order *lastOrder = _programme->getLastOrder();
 
-        if(lastOrder == nullptr || lastOrder->getId() != currentOrder->getId()) {            
+        if(lastOrder == nullptr || lastOrder->getId() != currentOrder->getId()) {  
             if(_orderHandlerInterface != nullptr) {
                 _orderHandlerInterface->orderUpdated(currentOrder);
+            }
+        }
+        
+        if(_device->getHeatingAnticipation() > 0 && _programme->getAnticipatingOrder() != nullptr && lastOrder != nullptr) {
+            Date anticipatingDate(now.getTime() + _device->getHeatingAnticipation());
+            Order *anticipatingOrder = _programme->findOrderAt(anticipatingDate);
+
+            if(anticipatingOrder->getTemperature() > lastOrder->getTemperature()) {
+
+                if(_orderHandlerInterface != nullptr) {
+                    _orderHandlerInterface->orderAnticipating(currentOrder);
+                }
             }
         }
 

@@ -8,6 +8,7 @@ Device::Device()
     _forcedUntil = -1;
     _brightnessMax = 100;
     _brightnessMin = 100;
+    _heatingAnticipation = 0;
 }
 
 bool Device::isPowerOn()
@@ -60,6 +61,11 @@ unsigned short Device::getBrightnessMin()
     return _brightnessMin;
 }
 
+unsigned short Device::getHeatingAnticipation()
+{
+    return _heatingAnticipation;
+}
+
 void Device::setPowerOn(bool powerOn) 
 {
     _powerOn = powerOn;
@@ -88,5 +94,10 @@ void Device::setBrightnessMax(unsigned short brightnessMax)
 void Device::setBrightnessMin(unsigned short brightnessMin) 
 {
     _brightnessMin = brightnessMin;
+}
+
+void Device::setHeatingAnticipation(unsigned short heatingAnticipation)
+{
+    _heatingAnticipation = heatingAnticipation;
 }
 

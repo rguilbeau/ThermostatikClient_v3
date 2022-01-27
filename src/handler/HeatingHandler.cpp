@@ -28,7 +28,8 @@ void HeatingHandler::orderUpdated(Order *order)
     #endif
 
     _programme->setLastOrder(order);
-    
+    _programme->setAnticipatingOrder(nullptr);
+
     bool hasMuted = _device->isProgrammeMode();
 
     if(order != nullptr && _device->isForcedNextOrder()) {
@@ -45,9 +46,27 @@ void HeatingHandler::orderUpdated(Order *order)
         bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
         _receiverFactory->setState(regulationStatus);
-        
-        OrderRender render = heating->getRender();
-        _tftService->setOrderRender(render);
+        _tftService->setOrderRender(heating->getRender());
+
+        delete heating;
+    }
+}
+
+void HeatingHandler::orderAnticipating(Order *order)
+{
+    #ifdef DEBUG
+        Serial.print("Order anticipating, order:");
+        Serial.println(order == nullptr ? "null" : order->getLabel());
+    #endif
+
+    _programme->setAnticipatingOrder(order);
+
+    if(_device->isProgrammeMode()) {
+        Heating *heating = Heating::getMode(_device, _programme);
+        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+
+        _receiverFactory->setState(regulationStatus);
+        _tftService->setOrderRender(heating->getRender());
 
         delete heating;
     }
@@ -71,9 +90,7 @@ void HeatingHandler::untilDateHit()
         bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
         _receiverFactory->setState(regulationStatus);
-
-        OrderRender render = heating->getRender();
-        _tftService->setOrderRender(render);
+        _tftService->setOrderRender(heating->getRender());
 
         delete heating;
     }
@@ -149,10 +166,9 @@ void HeatingHandler::messageReceived(char *topic, char *message)
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+    
     _receiverFactory->setState(regulationStatus);
-
-    OrderRender render = heating->getRender();
-    _tftService->setOrderRender(render);
+    _tftService->setOrderRender(heating->getRender());
 
     delete heating;
 }
@@ -164,10 +180,9 @@ void HeatingHandler::modeUpdated()
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+    
     _receiverFactory->setState(regulationStatus);
-
-    OrderRender render = heating->getRender();
-    _tftService->setOrderRender(render);
+    _tftService->setOrderRender(heating->getRender());
 
     delete heating;
 }

@@ -10,11 +10,6 @@ HeatingForcedNextOrder::~HeatingForcedNextOrder()
 
 }
 
-HeatingType HeatingForcedNextOrder::getType()
-{
-    return HeatingType::HEATING_FORCED_NEXT_ORDER;
-}
-
 bool HeatingForcedNextOrder::regulationStatus(float currentTemperature)
 {
     #ifdef DEBUG

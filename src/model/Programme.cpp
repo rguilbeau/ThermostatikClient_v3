@@ -41,9 +41,23 @@ Order *Programme::getLastOrder()
     }
 }
 
+Order *Programme::getAnticipatingOrder()
+{
+    if(_anticipatingOrder != nullptr && _anticipatingOrder->isUsed()) {
+        return _anticipatingOrder;
+    } else {
+        return nullptr;
+    }
+}
+
 void Programme::setLastOrder(Order *order)
 {
     _lastOrder = order;
+}
+
+void Programme::setAnticipatingOrder(Order *order)
+{
+    _anticipatingOrder = order;
 }
 
 String Programme::getLabel() 
