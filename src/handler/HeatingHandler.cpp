@@ -7,6 +7,7 @@ HeatingHandler::HeatingHandler(
     MqttFactory *mqttFactory,
     ReceiverFactory *receiverFactory,
     MessageParserService *messageParserService,
+    ProgrammeService *programmeService,
     TopicService *topicService,
     TftService *tftService
 ) {
@@ -15,20 +16,20 @@ HeatingHandler::HeatingHandler(
     _dhtFactory = dhtFactory;
     _mqttFactory = mqttFactory;
     _messageParserService = messageParserService;
+    _programmeService = programmeService;
     _topicService = topicService;
     _receiverFactory = receiverFactory;
     _tftService = tftService;
 }
 
-void HeatingHandler::orderUpdated(Order *order)
+void HeatingHandler::orderUpdated()
 {
+    Order *order = _programme->getLastOrder();
+
     #ifdef DEBUG
         Serial.print("Order updated, order:");
         Serial.println(order == nullptr ? "null" : order->getLabel());
     #endif
-
-    _programme->setLastOrder(order);
-    _programme->setAnticipatingOrder(nullptr);
 
     if(order != nullptr && _device->isForcedNextOrder()) {
         _device->setForced(false);
@@ -36,7 +37,6 @@ void HeatingHandler::orderUpdated(Order *order)
         String payload = _messageParserService->deviceToPayload(_device);
         _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
     }
-
 
     if(_device->isProgrammeMode()) {
         Heating *heating = Heating::getMode(_device, _programme);
@@ -49,14 +49,14 @@ void HeatingHandler::orderUpdated(Order *order)
     }
 }
 
-void HeatingHandler::orderAnticipating(Order *order)
+void HeatingHandler::orderAnticipating()
 {
+    Order *order = _programme->getAnticipatingOrder();
+
     #ifdef DEBUG
         Serial.print("Order anticipating, order:");
         Serial.println(order == nullptr ? "null" : order->getLabel());
     #endif
-
-    _programme->setAnticipatingOrder(order);
 
     if(_device->isProgrammeMode()) {
         Heating *heating = Heating::getMode(_device, _programme);
@@ -125,8 +125,7 @@ void HeatingHandler::temperatureIsNan()
     _mqttFactory->publish(_topicService->getTemperatures(), payload.c_str());
 
     Heating *heating = Heating::getMode(_device, _programme);
-    bool regulationStatus = heating->regulationStatus(99); //temperature NaN
-    _receiverFactory->setState(regulationStatus);
+    _receiverFactory->setState(false);
 
     TemperatureRender render;
     render.isNan = true;
@@ -152,18 +151,16 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     if(topicStr == String(_topicService->getDevice())) {
         _messageParserService->parseDevice(message, _device);
     } else if(topicStr == String(_topicService->getProgramme())) {
-        _messageParserService->parseProgramme(message, _programme);   
-        
-        Date anticipatingDate(now.getTime() + _device->getHeatingAnticipation());
-        Order *currentOrder = _programme->findOrderAt(now);
-        _programme->setLastOrder(currentOrder);
-        _programme->setAnticipatingOrder(_programme->findAnticipatingOrderAt(currentOrder, anticipatingDate));
+        _messageParserService->parseProgramme(message, _programme);       
     } else {
         #ifdef DEBUG
             Serial.println("Error : Unkonw topic");
         #endif
         return;
     }
+
+    _programme->setLastOrder(_programmeService->findCurrentOrder());
+    _programme->setAnticipatingOrder(_programmeService->findAnticipatingOrder());
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());

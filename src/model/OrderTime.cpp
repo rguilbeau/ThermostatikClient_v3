@@ -40,3 +40,8 @@ bool OrderTime::isUsed()
 {
     return _used;
 }
+
+unsigned long OrderTime::findTimeSinceStartWeek()
+{
+    return _time + (_dayIndex * 1440);
+}

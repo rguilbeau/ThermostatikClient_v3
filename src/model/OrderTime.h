@@ -17,6 +17,7 @@ public:
     int getTime();
     int getOrderId();
     bool isUsed();
+    unsigned long findTimeSinceStartWeek();
     
 private:
     bool _used;

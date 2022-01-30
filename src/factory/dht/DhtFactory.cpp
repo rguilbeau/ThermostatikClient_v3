@@ -9,6 +9,8 @@ DhtFactory::DhtFactory(DHTesp *dht, unsigned short pin, unsigned short delay)
     _dhtHandler = nullptr;
     _lastTemperature = 99;
     _tare = 0;
+    _nanNotified = false;
+    _isNanCnt = 0;
 
     pinMode(_pin, INPUT);
     _dht->setup(_pin, DHTesp::DHT22);
@@ -33,9 +35,10 @@ void DhtFactory::loop()
         _lastCheck = millis();
     }
 
-    if(isNan() && _dhtHandler != nullptr) {
+    if(isNan() && !_nanNotified && _dhtHandler != nullptr) {
         _dhtHandler->temperatureIsNan();
         hasMuted = false;
+        _nanNotified = true;
     }
     
     if(hasMuted) {
@@ -43,6 +46,7 @@ void DhtFactory::loop()
             Serial.print(F("DHT temperature muted : "));
             Serial.println(String(_lastTemperature));
         #endif
+        _nanNotified = false;
 
         if(_dhtHandler != nullptr) {
             _dhtHandler->temperatureChanged(_lastTemperature);
@@ -54,6 +58,11 @@ bool DhtFactory::_readTemperature()
 {
     bool hasMuted = false;
 
+    _lastTemperature = 20;
+    hasMuted = _isNanCnt == 0;
+    _isNanCnt = 1;
+    return hasMuted;
+    /*
     float temperature = fixDecimal(_dht->getTemperature() + _tare);
     _lastTemperature = _lastTemperature == 99 ? temperature : _lastTemperature; 
 
@@ -68,7 +77,7 @@ bool DhtFactory::_readTemperature()
         hasMuted = false;
     }
 
-    return hasMuted;
+    return hasMuted;*/
 }
 
 float DhtFactory::fixDecimal(float temperature)

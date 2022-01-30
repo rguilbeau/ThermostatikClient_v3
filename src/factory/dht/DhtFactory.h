@@ -32,7 +32,7 @@ private:
     float _lastTemperature;
     unsigned long _lastCheck;
     int _isNanCnt;
-
+    bool _nanNotified;
     float _tare;
 
     bool _readTemperature();

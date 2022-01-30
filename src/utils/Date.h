@@ -11,7 +11,8 @@ public:
 
     int findDayIndex();
     unsigned short findTimeSinceMidnight();
-
+    unsigned long findTimeSinceStartWeek();
+    
     bool before(Date date);
 
     long getTimeMin();
@@ -27,6 +28,8 @@ public:
 private:
     long mTime;
     bool mNow;
+
+    long getLocalTime();
 
     static const String sDaysOfWeek[7];
     static const String sDaysOfWeekShort[7];

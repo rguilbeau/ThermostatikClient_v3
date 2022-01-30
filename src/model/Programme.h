@@ -16,9 +16,6 @@ class Programme {
 public:
     Programme();
 
-    Order *findOrderAt(Date date);
-    Order *findAnticipatingOrderAt(Order *currentOrder, Date date);
-    
     Order *getLastOrder();
     Order *getAnticipatingOrder();
 
@@ -28,8 +25,12 @@ public:
     String getLabel();
     void setLabel(String label);
 
-    Order *getOrder(int index);
     OrderTime *getOrderTime(int index);
+    Order *getOrder(int index);
+    Order *getOrderById(int orderId);
+
+    int getOrderTimeSize();
+    int getOrderSize();
 
 private:
 

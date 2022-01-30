@@ -12,11 +12,17 @@ HeatingAnticipating::~HeatingAnticipating()
 
 bool HeatingAnticipating::regulationStatus(float currentTemperature)
 {
+    Order *order = _programme->getAnticipatingOrder();
     #ifdef DEBUG
-        Serial.print("Regulation : Anticipating");
+        Serial.print("Regulation : anticipating, Order:");
+        Serial.print(order == nullptr ? "null" : order->getLabel());
+
+        if(order == nullptr) {
+            Serial.println();
+        }
     #endif
 
-    return _regulateByTemperature(_programme->getAnticipatingOrder()->getTemperature(), currentTemperature);
+    return _regulateByTemperature(order->getTemperature(), currentTemperature);
 }
 
 bool HeatingAnticipating::nextMode()

@@ -36,9 +36,12 @@ String MessageParserService::temperatureToPayload(float temperature, bool isNan)
     }
 
     String temperatureStr = String(temperature);
+    //String anticipatingStr = anticipating == nullptr ? "null" : String(anticipating->getId());
 
     String payload = "{";
     payload += "\"temperature\":" + temperatureStr;
+    //payload += "\"is_nan\":" + isNan ? "true" : "false";
+    //payload += "\"anticipating_id\":" + anticipatingStr;
     payload += "}";
 
     return payload; 
@@ -70,7 +73,7 @@ void MessageParserService::parseDevice(char *payload, Device *device)
     device->setPowerOn(json["powerOn"].as<bool>());
     device->setForcedTemperature(json["forcedTemperature"].as<float>());
     device->setForcedUntil(json["forcedUntil"].as<long>());
-    device->setHeatingAnticipation(json["heatingAnticipation"].as<unsigned short>());
+    device->setHeatingAnticipation(1); //json["heatingAnticipation"].as<unsigned short>() * 60);
 
     Date::timezone = json["timezoneOffset"].as<int>();
     Date::summerTime = json["summerTime"].as<bool>();

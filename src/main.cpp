@@ -37,13 +37,6 @@ void setup()
 
     container = Container::get();
 
-    container->programmeFactory()->setOrderHandler(container->heatingHandler());
-    container->programmeFactory()->setUntilDateHandler(container->heatingHandler());
-    container->clockFactory()->setHandlerSize(2);
-    container->clockFactory()->setHandler(0, 500, container->tftAnimationHandler());
-    container->clockFactory()->setHandler(0, 1000, container->tftDateHandler());
-    container->clockFactory()->setNtpHandler(container->networkHandler());
-
     container->wifiFactory()->setHandler(container->networkHandler());
     container->receiverFactory()->setStateHandler(container->receiverStateHandler());
     container->mqttFactory()->setConnectionHandler(container->networkHandler());
@@ -58,7 +51,16 @@ void setup()
     container->buttonOk()->setHandler(container->buttonHandler());
     container->buttonHandler()->setHeatingHandler(container->heatingHandler());
 
+    container->orderHandler()->setOrderUpdatedHandler(container->heatingHandler());
+    container->orderHandler()->setUntilDateHandler(container->heatingHandler());
+
     container->tftService()->displayDefault();
+
+    container->clockFactory()->setHandlerSize(3);
+    container->clockFactory()->setHandler(0, 500, container->tftAnimationHandler());
+    container->clockFactory()->setHandler(1, 1000, container->tftDateHandler());
+    container->clockFactory()->setHandler(2, 1000, container->orderHandler());
+    container->clockFactory()->setNtpHandler(container->networkHandler());
 
     container->receiverFactory()->createAccessPoint();
     container->wifiFactory()->connect();
@@ -70,7 +72,6 @@ void loop()
     container->buttonMinus()->loop();
     container->buttonOk()->loop();
     container->dhtFactory()->loop();
-    container->programmeFactory()->loop();
     container->clockFactory()->loop();
     container->receiverFactory()->loop();
 

@@ -22,22 +22,26 @@ long Date::getTime() {
     if(mNow) {
         timestamp = time(nullptr);
     }
-    return timestamp + timezone + (summerTime ? 3600 : 0);
+    return timestamp;
+}
+
+long Date::getLocalTime() {
+    return getTime() + timezone + (summerTime ? 3600 : 0);
 }
 
 long Date::getTimeMin() {
-    return (long) (getTime() / 60);
+    return (long) (getLocalTime() / 60);
 }
 
 bool Date::before(Date date) {
-    long thisTime = getTime();
-    long checkDate = date.getTime();
+    long thisTime = getLocalTime();
+    long checkDate = date.getLocalTime();
 
     return thisTime < checkDate;
 }
 
 String Date::toShortFormat() {
-    time_t s = this->getTime();
+    time_t s = this->getLocalTime();
     struct tm* t = localtime(&s);
 
     String dayOfWeek = Date::sDaysOfWeek[t->tm_wday];
@@ -50,7 +54,7 @@ String Date::toShortFormat() {
 }
 
 String Date::toLongFormat() {
-    time_t s = this->getTime();
+    time_t s = this->getLocalTime();
     struct tm* t = localtime(&s);
 
     String dayOfWeek = Date::sDaysOfWeek[t->tm_wday];
@@ -63,7 +67,7 @@ String Date::toLongFormat() {
 }
 
 int Date::findDayIndex() {
-    time_t s = this->getTime();
+    time_t s = this->getLocalTime();
     struct tm* t = localtime(&s);
 
     int dayIndex = t->tm_wday;
@@ -72,11 +76,17 @@ int Date::findDayIndex() {
     if(dayIndex == -1) {
         dayIndex = 6;
     }
+
+    // 0-> monday / 6-> sunday
     return dayIndex;
 }
 
 unsigned short Date::findTimeSinceMidnight() {
-    time_t s = this->getTime();
+    time_t s = this->getLocalTime();
     struct tm* t = localtime(&s);
     return (t->tm_hour * 60) + t->tm_min;
+}
+
+unsigned long Date::findTimeSinceStartWeek() {
+    return findTimeSinceMidnight() + (findDayIndex() * 1440);
 }

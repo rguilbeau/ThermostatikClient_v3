@@ -12,7 +12,6 @@
 #include "factory/mqtt/MqttFactory.h"
 #include "factory/dht/DhtFactory.h"
 #include "factory/clock/ClockFactory.h"
-#include "factory/programme/ProgrammeFactory.h"
 #include "factory/button/Button.h"
 #include "factory/tft/TftFactory.h"
 
@@ -22,10 +21,12 @@
 #include "handler/HeatingHandler.h"
 #include "handler/ReceiverStateHandler.h"
 #include "handler/ButtonHandler.h"
+#include "handler/OrderHandler.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
 #include "service/TftService.h"
+#include "service/ProgrammeService.h"
 
 #include "model/Device.h"
 #include "model/Programme.h"
@@ -36,20 +37,20 @@ public:
 
     static Container *get();
 
-    ProgrammeFactory *programmeFactory();
     ClockFactory *clockFactory();
     WifiFactory *wifiFactory();
     ReceiverFactory *receiverFactory();
     MqttFactory *mqttFactory();
     DhtFactory *dhtFactory();
     TftFactory *tftFactory();
-
+    
     NetworkHandler *networkHandler();
     HeatingHandler *heatingHandler();
     ReceiverStateHandler *receiverStateHandler();
     ButtonHandler *buttonHandler();
     TftAnimationHandler *tftAnimationHandler();
     TftDateHandler *tftDateHandler();
+    OrderHandler *orderHandler();
 
     Button *buttonMore();
     Button *buttonMinus();
@@ -65,7 +66,6 @@ private:
 
     static Container *instance;
 
-    ProgrammeFactory *_programmeFactory;
     ClockFactory *_clockFactory;
     WifiFactory *_wifiFactory;
     ReceiverFactory *_receiverFactory;
@@ -79,11 +79,13 @@ private:
     ButtonHandler *_buttonHandler;
     TftAnimationHandler *_tftAnimationHandler;
     TftDateHandler *_tftDateHandler;
+    OrderHandler *_orderHandler;
 
     Button *_buttonMore;
     Button *_buttonMinus;
     Button *_buttonOk;
 
+    ProgrammeService *_programmeService;
     MessageParserService *_messageParserService;
     TopicService *_topicService;
     TftService *_tftService;

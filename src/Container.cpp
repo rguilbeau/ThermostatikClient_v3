@@ -15,10 +15,6 @@ Container::Container()
     _device = new Device();
     _programme = new Programme();
 
-    _programmeFactory = new ProgrammeFactory(
-        _programme, _device 
-    );
-
     _clockFactory = new ClockFactory();
 
     _wifiFactory = new WifiFactory(
@@ -64,6 +60,10 @@ Container::Container()
         _dhtFactory
     );
 
+    _programmeService = new ProgrammeService(
+        _device, _programme, _dhtFactory
+    );
+
     _networkHandler = new NetworkHandler(
         _clockFactory,_wifiFactory, _receiverFactory, _mqttFactory, 
         _dhtFactory, _topicService, _messageParserService, _tftService
@@ -76,7 +76,7 @@ Container::Container()
     _heatingHandler = new HeatingHandler(
         _programme, _device, 
         _dhtFactory, _mqttFactory, _receiverFactory, 
-        _messageParserService, 
+        _messageParserService, _programmeService,
         _topicService, _tftService
     );
 
@@ -84,9 +84,15 @@ Container::Container()
         _mqttFactory, _messageParserService, _topicService,
         _tftService, _tftAnimationHandler
     );
+
+    _orderHandler = new OrderHandler(
+        _device, _programme, 
+        _dhtFactory, 
+        _programmeService
+    );
 }
 
-ProgrammeFactory *Container::programmeFactory() { return _programmeFactory; }
+
 ClockFactory *Container::clockFactory() { return _clockFactory; }
 WifiFactory *Container::wifiFactory() { return _wifiFactory; }
 ReceiverFactory *Container::receiverFactory() { return _receiverFactory; }
@@ -104,6 +110,7 @@ HeatingHandler *Container::heatingHandler() { return _heatingHandler; }
 ReceiverStateHandler *Container::receiverStateHandler() { return _receiverStateHandler; }
 ButtonHandler *Container::buttonHandler() { return _buttonHandler; }
 TftDateHandler *Container::tftDateHandler() { return _tftDateHandler; }
+OrderHandler *Container::orderHandler() { return _orderHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }

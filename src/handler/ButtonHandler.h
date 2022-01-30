@@ -9,7 +9,7 @@
 #include "model/Device.h"
 #include "model/Programme.h"
 
-#include "factory/programme/ModeHandlerInterface.h"
+#include "handler/interface/ModeHandlerInterface.h"
 
 #include "factory/button/ButtonHandlerInterface.h"
 
