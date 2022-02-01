@@ -36,12 +36,10 @@ String MessageParserService::temperatureToPayload(float temperature, bool isNan)
     }
 
     String temperatureStr = String(temperature);
-    //String anticipatingStr = anticipating == nullptr ? "null" : String(anticipating->getId());
 
     String payload = "{";
     payload += "\"temperature\":" + temperatureStr;
     //payload += "\"is_nan\":" + isNan ? "true" : "false";
-    //payload += "\"anticipating_id\":" + anticipatingStr;
     payload += "}";
 
     return payload; 
