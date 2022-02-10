@@ -56,6 +56,23 @@ String MessageParserService::heatingToPayload(bool heating)
     return payload; 
 }
 
+String MessageParserService::anticipatingToPayload(Order *order)
+{
+    String anticipatingLabel = "null";
+    String anticipatingTemperature = "0";
+    if(order != nullptr) {
+        anticipatingLabel = "\"" + order->getLabel() + "\"";
+        anticipatingTemperature = String(order->getTemperature());
+    }
+
+    String payload = "{";
+    payload += "\"anticipatingLabel\":" + anticipatingLabel + ",";
+    payload += "\"anticipatingTemperature\":" + anticipatingTemperature;
+    payload += "}";
+
+    return payload;
+}
+
 void MessageParserService::parseDevice(char *payload, Device *device)
 {
     #ifdef DEBUG
@@ -71,7 +88,7 @@ void MessageParserService::parseDevice(char *payload, Device *device)
     device->setPowerOn(json["powerOn"].as<bool>());
     device->setForcedTemperature(json["forcedTemperature"].as<float>());
     device->setForcedUntil(json["forcedUntil"].as<long>());
-    device->setHeatingAnticipation(1); //json["heatingAnticipation"].as<unsigned short>() * 60);
+    device->setHeatingAnticipation(json["heatingAnticipation"].as<float>() / 60);
 
     Date::timezone = json["timezoneOffset"].as<int>();
     Date::summerTime = json["summerTime"].as<bool>();

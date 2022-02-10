@@ -31,6 +31,9 @@ void HeatingHandler::orderUpdated()
         Serial.println(order == nullptr ? "null" : order->getLabel());
     #endif
 
+    String payload = _messageParserService->anticipatingToPayload(nullptr);
+    _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
+
     if(order != nullptr && _device->isForcedNextOrder()) {
         _device->setForced(false);
 
@@ -59,6 +62,9 @@ void HeatingHandler::orderAnticipating()
     #endif
 
     if(_device->isProgrammeMode()) {
+        String payload = _messageParserService->anticipatingToPayload(order);
+        _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
+        
         Heating *heating = Heating::getMode(_device, _programme);
         bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
 
@@ -82,6 +88,14 @@ void HeatingHandler::untilDateHit()
 
         String payload = _messageParserService->deviceToPayload(_device);
         _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
+
+        Order *publishAnticipatingOrder = nullptr;
+        if(_device->isProgrammeMode()) {
+            publishAnticipatingOrder = _programme->getAnticipatingOrder();
+        }
+
+        payload = _messageParserService->anticipatingToPayload(publishAnticipatingOrder);
+        _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
 
         Heating *heating = Heating::getMode(_device, _programme);
         bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
@@ -162,6 +176,14 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     _programme->setLastOrder(_programmeService->findCurrentOrder());
     _programme->setAnticipatingOrder(_programmeService->findAnticipatingOrder());
 
+    Order *publishAnticipatingOrder = nullptr;
+    if(_device->isProgrammeMode()) {
+        publishAnticipatingOrder = _programme->getAnticipatingOrder();
+    }
+
+    String payload = _messageParserService->anticipatingToPayload(publishAnticipatingOrder);
+    _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
+
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
     
@@ -175,6 +197,14 @@ void HeatingHandler::modeUpdated()
 {
     String payload = _messageParserService->deviceToPayload(_device);
     _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
+
+    Order *publishAnticipatingOrder = nullptr;
+    if(_device->isProgrammeMode()) {
+        publishAnticipatingOrder = _programme->getAnticipatingOrder();
+    }
+
+    payload = _messageParserService->anticipatingToPayload(publishAnticipatingOrder);
+    _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
 
     Heating *heating = Heating::getMode(_device, _programme);
     bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());

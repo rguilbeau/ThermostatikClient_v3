@@ -34,6 +34,7 @@ public:
     String deviceToPayload(Device *device);
     String temperatureToPayload(float temperature, bool isNan);
     String heatingToPayload(bool heating);
+    String anticipatingToPayload(Order *order);
     
 private:
     DhtFactory *_dhtFactory;

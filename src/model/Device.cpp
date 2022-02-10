@@ -61,7 +61,7 @@ unsigned short Device::getBrightnessMin()
     return _brightnessMin;
 }
 
-unsigned short Device::getHeatingAnticipation()
+float Device::getHeatingAnticipation()
 {
     return _heatingAnticipation;
 }
@@ -96,7 +96,7 @@ void Device::setBrightnessMin(unsigned short brightnessMin)
     _brightnessMin = brightnessMin;
 }
 
-void Device::setHeatingAnticipation(unsigned short heatingAnticipation)
+void Device::setHeatingAnticipation(float heatingAnticipation)
 {
     _heatingAnticipation = heatingAnticipation;
 }

@@ -34,3 +34,8 @@ const char *TopicService::getAsker()
 {
     return MQTT_ASKER_CHANNEL;
 }
+
+const char *TopicService::getAnticipating()
+{
+    return MQTT_ANTICIPATING_CHANNEL;
+}

@@ -17,6 +17,7 @@ public:
     const char *getHeating();
     const char *getTemperatureControl();
     const char *getAsker();
+    const char *getAnticipating();
 };
 
 #endif

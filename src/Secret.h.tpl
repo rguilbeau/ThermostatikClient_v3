@@ -24,3 +24,4 @@
 #define MQTT_PROGRAMME_CHANNEL              "programme_channel"
 #define MQTT_DEVICE_CHANNEL                 "device_channel"
 #define MQTT_TEMPERATURE_CONTROL_CHANNEL    "temperature_control_channel"
+#define MQTT_ANTICIPATING_CHANNEL           "anticipating_channel"
