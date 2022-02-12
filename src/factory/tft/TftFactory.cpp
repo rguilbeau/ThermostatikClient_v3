@@ -1,7 +1,7 @@
 #include "TftFactory.h"
 
-const String TftFactory::FONT_NOTO_15_PATH = "/font/NotoSansBold15.vlw";
-const String TftFactory::FONT_NOTO_36_PATH = "/font/NotoSansBold36.vlw";
+const String TftFactory::FONT_NOTO_15 = "NotoSansBold15";
+const String TftFactory::FONT_NOTO_36 = "NotoSansBold36";
 
 String TftFactory::formatTemperature(float temperature)
 {
@@ -17,9 +17,9 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
 
     #ifdef DEBUG
         bool font_missing = false;
-        if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH))
+        if (!SPIFFS.exists("/" + TftFactory::FONT_NOTO_15 + ".vlw"))
             font_missing = true;
-        if (!SPIFFS.exists(TftFactory::FONT_NOTO_15_PATH))
+        if (!SPIFFS.exists("/" + TftFactory::FONT_NOTO_36 + ".vlw"))
             font_missing = true;
 
         if (font_missing) {
@@ -61,40 +61,40 @@ void TftFactory::draw(int x, int y, TftImage image)
 {
     switch(image) {
         case TftImage::IMAGE_THERMOMETER:
-            drawFromSpiff(x, y, "/img/th.bmp");
+            drawFromSpiff(x, y, "/th.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_FULL:
-            drawFromSpiff(x, y, "/img/th4.bmp");
+            drawFromSpiff(x, y, "/th4.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_THREE_QUARTER:
-            drawFromSpiff(x, y, "/img/th3.bmp");
+            drawFromSpiff(x, y, "/th3.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_HALF:
-            drawFromSpiff(x, y, "/img/th2.bmp");
+            drawFromSpiff(x, y, "/th2.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_QUARTER:
-            drawFromSpiff(x, y, "/img/th1.bmp");
+            drawFromSpiff(x, y, "/th1.bmp");
             break;
         case TftImage::IMAGE_THERMOMETER_EMPTY:
-            drawFromSpiff(x, y, "/img/th0.bmp");
+            drawFromSpiff(x, y, "/th0.bmp");
             break;
         case TftImage::IMAGE_WIFI_OFF:
-            drawFromSpiff(x, y, "/img/wifi.bmp");
+            drawFromSpiff(x, y, "/wifi.bmp");
             break;
         case TftImage::IMAGE_SERVER_OFF:
-            drawFromSpiff(x, y, "/img/server.bmp");
+            drawFromSpiff(x, y, "/server.bmp");
             break;
         case TftImage::IMAGE_RECEIVER_OFF:
-            drawFromSpiff(x, y, "/img/tower.bmp");
+            drawFromSpiff(x, y, "/tower.bmp");
             break;
         case TftImage::IMAGE_ORDER_PROGRAMME:
-            drawFromSpiff(x, y, "/img/arrow.bmp");
+            drawFromSpiff(x, y, "/arrow.bmp");
             break;
         case TftImage::IMAGE_ORDER_FORCED:
-            drawFromSpiff(x, y, "/img/hand.bmp");
+            drawFromSpiff(x, y, "/hand.bmp");
             break;
         case TftImage::IMAGE_ORDER_POWER_OFF:
-            drawFromSpiff(x, y, "/img/off.bmp");
+            drawFromSpiff(x, y, "/off.bmp");
             break;
     }
 }
@@ -118,10 +118,10 @@ void TftFactory::loadFont(TftFont font)
 {
     switch (font) {
         case TftFont::SMALL:
-            _driver->loadFont(TftFactory::FONT_NOTO_15_PATH);
+            _driver->loadFont(TftFactory::FONT_NOTO_15);
             break;
         case TftFont::LARGE:
-            _driver->loadFont(TftFactory::FONT_NOTO_36_PATH);
+            _driver->loadFont(TftFactory::FONT_NOTO_36);
             break;
         default:
             break;
@@ -202,7 +202,7 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
             _driver->setSwapBytes(oldSwapBytes);
 
             #ifdef DEBUG
-                Serial.print("BMP image " + filename + "loaded in ");
+                Serial.print("BMP image " + filename + " loaded in ");
                 Serial.print(millis() - startTime);
                 Serial.println(" ms");
             #endif

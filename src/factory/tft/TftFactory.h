@@ -26,8 +26,8 @@ public:
     static String formatTemperature(float temperature);
 
 private:
-    static const String FONT_NOTO_15_PATH;
-    static const String FONT_NOTO_36_PATH;
+    static const String FONT_NOTO_15;
+    static const String FONT_NOTO_36;
     
     TFT_eSPI *_driver;
     uint8_t _pinBrightness;
