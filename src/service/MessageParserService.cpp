@@ -30,16 +30,11 @@ String MessageParserService::deviceToPayload(Device *device)
 
 String MessageParserService::temperatureToPayload(float temperature, bool isNan)
 {
-    if(isNan) {
-        // pas de gestion is nan côté server...
-        temperature = 99;
-    }
-
     String temperatureStr = String(temperature);
-
+    String isNanStr = isNan ? "true" : "false";
     String payload = "{";
-    payload += "\"temperature\":" + temperatureStr;
-    //payload += "\"is_nan\":" + isNan ? "true" : "false";
+    payload += "\"temperature\":" + temperatureStr + ",";
+    payload += "\"nan\":" + isNanStr;
     payload += "}";
 
     return payload; 
