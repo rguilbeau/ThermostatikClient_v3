@@ -11,6 +11,7 @@ DhtFactory::DhtFactory(DHTesp *dht, unsigned short pin, unsigned short delay)
     _tare = 0;
     _nanNotified = false;
     _isNanCnt = 0;
+    _isNan = true;
 
     pinMode(_pin, INPUT);
     _dht->setup(_pin, DHTesp::DHT22);
@@ -61,6 +62,7 @@ bool DhtFactory::_readTemperature()
     _lastTemperature = 20;
     hasMuted = _isNanCnt == 0;
     _isNanCnt = 1;
+    _isNan = _isNanCnt >= 5;
     return hasMuted;
     /*
     float temperature = fixDecimal(_dht->getTemperature() + _tare);
@@ -97,5 +99,5 @@ float DhtFactory::getTemperature()
 
 bool DhtFactory::isNan()
 {
-    return _isNanCnt >= 5;
+    return _isNan;
 }
