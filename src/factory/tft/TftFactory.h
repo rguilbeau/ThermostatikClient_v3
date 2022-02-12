@@ -32,6 +32,9 @@ private:
     TFT_eSPI *_driver;
     uint8_t _pinBrightness;
 
+    TftFont _tftFontLoaded = TftFont::SMALL;
+    bool _fontLoaded;
+    
     void loadFont(TftFont font);
     void drawFromSpiff(int x, int y, String image);
     int getColor(TftColor color);

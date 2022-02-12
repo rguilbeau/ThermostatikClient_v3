@@ -26,6 +26,8 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
             Serial.println(F("ERROR : Font missing in SPIFFS, did you upload it?"));
         }
     #endif
+
+    _fontLoaded = false;
 }
 
 void TftFactory::setBrightness(int percent) {
@@ -116,15 +118,30 @@ int TftFactory::getColor(TftColor color)
 
 void TftFactory::loadFont(TftFont font)
 {
-    switch (font) {
-        case TftFont::SMALL:
-            _driver->loadFont(TftFactory::FONT_NOTO_15);
-            break;
-        case TftFont::LARGE:
-            _driver->loadFont(TftFactory::FONT_NOTO_36);
-            break;
-        default:
-            break;
+    /**
+     * --- HACK ---
+     * 
+     * Le yield() doit être commenté dans la librairie TFT_eSPI
+     * Dans la classe Smooth_font.cpp TFT_eSPI::loadMetrics(void)
+     * 
+     * Il est impossible de faire un yield() dans un callback asynchrone...
+     * @todo Trouver une autre solution pour gérer le chargement des fonts dans un callback asynchrone
+     * 
+     */
+    if(!_fontLoaded || _tftFontLoaded != font) {
+        switch (font) {
+            case TftFont::SMALL:
+                _driver->loadFont(TftFactory::FONT_NOTO_15, false);
+                _tftFontLoaded = TftFont::SMALL;
+                break;
+            case TftFont::LARGE:
+                _driver->loadFont(TftFactory::FONT_NOTO_36, false);
+                _tftFontLoaded = TftFont::LARGE;
+                break;
+            default:
+                break;
+        }
+        _fontLoaded = true;
     }
 }
 
