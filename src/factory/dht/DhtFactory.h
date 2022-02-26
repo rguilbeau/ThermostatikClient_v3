@@ -29,6 +29,7 @@ private:
 
     unsigned short _pin;
     unsigned short _delay;
+    unsigned short _curDelay;
     float _lastTemperature;
     unsigned long _lastCheck;
     int _isNanCnt;

@@ -5,6 +5,7 @@ DhtFactory::DhtFactory(DHTesp *dht, unsigned short pin, unsigned short delay)
     _dht = dht;
     _pin = pin;
     _delay = delay;
+    _curDelay = delay;
     _lastCheck = 0;
     _dhtHandler = nullptr;
     _lastTemperature = 99;
@@ -31,15 +32,21 @@ void DhtFactory::loop()
 {
     bool hasMuted = false;
 
-    if(_lastCheck + _delay < millis()) {
+    if(_lastCheck + _curDelay < millis()) {
         hasMuted = _readTemperature();
         _lastCheck = millis();
     }
 
-    if(isNan() && !_nanNotified && _dhtHandler != nullptr) {
-        _dhtHandler->temperatureIsNan();
+    if(isNan()) {
         hasMuted = false;
-        _nanNotified = true;
+        _curDelay = _dht->getMinimumSamplingPeriod();
+
+        if(!_nanNotified && _dhtHandler != nullptr) {
+            _dhtHandler->temperatureIsNan();
+            _nanNotified = true;
+        }
+    } else {
+        _curDelay = _delay;
     }
     
     if(hasMuted) {
