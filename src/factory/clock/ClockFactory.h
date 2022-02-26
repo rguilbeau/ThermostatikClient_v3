@@ -2,6 +2,7 @@
 #define T_CLOCK_FACTORY_H
 
 #include <Arduino.h>
+#include "Debug.h"
 
 #include "ClockHandlerInterface.h"
 #include "NtpHandlerInterface.h"

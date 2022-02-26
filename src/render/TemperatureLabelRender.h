@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 struct TemperatureLabelRender {
-    String text = "Eteint";
+    String text = "Consigne atteinte";
 };
 
 

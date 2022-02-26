@@ -13,6 +13,8 @@ String TftFactory::formatTemperature(float temperature)
 TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
 {
     _driver = driver;
+    _driver->init();
+
     _pinBrightness = pinBrightness;
 
     #ifdef DEBUG
@@ -38,16 +40,21 @@ void TftFactory::setBrightness(int percent) {
     analogWrite(_pinBrightness, analogValue);
 }
 
+void TftFactory::clear() {
+    _driver->fillScreen(getColor(TftColor::BG_DARK));
+    _driver->setRotation(3);
+}
+
 void TftFactory::print(int x, int y, TftText text)
 {
     int height = getHeight(text.font);
     int color = getColor(text.color);
-    int backgroundColor = getColor(text.background);
+    uint32 backgroundColor = getColor(text.background);
 
     loadFont(text.font);
     _driver->fillRect(
         x, y, text.width, 
-        height, color
+        height, backgroundColor
     );
     _driver->setCursor(x, y);
     _driver->setTextColor(color, backgroundColor);
@@ -98,19 +105,21 @@ void TftFactory::draw(int x, int y, TftImage image)
         case TftImage::IMAGE_ORDER_POWER_OFF:
             drawFromSpiff(x, y, "/off.bmp");
             break;
+        case TftImage::IMAGE_ORDER_ANTICIPATING:
+            drawFromSpiff(x, y, "/clock.bmp");
     }
 }
 
-int TftFactory::getColor(TftColor color)
+uint32 TftFactory::getColor(TftColor color)
 {
     switch (color)
     {
     case TftColor::COLOR_GRAY :
-        return 0;
+        return TFT_DARKGREY;
     case TftColor::COLOR_WHITE :
-        return 1;
+        return TFT_WHITE;
     case TftColor::BG_DARK :
-        return 2;    
+        return TFT_BLACK;    
     default:
         return 0;
     }
@@ -217,12 +226,6 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
             }
 
             _driver->setSwapBytes(oldSwapBytes);
-
-            #ifdef DEBUG
-                Serial.print("BMP image " + filename + " loaded in ");
-                Serial.print(millis() - startTime);
-                Serial.println(" ms");
-            #endif
         } else {
             #ifdef DEBUG
                 Serial.println("BMP format not recognized for file : " + filename);

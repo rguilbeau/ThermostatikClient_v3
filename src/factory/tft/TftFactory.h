@@ -18,6 +18,7 @@ public:
     );
 
     void setBrightness(int percent);
+    void clear();
     void print(int x, int y, TftText text);
     void draw(int x, int y, TftImage image);
     void fillRect(int x, int y, int width, int height, TftColor color);
@@ -37,7 +38,7 @@ private:
     
     void loadFont(TftFont font);
     void drawFromSpiff(int x, int y, String image);
-    int getColor(TftColor color);
+    uint32 getColor(TftColor color);
     int getHeight(TftFont font);
     uint16_t read16(File &f);
     uint32_t read32(File &f);

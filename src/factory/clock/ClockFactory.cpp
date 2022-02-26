@@ -8,7 +8,10 @@ ClockFactory::ClockFactory()
 
 void ClockFactory::initNtp()
 {
-    Serial.println("NTP initialization");
+    #ifdef DEBUG
+        Serial.println("NTP initialization");
+    #endif
+    
     configTime(0, 0, "pool.ntp.org", "time.nist.gov"); // UTC
 }
 
@@ -30,6 +33,7 @@ void ClockFactory::setHandler(int index, int delay, ClockHandlerInterface *handl
     if(index < _handlerSize) {
         _handlers[index] = handler;
         _handlersDelays[index] = delay;
+        _lastCheck[index] = 0;
     }
 }
 

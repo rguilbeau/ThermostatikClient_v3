@@ -7,7 +7,7 @@
 struct OrderRender {
     TftImage icon = TftImage::IMAGE_ORDER_POWER_OFF;
     String temperature = "Eteint";
-    String label = "";
+    String label = "Aucune chauffe";
     String info = "";
 };
 

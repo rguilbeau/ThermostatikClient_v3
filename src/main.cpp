@@ -36,25 +36,25 @@ void setup()
     WiFi.mode(WIFI_AP_STA);
 
     container = Container::get();
-
-    container->wifiFactory()->setHandler(container->networkHandler());
-    container->receiverFactory()->setStateHandler(container->receiverStateHandler());
-    container->mqttFactory()->setConnectionHandler(container->networkHandler());
-    container->mqttFactory()->setMessageHandler(container->heatingHandler());
-    container->dhtFactory()->setHandler(container->heatingHandler());
+    container->tftFactory()->clear();
+    container->tftService()->displayDefault();
 
     container->wifiFactory()->setHandler(container->networkHandler());
     container->receiverFactory()->setConnectionHandler(container->networkHandler());
+    container->mqttFactory()->setConnectionHandler(container->networkHandler());
 
-    container->buttonMore()->setHandler(container->buttonHandler());
-    container->buttonMinus()->setHandler(container->buttonHandler());
-    container->buttonOk()->setHandler(container->buttonHandler());
-    container->buttonHandler()->setHeatingHandler(container->heatingHandler());
+    container->receiverFactory()->setStateHandler(container->receiverStateHandler());
+    container->mqttFactory()->setMessageHandler(container->heatingHandler());
+    container->dhtFactory()->setHandler(container->heatingHandler());
+
+    
+    //container->buttonMore()->setHandler(container->buttonHandler());
+    //container->buttonMinus()->setHandler(container->buttonHandler());
+    //container->buttonOk()->setHandler(container->buttonHandler());
+    //container->buttonHandler()->setHeatingHandler(container->heatingHandler());
 
     container->orderHandler()->setOrderUpdatedHandler(container->heatingHandler());
     container->orderHandler()->setUntilDateHandler(container->heatingHandler());
-
-    container->tftService()->displayDefault();
 
     container->clockFactory()->setHandlerSize(3);
     container->clockFactory()->setHandler(0, 500, container->tftAnimationHandler());
@@ -65,6 +65,7 @@ void setup()
     container->receiverFactory()->createAccessPoint();
     container->wifiFactory()->connect();
 }
+
 
 void loop()
 {
