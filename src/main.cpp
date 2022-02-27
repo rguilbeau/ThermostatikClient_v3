@@ -72,7 +72,7 @@ void setup()
 }
 
 void loop()
-{    
+{  
     container->buttonMore()->loop();
     container->buttonMinus()->loop();
     container->buttonOk()->loop();

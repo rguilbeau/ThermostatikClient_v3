@@ -28,7 +28,8 @@ public:
 protected:
     Device *_device;
     Programme *_programme;
-    
+    OrderRender _render;
+
     Heating(Device *device, Programme *programme);
     bool _regulateByTemperature(float requestTemperature, float currentTemperature);
 

@@ -107,23 +107,25 @@ void TftService::setOrderRender(OrderRender render)
     TftText temperatureText;
     temperatureText.font = TftFont::LARGE;
     temperatureText.color = TftColor::COLOR_WHITE;
-    temperatureText.width = 200;
+    temperatureText.width = 150;
     temperatureText.text = render.temperature;
     _tftFactory->print(90, 125, temperatureText);
 
-    TftText labelText;
-    labelText.font = TftFont::SMALL;
-    labelText.color = TftColor::COLOR_GRAY;
-    labelText.width = 200;
-    labelText.text = render.label;
-    _tftFactory->print(90, 165, labelText);
+    if(!render.onlyTemperature) {
+        TftText labelText;
+        labelText.font = TftFont::SMALL;
+        labelText.color = TftColor::COLOR_GRAY;
+        labelText.width = 200;
+        labelText.text = render.label;
+        _tftFactory->print(90, 165, labelText);
 
-    TftText infoText;
-    infoText.font = TftFont::SMALL;
-    infoText.color = TftColor::COLOR_GRAY;
-    infoText.width = 200;
-    infoText.text = render.info;
-    _tftFactory->print(90, 185, infoText);
+        TftText infoText;
+        infoText.font = TftFont::SMALL;
+        infoText.color = TftColor::COLOR_GRAY;
+        infoText.width = 200;
+        infoText.text = render.info;
+        _tftFactory->print(90, 185, infoText);
+    }
 }
 
 void TftService::setMessageRender(DateRender render) 

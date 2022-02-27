@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#include <Ticker.h>
+
 #include "handler/interface/UntilDateHandlerInterface.h"
 #include "handler/interface/OrderUpdatedHandlerInterface.h"
 #include "factory/dht/DhtFactory.h"
@@ -51,7 +53,7 @@ public:
     void temperatureChanged(float temperature) override;
     void temperatureIsNan() override; 
     void messageReceived(char *topic, char *message) override;
-    void modeUpdated() override;
+    void modeUpdated(Heating *heating) override;
 
 private:
     Programme *_programme;
@@ -65,6 +67,9 @@ private:
     ProgrammeService *_programmeService;
     TopicService *_topicService;
     TftService *_tftService;
+
+    Ticker differedModeUpdatedTicker;
+    void differedModeUpdated();
 };
 
 #endif

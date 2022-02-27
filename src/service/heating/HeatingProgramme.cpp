@@ -59,15 +59,14 @@ OrderRender HeatingProgramme::getRender()
 {
     Order *order = _programme->getLastOrder();
 
-    OrderRender render;
-    render.icon = TftImage::IMAGE_ORDER_PROGRAMME;
+    _render.icon = TftImage::IMAGE_ORDER_PROGRAMME;
 
     if(order != nullptr) {
-        render.temperature = TftFactory::formatTemperature(order->getTemperature());
-        render.label = order->getLabel();
-        render.info = _programme->getLabel();
+        _render.temperature = TftFactory::formatTemperature(order->getTemperature());
+        _render.label = order->getLabel();
+        _render.info = _programme->getLabel();
     } else {
-        render.temperature = "N/A";
+        _render.temperature = "N/A";
     }
-    return render;
+    return _render;
 }

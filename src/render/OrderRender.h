@@ -9,6 +9,7 @@ struct OrderRender {
     String temperature = "Eteint";
     String label = "Aucune chauffe";
     String info = "";
+    bool onlyTemperature = false;
 };
 
 #endif

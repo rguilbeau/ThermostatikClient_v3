@@ -37,9 +37,7 @@ void ButtonHandler::pushed(ButtonType buttontype, String name)
             break;
     }
 
-    delete heating;
-
     if(hasMuted && _modeHandler != nullptr) {
-        _modeHandler->modeUpdated();
+        _modeHandler->modeUpdated(heating);
     }
 }

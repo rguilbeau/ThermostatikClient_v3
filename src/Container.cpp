@@ -42,9 +42,9 @@ Container::Container()
         D1
     );
 
-    _buttonMore = new Button(D3, ButtonType::BUTTON_MORE, 50);
-    _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 50);
-    _buttonOk = new Button(D2, ButtonType::BUTTON_OK, 50);
+    _buttonMore = new Button(D3, ButtonType::BUTTON_MORE, 10);
+    _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 10);
+    _buttonOk = new Button(D2, ButtonType::BUTTON_OK, 10);
 
     _topicService = new TopicService(DEVICE_NAME);
 

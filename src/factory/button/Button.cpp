@@ -6,6 +6,7 @@ Button::Button(uint8_t pin, ButtonType buttonType, int debounce)
     _buttonType = buttonType;
     _pushed = false;
     _debounce = debounce;
+    _lastCheck = 0;
 }
 
 void Button::setHandler(ButtonHandlerInterface *handler)
