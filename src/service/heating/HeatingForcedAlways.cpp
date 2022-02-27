@@ -28,15 +28,17 @@ bool HeatingForcedAlways::nextMode()
 bool HeatingForcedAlways::forceTemperature(float increment)
 {
     _device->setForcedTemperature(_device->getForcedTemperature() + increment);
-    _render.onlyTemperature = true;
+    _isQuickRender = true;
     return true;
 }
 
 OrderRender HeatingForcedAlways::getRender()
 {
-    _render.icon = TftImage::IMAGE_ORDER_FORCED;
-    _render.temperature = TftFactory::formatTemperature(_device->getForcedTemperature());
-    _render.label = "Manuelle";
-    _render.info = "Tout le temps";
-    return _render;
+    OrderRender render;
+
+    render.icon = TftImage::IMAGE_ORDER_FORCED;
+    render.temperature = TftFactory::formatTemperature(_device->getForcedTemperature());
+    render.label = "Manuelle";
+    render.info = "Tout le temps";
+    return render;
 }

@@ -27,6 +27,7 @@ Heating::Heating(Device *device, Programme *programme)
 {
     _device = device;
     _programme = programme;
+    _isQuickRender = false;
 }
 
 Heating::~Heating()
@@ -54,4 +55,9 @@ bool Heating::_regulateByTemperature(float requestTemperature, float currentTemp
     #endif
 
     return regulationStatus;
+}
+
+bool Heating::isQuickRender()
+{
+    return _isQuickRender;
 }

@@ -29,6 +29,7 @@ public:
     void setServerStateRender(ServerStateRender render);
     void setReceiverStateRender(ReceiverStateRender render);
     void setOrderRender(OrderRender render);
+    void setOrderRender(OrderRender render, bool isQuickRender);
     void setMessageRender(DateRender render);
 
 private:

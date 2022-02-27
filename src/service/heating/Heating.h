@@ -25,13 +25,16 @@ public:
 
     virtual OrderRender getRender() = 0;
 
+    bool isQuickRender();
+
 protected:
     Device *_device;
     Programme *_programme;
-    OrderRender _render;
 
     Heating(Device *device, Programme *programme);
     bool _regulateByTemperature(float requestTemperature, float currentTemperature);
+
+    bool _isQuickRender;
 
 };
 

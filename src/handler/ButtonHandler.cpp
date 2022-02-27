@@ -39,7 +39,10 @@ void ButtonHandler::pushed(ButtonType buttontype, String name)
             break;
     }
 
+    bool isQuickRender = heating->isQuickRender();
+    delete heating;
+
     if(hasMuted && _modeHandler != nullptr) {
-        _modeHandler->modeUpdated(heating);
+        _modeHandler->modeUpdated(isQuickRender);
     }
 }

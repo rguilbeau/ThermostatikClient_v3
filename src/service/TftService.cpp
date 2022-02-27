@@ -100,7 +100,11 @@ void TftService::setReceiverStateRender(ReceiverStateRender render)
     }
 }
 
-void TftService::setOrderRender(OrderRender render) 
+void TftService::setOrderRender(OrderRender render) {
+    setOrderRender(render, false);
+}
+
+void TftService::setOrderRender(OrderRender render, bool isQuickRender) 
 {
     _tftFactory->draw(30, 125, render.icon);
 
@@ -111,7 +115,7 @@ void TftService::setOrderRender(OrderRender render)
     temperatureText.text = render.temperature;
     _tftFactory->print(90, 125, temperatureText);
 
-    if(!render.onlyTemperature) {
+    if(!isQuickRender) {
         TftText labelText;
         labelText.font = TftFont::SMALL;
         labelText.color = TftColor::COLOR_GRAY;

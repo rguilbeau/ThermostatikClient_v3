@@ -41,9 +41,10 @@ bool HeatingPowerOff::forceTemperature(float increment)
 
 OrderRender HeatingPowerOff::getRender()
 {
-    _render.icon = TftImage::IMAGE_ORDER_POWER_OFF;
-    _render.temperature = "Eteint";
-    _render.label = "Aucune consigne";
-    _render.info = "";
-    return _render;
+    OrderRender render;
+    render.icon = TftImage::IMAGE_ORDER_POWER_OFF;
+    render.temperature = "Eteint";
+    render.label = "Aucune consigne";
+    render.info = "";
+    return render;
 }

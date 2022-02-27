@@ -201,10 +201,11 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     delete heating;
 }
 
-void HeatingHandler::modeUpdated(Heating *heating)
+void HeatingHandler::modeUpdated(bool isQuickRender)
 {
     differedModeUpdatedTicker.detach();
-    _tftService->setOrderRender(heating->getRender());
+    Heating *heating = Heating::getMode(_device, _programme);
+    _tftService->setOrderRender(heating->getRender(), isQuickRender);
     delete heating;
 
     differedModeUpdatedTicker.once(2, std::bind(&HeatingHandler::differedModeUpdated, this));
@@ -213,16 +214,16 @@ void HeatingHandler::modeUpdated(Heating *heating)
 
 void HeatingHandler::differedModeUpdated()
 {
-    String payload = _messageParserService->deviceToPayload(_device);
-    _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
-
     Order *publishAnticipatingOrder = nullptr;
     if(_device->isProgrammeMode()) {
         publishAnticipatingOrder = _programme->getAnticipatingOrder();
     }
 
-    payload = _messageParserService->anticipatingToPayload(publishAnticipatingOrder);
+    String payload = _messageParserService->anticipatingToPayload(publishAnticipatingOrder);
     _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
+
+    payload = _messageParserService->deviceToPayload(_device);
+    _mqttFactory->publish(_topicService->getTemperatureControl(), payload.c_str());
 
     Heating *heating = Heating::getMode(_device, _programme);
 

@@ -7,7 +7,7 @@ class ModeHandlerInterface {
 
 public:
 
-    virtual void modeUpdated(Heating *heating) = 0;
+    virtual void modeUpdated(bool isQuickRender) = 0;
 
 };
 

@@ -53,7 +53,7 @@ public:
     void temperatureChanged(float temperature) override;
     void temperatureIsNan() override; 
     void messageReceived(char *topic, char *message) override;
-    void modeUpdated(Heating *heating) override;
+    void modeUpdated(bool isQuickRender) override;
 
 private:
     Programme *_programme;

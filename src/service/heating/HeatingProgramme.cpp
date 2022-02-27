@@ -59,15 +59,17 @@ bool HeatingProgramme::forceTemperature(float increment)
 OrderRender HeatingProgramme::getRender()
 {
     Order *order = _programme->getLastOrder();
+    
+    OrderRender render;
 
-    _render.icon = TftImage::IMAGE_ORDER_PROGRAMME;
+    render.icon = TftImage::IMAGE_ORDER_PROGRAMME;
 
     if(order != nullptr) {
-        _render.temperature = TftFactory::formatTemperature(order->getTemperature());
-        _render.label = order->getLabel();
-        _render.info = _programme->getLabel();
+        render.temperature = TftFactory::formatTemperature(order->getTemperature());
+        render.label = order->getLabel();
+        render.info = _programme->getLabel();
     } else {
-        _render.temperature = "N/A";
+        render.temperature = "N/A";
     }
-    return _render;
+    return render;
 }
