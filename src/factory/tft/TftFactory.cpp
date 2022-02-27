@@ -30,6 +30,7 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
     #endif
 
     _fontLoaded = false;
+    //pinMode(_pinBrightness, OUTPUT);
 }
 
 void TftFactory::setBrightness(int percent) {

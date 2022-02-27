@@ -13,6 +13,7 @@
 
 Container *container = nullptr;
 
+
 void startSerial() {
     Serial.begin(9600);
     delay(2000);
@@ -21,6 +22,9 @@ void startSerial() {
 
 void setup()
 {
+    container = Container::get();
+    container->tftFactory()->setBrightness(0);
+
     #ifdef DEBUG
         startSerial();
     #elif DISPLAY_FREE_MEMORY
@@ -38,6 +42,7 @@ void setup()
     container = Container::get();
     container->tftFactory()->clear();
     container->tftService()->displayDefault();
+    container->tftFactory()->setBrightness(50);
 
     container->wifiFactory()->setHandler(container->networkHandler());
     container->receiverFactory()->setConnectionHandler(container->networkHandler());
@@ -48,10 +53,10 @@ void setup()
     container->dhtFactory()->setHandler(container->heatingHandler());
 
     
-    //container->buttonMore()->setHandler(container->buttonHandler());
-    //container->buttonMinus()->setHandler(container->buttonHandler());
-    //container->buttonOk()->setHandler(container->buttonHandler());
-    //container->buttonHandler()->setHeatingHandler(container->heatingHandler());
+    container->buttonMore()->setHandler(container->buttonHandler());
+    container->buttonMinus()->setHandler(container->buttonHandler());
+    container->buttonOk()->setHandler(container->buttonHandler());
+    container->buttonHandler()->setHeatingHandler(container->heatingHandler());
 
     container->orderHandler()->setOrderUpdatedHandler(container->heatingHandler());
     container->orderHandler()->setUntilDateHandler(container->heatingHandler());
@@ -66,9 +71,8 @@ void setup()
     container->wifiFactory()->connect();
 }
 
-
 void loop()
-{
+{    
     container->buttonMore()->loop();
     container->buttonMinus()->loop();
     container->buttonOk()->loop();

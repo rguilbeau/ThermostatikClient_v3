@@ -39,12 +39,12 @@ Container::Container()
 
     _tftFactory = new TftFactory(
         new TFT_eSPI(),
-        8
+        D1
     );
 
-    _buttonMore = new Button(D5, ButtonType::BUTTON_MORE, 50);
+    _buttonMore = new Button(D3, ButtonType::BUTTON_MORE, 50);
     _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 50);
-    _buttonOk = new Button(D7, ButtonType::BUTTON_OK, 50);
+    _buttonOk = new Button(D2, ButtonType::BUTTON_OK, 50);
 
     _topicService = new TopicService(DEVICE_NAME);
 
