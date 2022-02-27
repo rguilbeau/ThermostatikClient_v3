@@ -10,6 +10,8 @@ public:
     SleepFactory(int delay);
 
     void wakeUp();
+    bool isWakeUp();
+
     void setHandler(SleepHandlerInterface *handler);
     void invokeHandler();
     void loop();

@@ -23,6 +23,11 @@ void SleepFactory::invokeHandler()
     }
 }
 
+bool SleepFactory::isWakeUp()
+{
+    return !_sleeping;
+}
+
 void SleepFactory::wakeUp()
 {
     _lastWakeUp = millis();
