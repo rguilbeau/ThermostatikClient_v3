@@ -2,10 +2,12 @@
 
 ButtonHandler::ButtonHandler(
     Programme *programme,
-    Device *device
+    Device *device,
+    SleepFactory *sleepFactory
 ) {
     _programme = programme;
     _device = device;
+    _sleepFactory = sleepFactory;
 }
 
 void ButtonHandler::setHeatingHandler(ModeHandlerInterface *modeHandler)
@@ -41,6 +43,8 @@ void ButtonHandler::pushed(ButtonType buttontype, String name)
 
     bool isQuickRender = heating->isQuickRender();
     delete heating;
+
+    _sleepFactory->wakeUp();
 
     if(hasMuted && _modeHandler != nullptr) {
         _modeHandler->modeUpdated(isQuickRender);

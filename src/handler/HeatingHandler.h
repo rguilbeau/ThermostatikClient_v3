@@ -12,6 +12,7 @@
 #include "factory/mqtt/MqttFactory.h"
 #include "factory/mqtt/MqttMessageHandlerInterface.h"
 #include "factory/receiver/ReceiverFactory.h"
+#include "factory/sleep/SleepFactory.h"
 #include "handler/interface/ModeHandlerInterface.h"
 
 #include "model/Programme.h"
@@ -40,6 +41,7 @@ public:
         DhtFactory *dhtFactory,
         MqttFactory *mqttFactory,
         ReceiverFactory *receiverFactory,
+        SleepFactory *sleepFactory,
         MessageParserService *messageParserService,
         ProgrammeService *programmeService,
         TopicService *topicService,
@@ -62,6 +64,7 @@ private:
     DhtFactory *_dhtFactory;
     MqttFactory *_mqttFactory;
     ReceiverFactory *_receiverFactory;
+    SleepFactory *_sleepFactory;
 
     MessageParserService *_messageParserService;
     ProgrammeService *_programmeService;

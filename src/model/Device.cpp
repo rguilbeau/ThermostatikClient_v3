@@ -7,7 +7,7 @@ Device::Device()
     _forcedTemperature = 20.6;
     _forcedUntil = -1;
     _brightnessMax = 100;
-    _brightnessMin = 100;
+    _brightnessMin = 50;
     _heatingAnticipation = 0;
 }
 

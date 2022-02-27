@@ -14,6 +14,7 @@
 #include "factory/clock/ClockFactory.h"
 #include "factory/button/Button.h"
 #include "factory/tft/TftFactory.h"
+#include "factory/sleep/SleepFactory.h"
 
 #include "handler/NetworkHandler.h"
 #include "handler/TftAnimationHandler.h"
@@ -22,6 +23,7 @@
 #include "handler/ReceiverStateHandler.h"
 #include "handler/ButtonHandler.h"
 #include "handler/OrderHandler.h"
+#include "handler/SleepHandler.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
@@ -43,7 +45,8 @@ public:
     MqttFactory *mqttFactory();
     DhtFactory *dhtFactory();
     TftFactory *tftFactory();
-    
+    SleepFactory *sleepFactory();
+
     NetworkHandler *networkHandler();
     HeatingHandler *heatingHandler();
     ReceiverStateHandler *receiverStateHandler();
@@ -51,6 +54,7 @@ public:
     TftAnimationHandler *tftAnimationHandler();
     TftDateHandler *tftDateHandler();
     OrderHandler *orderHandler();
+    SleepHandler *sleepHandler();
 
     Button *buttonMore();
     Button *buttonMinus();
@@ -72,6 +76,7 @@ private:
     MqttFactory *_mqttFactory;
     DhtFactory *_dhtFactory;
     TftFactory *_tftFactory;
+    SleepFactory *_sleepFactory;
 
     NetworkHandler *_networkHandler;
     HeatingHandler *_heatingHandler;
@@ -80,6 +85,7 @@ private:
     TftAnimationHandler *_tftAnimationHandler;
     TftDateHandler *_tftDateHandler;
     OrderHandler *_orderHandler;
+    SleepHandler *_sleepHandler;
 
     Button *_buttonMore;
     Button *_buttonMinus;

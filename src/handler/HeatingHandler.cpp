@@ -6,6 +6,7 @@ HeatingHandler::HeatingHandler(
     DhtFactory *dhtFactory,
     MqttFactory *mqttFactory,
     ReceiverFactory *receiverFactory,
+    SleepFactory *sleepFactory,
     MessageParserService *messageParserService,
     ProgrammeService *programmeService,
     TopicService *topicService,
@@ -15,6 +16,7 @@ HeatingHandler::HeatingHandler(
     _device = device;
     _dhtFactory = dhtFactory;
     _mqttFactory = mqttFactory;
+    _sleepFactory = sleepFactory;
     _messageParserService = messageParserService;
     _programmeService = programmeService;
     _topicService = topicService;
@@ -172,6 +174,7 @@ void HeatingHandler::messageReceived(char *topic, char *message)
 
     if(topicStr == String(_topicService->getDevice())) {
         _messageParserService->parseDevice(message, _device);
+        _sleepFactory->invokeHandler();
     } else if(topicStr == String(_topicService->getProgramme())) {
         _messageParserService->parseProgramme(message, _programme);       
     } else {

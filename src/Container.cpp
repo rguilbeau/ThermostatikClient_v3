@@ -34,13 +34,15 @@ Container::Container()
     );
 
     _dhtFactory = new DhtFactory(
-        new DHTesp(), 10, 60000
+        new DHTesp(), D0, 60000
     );
 
     _tftFactory = new TftFactory(
         new TFT_eSPI(),
         D1
     );
+
+    _sleepFactory = new SleepFactory(20000);
 
     _buttonMore = new Button(D3, ButtonType::BUTTON_MORE, 10);
     _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 10);
@@ -53,7 +55,7 @@ Container::Container()
     );
 
     _buttonHandler = new ButtonHandler(
-        _programme, _device
+        _programme, _device, _sleepFactory
     );
 
     _messageParserService = new MessageParserService(
@@ -75,7 +77,7 @@ Container::Container()
 
     _heatingHandler = new HeatingHandler(
         _programme, _device, 
-        _dhtFactory, _mqttFactory, _receiverFactory, 
+        _dhtFactory, _mqttFactory, _receiverFactory, _sleepFactory,
         _messageParserService, _programmeService,
         _topicService, _tftService
     );
@@ -90,6 +92,10 @@ Container::Container()
         _dhtFactory, 
         _programmeService
     );
+
+    _sleepHandler = new SleepHandler(
+        _device, _tftFactory
+    );
 }
 
 
@@ -99,6 +105,7 @@ ReceiverFactory *Container::receiverFactory() { return _receiverFactory; }
 MqttFactory *Container::mqttFactory() { return _mqttFactory; }
 DhtFactory *Container::dhtFactory() { return _dhtFactory; }
 TftFactory *Container::tftFactory() { return _tftFactory; }
+SleepFactory *Container::sleepFactory() { return _sleepFactory; }
 
 Button *Container::buttonMore() { return _buttonMore; }
 Button *Container::buttonMinus() { return _buttonMinus; }
@@ -111,6 +118,7 @@ ReceiverStateHandler *Container::receiverStateHandler() { return _receiverStateH
 ButtonHandler *Container::buttonHandler() { return _buttonHandler; }
 TftDateHandler *Container::tftDateHandler() { return _tftDateHandler; }
 OrderHandler *Container::orderHandler() { return _orderHandler; }
+SleepHandler *Container::sleepHandler() { return _sleepHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }

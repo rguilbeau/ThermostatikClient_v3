@@ -13,12 +13,15 @@
 
 #include "factory/button/ButtonHandlerInterface.h"
 
+#include "factory/sleep/SleepFactory.h"
+
 class ButtonHandler : public ButtonHandlerInterface {
 
 public:
     ButtonHandler(
         Programme *programme,
-        Device *device
+        Device *device,
+        SleepFactory *sleepFactory
     );
     
     void pushed(ButtonType buttonType, String name) override;
@@ -29,6 +32,7 @@ private:
 
     Programme *_programme;
     Device *_device;
+    SleepFactory *_sleepFactory;
 };
 
 #endif

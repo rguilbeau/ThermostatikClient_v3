@@ -42,7 +42,9 @@ void setup()
     container = Container::get();
     container->tftFactory()->clear();
     container->tftService()->displayDefault();
-    container->tftFactory()->setBrightness(50);
+    
+    container->sleepFactory()->setHandler(container->sleepHandler());
+    container->sleepFactory()->invokeHandler();
 
     container->wifiFactory()->setHandler(container->networkHandler());
     container->receiverFactory()->setConnectionHandler(container->networkHandler());
@@ -52,7 +54,6 @@ void setup()
     container->mqttFactory()->setMessageHandler(container->heatingHandler());
     container->dhtFactory()->setHandler(container->heatingHandler());
 
-    
     container->buttonMore()->setHandler(container->buttonHandler());
     container->buttonMinus()->setHandler(container->buttonHandler());
     container->buttonOk()->setHandler(container->buttonHandler());
@@ -79,6 +80,7 @@ void loop()
     container->dhtFactory()->loop();
     container->clockFactory()->loop();
     container->receiverFactory()->loop();
+    container->sleepFactory()->loop();
 
     #ifdef DISPLAY_FREE_MEMORY
         freeMemoryService->loop();
