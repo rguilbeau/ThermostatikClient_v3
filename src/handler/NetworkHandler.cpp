@@ -61,7 +61,7 @@ void NetworkHandler::mqttDisconnected()
         _mqttReconnectTimer.once(2, std::bind(&MqttFactory::connect, _mqttFactory));
     } else {
         #ifdef DEBUG
-            Serial.println("Network factory can't connect to MQTT : wifi is disconnected");
+            Serial.println(F("Network factory can't connect to MQTT : wifi is disconnected"));
         #endif
     }
 }
@@ -90,7 +90,7 @@ void NetworkHandler::wifiDisconnected()
 void NetworkHandler::receiverConnected()
 {
     #ifdef DEBUG
-        Serial.println("Receiver connected");
+        Serial.println(F("Receiver connected"));
     #endif
 
     ReceiverStateRender render;
@@ -101,7 +101,7 @@ void NetworkHandler::receiverConnected()
 void NetworkHandler::receiverDisconnected()
 {
     #ifdef DEBUG
-        Serial.println("Receiver disconnected");
+        Serial.println(F("Receiver disconnected"));
     #endif
 
     ReceiverStateRender render;

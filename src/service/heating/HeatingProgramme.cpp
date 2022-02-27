@@ -15,11 +15,12 @@ bool HeatingProgramme::regulationStatus(float currentTemperature)
     Order *order = _programme->getLastOrder();
     
     #ifdef DEBUG
-        Serial.print("Regulation : Programme, Order:");
-        Serial.print(order == nullptr ? "null" : order->getLabel());
-
+        Serial.print(F("Regulation : Programme, Order:"));
+        
         if(order == nullptr) {
-            Serial.println();
+            Serial.println(F("null"));
+        } else {
+            Serial.print(order->getLabel());
         }
     #endif
 

@@ -17,7 +17,7 @@ Container *container = nullptr;
 void startSerial() {
     Serial.begin(9600);
     delay(2000);
-    Serial.println("Serial started");
+    Serial.println(F("Serial started"));
 }
 
 void setup()
@@ -33,7 +33,7 @@ void setup()
 
     if(!SPIFFS.begin()) {
         #ifdef DEBUG
-            Serial.println("Unable to mount filesysteme !");
+            Serial.println(F("Unable to mount filesysteme !"));
         #endif
     }
 

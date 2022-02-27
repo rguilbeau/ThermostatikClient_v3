@@ -45,11 +45,11 @@ bool Heating::_regulateByTemperature(float requestTemperature, float currentTemp
     }
 
     #ifdef DEBUG
-        Serial.print(" by temperature request:");
+        Serial.print(F(" by temperature request:"));
         Serial.print(requestTemperature);
-        Serial.print(", current:");
+        Serial.print(F(", current:"));
         Serial.print(currentTemperature);
-        Serial.print(", heating:");
+        Serial.print(F(", heating:"));
         Serial.println(regulationStatus);
     #endif
 

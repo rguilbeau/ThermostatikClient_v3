@@ -41,9 +41,9 @@ void MqttFactory::connect()
     #ifdef DEBUG
         Serial.print(F("Connect to MQTT : "));
         Serial.print(_host);
-        Serial.print(":");
+        Serial.print(F(":"));
         Serial.print(String(_port));
-        Serial.print(" / login : ");
+        Serial.print(F(" / login : "));
         Serial.println(_login);
     #endif
     _client->connect();
@@ -137,13 +137,13 @@ void MqttFactory::_clientMessageReceived(char* topic, char* payload, AsyncMqttCl
 
     #ifdef DEBUG
         if(len != total) {
-            Serial.print("MQTT partial message (index:");
+            Serial.print(F("MQTT partial message (index:"));
             Serial.print(index);
-            Serial.print(", length:");
+            Serial.print(F(", length:"));
             Serial.print(len);
-            Serial.print(", total:");
+            Serial.print(F(", total:"));
             Serial.print(total);
-            Serial.println(")");
+            Serial.println(F(")"));
         }
     #endif
 

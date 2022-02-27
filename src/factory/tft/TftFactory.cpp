@@ -179,7 +179,9 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
 
     if (!bmpFS) {
         #ifdef DEBUG
-            Serial.print("TFT image " + filename + " not found on SPIFFS");
+            Serial.print(F("TFT immage "));
+            Serial.print(filename);
+            Serial.println(F(" not found on SPIFFS"));
         #endif
         return;
     }
@@ -229,7 +231,8 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
             _driver->setSwapBytes(oldSwapBytes);
         } else {
             #ifdef DEBUG
-                Serial.println("BMP format not recognized for file : " + filename);
+                Serial.print(F("BMP format not recognized for file : "));
+                Serial.println(filename);
             #endif
         }
     }

@@ -27,8 +27,12 @@ void HeatingHandler::orderUpdated()
     Order *order = _programme->getLastOrder();
 
     #ifdef DEBUG
-        Serial.print("Order updated, order:");
-        Serial.println(order == nullptr ? "null" : order->getLabel());
+        Serial.print(F("Order updated, order:"));
+        if(order == nullptr) {
+            Serial.println(F("null"));
+        } else {
+            Serial.println(order->getLabel());
+        }
     #endif
 
     String payload = _messageParserService->anticipatingToPayload(nullptr);
@@ -57,8 +61,12 @@ void HeatingHandler::orderAnticipating()
     Order *order = _programme->getAnticipatingOrder();
 
     #ifdef DEBUG
-        Serial.print("Order anticipating, order:");
-        Serial.println(order == nullptr ? "null" : order->getLabel());
+        Serial.print(F("Order anticipating, order:"));
+        if(order == nullptr) {
+            Serial.println(F("null"));
+        } else {
+            Serial.println(order->getLabel());
+        }
     #endif
 
     if(_device->isProgrammeMode()) {
@@ -80,7 +88,7 @@ void HeatingHandler::untilDateHit()
     if(_device->isForcedUntilDate()) {
         #ifdef DEBUG
             Date now;
-            Serial.print("Until date hint, date:");
+            Serial.print(F("Until date hint, date:"));
             Serial.println(now.toShortFormat());
         #endif
 
@@ -110,7 +118,7 @@ void HeatingHandler::untilDateHit()
 void HeatingHandler::temperatureChanged(float temperature)
 {
     #ifdef DEBUG
-        Serial.print("Temperature changed:");
+        Serial.print(F("Temperature changed:"));
         Serial.println(temperature);
     #endif
 
@@ -132,7 +140,7 @@ void HeatingHandler::temperatureChanged(float temperature)
 void HeatingHandler::temperatureIsNan()
 {
     #ifdef DEBUG
-        Serial.println("Temperature is NaN");
+        Serial.println(F("Temperature is NaN"));
     #endif
 
     String payload = _messageParserService->temperatureToPayload(0, true);
@@ -156,9 +164,9 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     String topicStr = String(topic);
 
     #ifdef DEBUG
-        Serial.print("Message received from:");
+        Serial.print(F("Message received from:"));
         Serial.print(topicStr);
-        Serial.print(" payload:");
+        Serial.print(F(" payload:"));
         Serial.println(message);
     #endif
 
@@ -168,7 +176,7 @@ void HeatingHandler::messageReceived(char *topic, char *message)
         _messageParserService->parseProgramme(message, _programme);       
     } else {
         #ifdef DEBUG
-            Serial.println("Error : Unkonw topic");
+            Serial.println(F("Error : Unkonw topic"));
         #endif
         return;
     }

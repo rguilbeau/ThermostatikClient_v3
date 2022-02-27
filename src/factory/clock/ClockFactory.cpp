@@ -9,7 +9,7 @@ ClockFactory::ClockFactory()
 void ClockFactory::initNtp()
 {
     #ifdef DEBUG
-        Serial.println("NTP initialization");
+        Serial.println(F("NTP initialization"));
     #endif
     
     configTime(0, 0, "pool.ntp.org", "time.nist.gov"); // UTC

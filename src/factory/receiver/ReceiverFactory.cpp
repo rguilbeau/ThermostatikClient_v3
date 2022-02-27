@@ -19,13 +19,31 @@ ReceiverFactory::ReceiverFactory(
 void ReceiverFactory::createAccessPoint()
 {
     #ifdef DEBUG
-        Serial.println("Receiver : create access point");
+        Serial.println(F("Receiver : create access point"));
+    #endif
+
+    //IPAddress ip(192, 168, 1, 184);
+    //IPAddress gateway(192, 168, 1, 185);
+    //IPAddress subnet(255,255,255,0);
+
+    //bool configOk = WiFi.softAPConfig(ip, gateway, subnet);
+
+    #ifdef DEBUG
+        //if(!configOk) {
+        //    Serial.println("Receiver : config AP failed !");
+       // }
     #endif
 
     WiFi.softAP(_ssid, _password);
     delay(100);
     
-    _server->on("/state", HTTP_GET, std::bind(&ReceiverFactory::onRequestReceiver, this, std::placeholders::_1));
+    #ifdef DEBUG
+        IPAddress apIp = WiFi.softAPIP();
+        Serial.print(F("AP IP address: "));
+        Serial.println(apIp);
+    #endif
+
+    _server->on("/", HTTP_GET, std::bind(&ReceiverFactory::onRequestReceiver, this, std::placeholders::_1));
     _server->begin();
 }
 

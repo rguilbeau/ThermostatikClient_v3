@@ -17,7 +17,7 @@ ReceiverStateHandler::ReceiverStateHandler(
 void ReceiverStateHandler::receiverStateChanged(bool state)
 {
     #ifdef DEBUG
-        Serial.print("Receiver state changed, state:");
+        Serial.print(F("Receiver state changed, state:"));
         Serial.println(state);
     #endif
 

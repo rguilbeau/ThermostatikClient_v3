@@ -16,7 +16,9 @@ void ButtonHandler::setHeatingHandler(ModeHandlerInterface *modeHandler)
 void ButtonHandler::pushed(ButtonType buttontype, String name)
 {
     #ifdef DEBUG
-        Serial.println("Button " + name + " pushed");
+        Serial.print(F("Button "));
+        Serial.print(name);
+        Serial.println(F(" pushed"));
     #endif
 
     bool hasMuted = false;

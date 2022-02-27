@@ -71,7 +71,7 @@ String MessageParserService::anticipatingToPayload(Order *order)
 void MessageParserService::parseDevice(char *payload, Device *device)
 {
     #ifdef DEBUG
-        Serial.println("Parsing device payload");
+        Serial.println(F("Parsing device payload"));
     #endif
     
     DynamicJsonDocument json(_json_Capacity);
@@ -95,7 +95,7 @@ void MessageParserService::parseProgramme(char *payload, Programme *programme)
 {
     //{"l":"Programme test","oi":[1,3,2],"ol":["Confort","test","Nuit"],"ot":[20.5,20.0,19.0],"ts":[[0,0,1],[0,60,2],[1,0,1],[1,60,2],[2,0,1],[2,60,2],[3,0,1],[3,60,2],[4,0,1],[4,60,2],[5,0,1],[5,60,2],[6,0,1],[6,60,2]]}
     #ifdef DEBUG
-        Serial.println("Parsing programme payload");
+        Serial.println(F("Parsing programme payload"));
     #endif
 
     DynamicJsonDocument json(_json_Capacity);
