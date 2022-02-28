@@ -59,7 +59,7 @@ void TftFactory::print(int x, int y, TftText text)
     );
     _driver->setCursor(x, y);
     _driver->setTextColor(color, backgroundColor);
-    _driver->print(text.text);
+    _driver->print(cleanString(text.text));
 }
 
 void TftFactory::fillRect(int x, int y, int width, int height, TftColor color)
@@ -253,4 +253,74 @@ uint32_t TftFactory::read32(File &f) {
     ((uint8_t *)&result)[2] = f.read();
     ((uint8_t *)&result)[3] = f.read(); // MSB
     return result;
+}
+
+String TftFactory::cleanString(String str) {
+    str.replace(F("Š"), F("S"));
+    str.replace(F("š"), F("s"));
+    str.replace(F("Ž"), F("Z"));
+    str.replace(F("ž"), F("z"));
+    str.replace(F("À"), F("A"));
+    str.replace(F("Á"), F("A"));
+    str.replace(F("Â"), F("A"));
+    str.replace(F("Ã"), F("A"));
+    str.replace(F("Ä"), F("A"));
+    str.replace(F("Å"), F("A"));
+    str.replace(F("Æ"), F("A"));
+    str.replace(F("Ç"), F("C"));
+    str.replace(F("È"), F("E"));
+    str.replace(F("É"), F("E"));
+    str.replace(F("Ê"), F("E"));
+    str.replace(F("Ë"), F("E"));
+    str.replace(F("Ì"), F("I"));
+    str.replace(F("Í"), F("I"));
+    str.replace(F("Î"), F("I"));
+    str.replace(F("Ï"), F("I"));
+    str.replace(F("Ñ"), F("N"));
+    str.replace(F("Ò"), F("O"));
+    str.replace(F("Ó"), F("O"));
+    str.replace(F("Ô"), F("O"));
+    str.replace(F("Õ"), F("O"));
+    str.replace(F("Ö"), F("O"));
+    str.replace(F("Ø"), F("O"));
+    str.replace(F("Ù"), F("U"));
+    str.replace(F("Ú"), F("U"));
+    str.replace(F("Û"), F("U"));
+    str.replace(F("Ü"), F("U"));
+    str.replace(F("Ý"), F("Y"));
+    str.replace(F("Þ"), F("B"));
+    str.replace(F("ß"), F("Ss"));
+    str.replace(F("à"), F("a"));
+    str.replace(F("á"), F("a"));
+    str.replace(F("â"), F("a"));
+    str.replace(F("ã"), F("a"));
+    str.replace(F("ä"), F("a"));
+    str.replace(F("å"), F("a"));
+    str.replace(F("æ"), F("a"));
+    str.replace(F("ç"), F("c"));
+    str.replace(F("è"), F("e"));
+    str.replace(F("é"), F("e"));
+    str.replace(F("ê"), F("e"));
+    str.replace(F("ë"), F("e"));
+    str.replace(F("ì"), F("i"));
+    str.replace(F("í"), F("i"));
+    str.replace(F("î"), F("i"));
+    str.replace(F("ï"), F("i"));
+    str.replace(F("ð"), F("o"));
+    str.replace(F("ñ"), F("n"));
+    str.replace(F("ò"), F("o"));
+    str.replace(F("ó"), F("o"));
+    str.replace(F("ô"), F("o"));
+    str.replace(F("õ"), F("o"));
+    str.replace(F("ö"), F("o"));
+    str.replace(F("ø"), F("o"));
+    str.replace(F("ù"), F("u"));
+    str.replace(F("ú"), F("u"));
+    str.replace(F("û"), F("u"));
+    str.replace(F("ý"), F("y"));
+    str.replace(F("þ"), F("b"));
+    str.replace(F("ÿ"), F("y"));
+    str.replace(F("œ"), F("oe"));
+    str.replace(F("Œ"), F("OE"));
+    return str;
 }
