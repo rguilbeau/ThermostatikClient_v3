@@ -190,8 +190,6 @@ void TftFactory::drawFromSpiff(int x, int y, String filename)
     uint16_t w, h, row;
     uint8_t r, g, b;
 
-    uint32_t startTime = millis();
-
     if (read16(bmpFS) == 0x4D42) {
         read32(bmpFS);
         read32(bmpFS);
