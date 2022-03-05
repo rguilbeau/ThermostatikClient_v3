@@ -13,17 +13,17 @@ MessageParserService::MessageParserService(
 
 String MessageParserService::deviceToPayload(Device *device)
 {   
-    String isForced = device->isForced() ? "true" : "false";
+    String isForced = device->isForced() ? F("true") : F("false");
     String forcedTemperature = String(device->getForcedTemperature());
     String forcedUntil = String(device->getForcedUntil());
-    String powerOn = device->isPowerOn() ? "true" : "false";
+    String powerOn = device->isPowerOn() ? F("true") : F("false");
 
-    String payload = "{";
-    payload += "\"forced\":" + isForced + ",";
-    payload += "\"forcedTemperature\":" + forcedTemperature + ",";
-    payload += "\"forcedUntil\":" + forcedUntil + ",";
-    payload += "\"powerOn\":" + powerOn;
-    payload += "}";
+    String payload = F("{");
+    payload += F("\"forced\":") + isForced + F(",");
+    payload += F("\"forcedTemperature\":") + forcedTemperature + F(",");
+    payload += F("\"forcedUntil\":") + forcedUntil + F(",");
+    payload += F("\"powerOn\":") + powerOn;
+    payload += F("}");
 
     return payload;
 }
@@ -31,39 +31,39 @@ String MessageParserService::deviceToPayload(Device *device)
 String MessageParserService::temperatureToPayload(float temperature, bool isNan)
 {
     String temperatureStr = String(temperature);
-    String isNanStr = isNan ? "true" : "false";
-    String payload = "{";
-    payload += "\"temperature\":" + temperatureStr + ",";
-    payload += "\"nan\":" + isNanStr;
-    payload += "}";
+    String isNanStr = isNan ? F("true") : F("false");
+    String payload = F("{");
+    payload += F("\"temperature\":") + temperatureStr + F(",");
+    payload += F("\"nan\":") + isNanStr;
+    payload += F("}");
 
     return payload; 
 }
 
 String MessageParserService::heatingToPayload(bool heating)
 {
-    String heatingStr = heating ? "true" : "false";
+    String heatingStr = heating ? F("true") : F("false");
 
-    String payload = "{";
-    payload += "\"heating\":" + heatingStr;
-    payload += "}";
+    String payload = F("{");
+    payload += F("\"heating\":") + heatingStr;
+    payload += F("}");
 
     return payload; 
 }
 
 String MessageParserService::anticipatingToPayload(Order *order)
 {
-    String anticipatingLabel = "null";
-    String anticipatingTemperature = "0";
+    String anticipatingLabel = F("null");
+    String anticipatingTemperature = F("0");
     if(order != nullptr) {
-        anticipatingLabel = "\"" + order->getLabel() + "\"";
+        anticipatingLabel = F("\"") + order->getLabel() + F("\"");
         anticipatingTemperature = String(order->getTemperature());
     }
 
-    String payload = "{";
-    payload += "\"anticipatingLabel\":" + anticipatingLabel + ",";
-    payload += "\"anticipatingTemperature\":" + anticipatingTemperature;
-    payload += "}";
+    String payload = F("{");
+    payload += F("\"anticipatingLabel\":") + anticipatingLabel + F(",");
+    payload += F("\"anticipatingTemperature\":") + anticipatingTemperature;
+    payload += F("}");
 
     return payload;
 }
@@ -77,18 +77,18 @@ void MessageParserService::parseDevice(char *payload, Device *device)
     DynamicJsonDocument json(_json_Capacity);
     deserializeJson(json, payload);
 
-    device->setBrightnessMin(json["brightnessMin"].as<unsigned short>());
-    device->setBrightnessMax(json["brightnessMax"].as<unsigned short>());
-    device->setForced(json["forced"].as<bool>());
-    device->setPowerOn(json["powerOn"].as<bool>());
-    device->setForcedTemperature(json["forcedTemperature"].as<float>());
-    device->setForcedUntil(json["forcedUntil"].as<long>());
-    device->setHeatingAnticipation(json["heatingAnticipation"].as<float>() / 60);
+    device->setBrightnessMin(json[F("brightnessMin")].as<unsigned short>());
+    device->setBrightnessMax(json[F("brightnessMax")].as<unsigned short>());
+    device->setForced(json[F("forced")].as<bool>());
+    device->setPowerOn(json[F("powerOn")].as<bool>());
+    device->setForcedTemperature(json[F("forcedTemperature")].as<float>());
+    device->setForcedUntil(json[F("forcedUntil")].as<long>());
+    device->setHeatingAnticipation(json[F("heatingAnticipation")].as<float>() / 60);
 
-    Date::timezone = json["timezoneOffset"].as<int>();
-    Date::summerTime = json["summerTime"].as<bool>();
+    Date::timezone = json[F("timezoneOffset")].as<int>();
+    Date::summerTime = json[F("summerTime")].as<bool>();
     
-    _dhtFactory->setTare(json["tareThermometer"].as<float>());
+    _dhtFactory->setTare(json[F("tareThermometer")].as<float>());
 }
 
 void MessageParserService::parseProgramme(char *payload, Programme *programme)
@@ -101,11 +101,11 @@ void MessageParserService::parseProgramme(char *payload, Programme *programme)
     DynamicJsonDocument json(_json_Capacity);
     deserializeJson(json, payload);
 
-    programme->setLabel(json["l"].as<String>());
+    programme->setLabel(json[F("l")].as<String>());
 
-    JsonArray ordersId = json["oi"].as<JsonArray>();
-    JsonArray ordersLabel = json["ol"].as<JsonArray>();
-    JsonArray ordersTemperature = json["ot"].as<JsonArray>();
+    JsonArray ordersId = json[F("oi")].as<JsonArray>();
+    JsonArray ordersLabel = json[F("ol")].as<JsonArray>();
+    JsonArray ordersTemperature = json[F("ot")].as<JsonArray>();
 
     for(unsigned short i = 0; i < PROGRAMME_MAX_ORDERS; i++) {
         if (ordersId[i].isNull()) {
@@ -119,7 +119,7 @@ void MessageParserService::parseProgramme(char *payload, Programme *programme)
         }
     }
 
-    JsonArray orderTimes = json["ts"].as<JsonArray>();
+    JsonArray orderTimes = json[F("ts")].as<JsonArray>();
     for(unsigned short i = 0; i < PROGRAMME_MAX_TIMES_ORDERS; i++) {
         if(orderTimes[i].isNull()) {
             programme->getOrderTime(i)->unused();

@@ -7,7 +7,7 @@ String TftFactory::formatTemperature(float temperature)
 {
     char buff[6];
     dtostrf(temperature, 4, 1, buff);
-    return (String(buff) + " 'C");
+    return (String(buff) + F(" 'C"));
 }
 
 TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
@@ -19,9 +19,9 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
 
     #ifdef DEBUG
         bool font_missing = false;
-        if (!SPIFFS.exists("/" + TftFactory::FONT_NOTO_15 + ".vlw"))
+        if (!SPIFFS.exists(F("/") + TftFactory::FONT_NOTO_15 + F(".vlw")))
             font_missing = true;
-        if (!SPIFFS.exists("/" + TftFactory::FONT_NOTO_36 + ".vlw"))
+        if (!SPIFFS.exists(F("/") + TftFactory::FONT_NOTO_36 + F(".vlw")))
             font_missing = true;
 
         if (font_missing) {

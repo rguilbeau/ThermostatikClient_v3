@@ -5,7 +5,7 @@ Programme::Programme()
     _lastOrder = nullptr;
     _anticipatingOrder = nullptr;
 
-    _label = "";
+    _label = F("");
 
     for(int i = 0; i < PROGRAMME_MAX_TIMES_ORDERS; i++) {
         _ordersTimes[i] = new OrderTime();

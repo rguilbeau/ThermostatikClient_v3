@@ -43,16 +43,16 @@ String Button::getTypeStr()
     String type;
     switch (_buttonType) {
         case BUTTON_OK:
-            type = "OK";
+            type = F("OK");
             break;
         case BUTTON_MORE:
-            type = "MORE";
+            type = F("MORE");
             break;
         case BUTTON_MINUS:
-            type = "MINUS";
+            type = F("MINUS");
             break;
         default:
-            type = "?";
+            type = F("?");
             break;
     }
     return type;

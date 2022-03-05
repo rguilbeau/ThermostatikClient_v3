@@ -38,7 +38,7 @@ OrderRender HeatingForcedAlways::getRender()
 
     render.icon = TftImage::IMAGE_ORDER_FORCED;
     render.temperature = TftFactory::formatTemperature(_device->getForcedTemperature());
-    render.label = "Manuelle";
-    render.info = "Tout le temps";
+    render.label = F("Manuelle");
+    render.info = F("Tout le temps");
     return render;
 }

@@ -69,7 +69,7 @@ OrderRender HeatingProgramme::getRender()
         render.label = order->getLabel();
         render.info = _programme->getLabel();
     } else {
-        render.temperature = "N/A";
+        render.temperature = F("N/A");
     }
     return render;
 }

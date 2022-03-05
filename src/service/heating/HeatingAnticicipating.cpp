@@ -58,7 +58,7 @@ OrderRender HeatingAnticipating::getRender()
     OrderRender render;
     render.icon = TftImage::IMAGE_ORDER_ANTICIPATING;
     render.temperature = TftFactory::formatTemperature(order->getTemperature());
-    render.label = order->getLabel() + " (anticipation)";
+    render.label = order->getLabel() + F(" (anticipation)");
     render.info = _programme->getLabel();
     return render;
 }

@@ -45,7 +45,7 @@ void TftService::setTemperatureRender(TemperatureRender render)
     text.width = 180;
 
     if(render.isNan) {
-        text.text = "--.- 'C";
+        text.text = F("--.- 'C");
     } else {
         text.text = TftFactory::formatTemperature(render.temperature);
     }

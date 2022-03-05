@@ -22,7 +22,7 @@ void ReceiverStateHandler::receiverStateChanged(bool state)
     #endif
 
     TemperatureLabelRender temperatureLabelRender;
-    temperatureLabelRender.text = state ? "En chauffe..." : "Consigne atteinte";
+    temperatureLabelRender.text = state ? F("En chauffe...") : F("Consigne atteinte");
     _tftService->setTemperatureLabelRender(temperatureLabelRender);
 
     ThermometerRender thermometerRender;

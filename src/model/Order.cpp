@@ -3,7 +3,7 @@
 Order::Order()
 {
     _id = 0;
-    _label = "";
+    _label = F("");
     _temperature = 0;
     _used = false;
 }

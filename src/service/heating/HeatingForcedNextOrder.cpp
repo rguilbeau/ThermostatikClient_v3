@@ -40,7 +40,7 @@ OrderRender HeatingForcedNextOrder::getRender()
 
     render.icon = TftImage::IMAGE_ORDER_FORCED;
     render.temperature = TftFactory::formatTemperature(_device->getForcedTemperature());
-    render.label = "Manuelle jusqu'a";
-    render.info = "la prochaine consigne";
+    render.label = F("Manuelle jusqu'a");
+    render.info = F("la prochaine consigne");
     return render;
 }
