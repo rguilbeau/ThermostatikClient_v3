@@ -17,7 +17,7 @@ void FreeMemoryService::loop()
         if(_lastFreeMemory != freeMemory) {
             _lastFreeMemory = freeMemory;
 
-            #ifdef DISPLAY_FREE_MEMORY
+            #ifdef DEBUG
                 Serial.print(F("* Free memory : "));
                 Serial.print(_lastFreeMemory);
                 Serial.println(F(" *"));

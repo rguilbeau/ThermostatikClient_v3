@@ -7,7 +7,7 @@
 
 #include "service/FreeMemoryService.h"
 
-#ifdef DISPLAY_FREE_MEMORY
+#ifdef DEBUG
     FreeMemoryService *freeMemoryService = new FreeMemoryService(1000);
 #endif
 
@@ -15,9 +15,7 @@ Container *container = nullptr;
 
 
 void startSerial() {
-    Serial.begin(9600);
-    delay(2000);
-    Serial.println(F("Serial started"));
+   
 }
 
 void setup()
@@ -27,10 +25,8 @@ void setup()
 
     #ifdef DEBUG
         startSerial();
-    #elif DISPLAY_FREE_MEMORY
-        startSerial();
     #endif
-
+    
     if(!SPIFFS.begin()) {
         #ifdef DEBUG
             Serial.println(F("Unable to mount filesysteme !"));
@@ -83,7 +79,7 @@ void loop()
     container->receiverFactory()->loop();
     container->sleepFactory()->loop();
 
-    #ifdef DISPLAY_FREE_MEMORY
+    #ifdef DEBUG
         freeMemoryService->loop();
     #endif
 }
