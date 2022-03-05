@@ -24,6 +24,7 @@
 #include "handler/ButtonHandler.h"
 #include "handler/OrderHandler.h"
 #include "handler/SleepHandler.h"
+#include "handler/DhtSmootherHandler.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
@@ -55,6 +56,7 @@ public:
     TftDateHandler *tftDateHandler();
     OrderHandler *orderHandler();
     SleepHandler *sleepHandler();
+    DhtSmootherHandler *dhtSmootherHandler();
 
     Button *buttonMore();
     Button *buttonMinus();
@@ -86,7 +88,8 @@ private:
     TftDateHandler *_tftDateHandler;
     OrderHandler *_orderHandler;
     SleepHandler *_sleepHandler;
-
+    DhtSmootherHandler *_dhtSmootherHandler;
+    
     Button *_buttonMore;
     Button *_buttonMinus;
     Button *_buttonOk;

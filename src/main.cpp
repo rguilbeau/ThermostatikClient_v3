@@ -52,6 +52,7 @@ void setup()
 
     container->receiverFactory()->setStateHandler(container->receiverStateHandler());
     container->mqttFactory()->setMessageHandler(container->heatingHandler());
+    container->dhtFactory()->setSmoother(container->dhtSmootherHandler());
     container->dhtFactory()->setHandler(container->heatingHandler());
 
     container->buttonMore()->setHandler(container->buttonHandler());

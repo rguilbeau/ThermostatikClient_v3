@@ -34,7 +34,7 @@ Container::Container()
     );
 
     _dhtFactory = new DhtFactory(
-        new DHTesp(), D0, 60000
+        new DHTesp(), D0, 2000
     );
 
     _tftFactory = new TftFactory(
@@ -96,6 +96,8 @@ Container::Container()
     _sleepHandler = new SleepHandler(
         _device, _tftFactory
     );
+
+    _dhtSmootherHandler = new DhtSmootherHandler();
 }
 
 
@@ -119,6 +121,7 @@ ButtonHandler *Container::buttonHandler() { return _buttonHandler; }
 TftDateHandler *Container::tftDateHandler() { return _tftDateHandler; }
 OrderHandler *Container::orderHandler() { return _orderHandler; }
 SleepHandler *Container::sleepHandler() { return _sleepHandler; }
+DhtSmootherHandler *Container::dhtSmootherHandler() { return _dhtSmootherHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }

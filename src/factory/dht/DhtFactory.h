@@ -7,6 +7,7 @@
 #include "Debug.h"
 
 #include "DhtHandlerInterface.h"
+#include "DhtSmootherInterface.h"
 
 class DhtFactory {
 
@@ -14,7 +15,8 @@ public:
     DhtFactory(DHTesp *dht, unsigned short pin, unsigned short delay);
 
     void setHandler(DhtHandlerInterface *dhtHandler);
-
+    void setSmoother(DhtSmootherInterface *dhtSmoother);
+    
     float getTemperature();
 
     bool isNan();
@@ -24,12 +26,10 @@ public:
     void setTare(float tare);
 
 private:
-
     DHTesp *_dht;
 
     unsigned short _pin;
     unsigned short _delay;
-    unsigned short _curDelay;
     float _lastTemperature;
     unsigned long _lastCheck;
     int _isNanCnt;
@@ -38,10 +38,9 @@ private:
     float _tare;
 
     bool _readTemperature();
-    float fixDecimal(float temperature);
-    float smooth(float temperature, float lastSmoothTemperature, float factor);
 
     DhtHandlerInterface *_dhtHandler;
+    DhtSmootherInterface*_dhtSmoother;
 };
 
 #endif
