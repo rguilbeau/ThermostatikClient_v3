@@ -17,11 +17,11 @@ public:
         uint8_t pinBrightness
     );
 
-    void setBrightness(int percent);
+    void setBrightness(unsigned short percent);
     void clear();
-    void print(int x, int y, TftText text);
-    void draw(int x, int y, TftImage image);
-    void fillRect(int x, int y, int width, int height, TftColor color);
+    void print(unsigned short x, unsigned short y, TftText text);
+    void draw(unsigned short x, unsigned short y, TftImage image);
+    void fillRect(unsigned short x, unsigned short y, unsigned short width, unsigned short height, TftColor color);
     void loop();
 
     static String formatTemperature(float temperature);
@@ -37,9 +37,9 @@ private:
     bool _fontLoaded;
     
     void loadFont(TftFont font);
-    void drawFromSpiff(int x, int y, String image);
+    void drawFromSpiff(unsigned short x, unsigned short y, String image);
     uint32 getColor(TftColor color);
-    int getHeight(TftFont font);
+    unsigned short getHeight(TftFont font);
     uint16_t read16(File &f);
     uint32_t read32(File &f);
 

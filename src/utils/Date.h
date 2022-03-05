@@ -9,9 +9,9 @@ public:
     Date();
     Date(long time);
 
-    int findDayIndex();
+    unsigned short findDayIndex();
     unsigned short findTimeSinceMidnight();
-    unsigned long findTimeSinceStartWeek();
+    unsigned short findTimeSinceStartWeek();
     
     bool before(Date date);
 

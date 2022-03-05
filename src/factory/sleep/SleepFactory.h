@@ -7,7 +7,7 @@
 class SleepFactory {
 
 public:
-    SleepFactory(int delay);
+    SleepFactory(unsigned short delay);
 
     void wakeUp();
     bool isWakeUp();
@@ -19,7 +19,7 @@ public:
 private:
     SleepHandlerInterface *_handler;
     unsigned long _lastWakeUp;
-    int _delay;
+    unsigned short _delay;
     bool _sleeping;
 };
 

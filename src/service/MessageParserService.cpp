@@ -107,12 +107,12 @@ void MessageParserService::parseProgramme(char *payload, Programme *programme)
     JsonArray ordersLabel = json["ol"].as<JsonArray>();
     JsonArray ordersTemperature = json["ot"].as<JsonArray>();
 
-    for(int i = 0; i < PROGRAMME_MAX_ORDERS; i++) {
+    for(unsigned short i = 0; i < PROGRAMME_MAX_ORDERS; i++) {
         if (ordersId[i].isNull()) {
             programme->getOrder(i)->unused();
         } else {
             programme->getOrder(i)->update(
-                ordersId[i].as<int>(),
+                ordersId[i].as<unsigned short>(),
                 ordersLabel[i].as<String>(),
                 ordersTemperature[i].as<float>()
             );
@@ -120,14 +120,14 @@ void MessageParserService::parseProgramme(char *payload, Programme *programme)
     }
 
     JsonArray orderTimes = json["ts"].as<JsonArray>();
-    for(int i = 0; i < PROGRAMME_MAX_TIMES_ORDERS; i++) {
+    for(unsigned short i = 0; i < PROGRAMME_MAX_TIMES_ORDERS; i++) {
         if(orderTimes[i].isNull()) {
             programme->getOrderTime(i)->unused();
         } else {
             programme->getOrderTime(i)->update(
-                orderTimes[i][0].as<int>(),
-                orderTimes[i][1].as<int>(),
-                orderTimes[i][2].as<int>()
+                orderTimes[i][0].as<unsigned short>(),
+                orderTimes[i][1].as<unsigned short>(),
+                orderTimes[i][2].as<unsigned short>()
             );
         }
     }

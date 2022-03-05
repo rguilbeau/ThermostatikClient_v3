@@ -10,6 +10,7 @@ OrderHandler::OrderHandler(
     _programme = programme;
     _dhtFactory = dhtFactory;
     _programmeService = programmeService;
+    _lastCheckMin = -1;
 }
 
 void OrderHandler::setOrderUpdatedHandler(OrderUpdatedHandlerInterface *orderUpdatedHandlerInterface)

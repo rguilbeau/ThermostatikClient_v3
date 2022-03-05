@@ -1,6 +1,6 @@
 #include "SleepFactory.h"
 
-SleepFactory::SleepFactory(int delay)
+SleepFactory::SleepFactory(unsigned short delay)
 {
     _delay = delay;
     _lastWakeUp = 0;

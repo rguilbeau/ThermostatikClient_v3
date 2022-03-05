@@ -33,11 +33,11 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
     //pinMode(_pinBrightness, OUTPUT);
 }
 
-void TftFactory::setBrightness(int percent) {
+void TftFactory::setBrightness(unsigned short percent) {
     percent = percent < 0 ? 0 : percent;
     percent = percent > 100 ? 100 : percent;
 
-    int analogValue = (int) ((percent * 255) / 100);
+    unsigned short analogValue = (int) ((percent * 255) / 100);
     analogWrite(_pinBrightness, analogValue);
 }
 
@@ -46,10 +46,10 @@ void TftFactory::clear() {
     _driver->setRotation(3);
 }
 
-void TftFactory::print(int x, int y, TftText text)
+void TftFactory::print(unsigned short x, unsigned short y, TftText text)
 {
-    int height = getHeight(text.font);
-    int color = getColor(text.color);
+    unsigned short height = getHeight(text.font);
+    unsigned short color = getColor(text.color);
     uint32 backgroundColor = getColor(text.background);
 
     loadFont(text.font);
@@ -62,12 +62,12 @@ void TftFactory::print(int x, int y, TftText text)
     _driver->print(cleanString(text.text));
 }
 
-void TftFactory::fillRect(int x, int y, int width, int height, TftColor color)
+void TftFactory::fillRect(unsigned short x, unsigned short y, unsigned short width, unsigned short height, TftColor color)
 {
     _driver->fillRect(x, y, width, height, getColor(color));
 }
 
-void TftFactory::draw(int x, int y, TftImage image)
+void TftFactory::draw(unsigned short x, unsigned short y, TftImage image)
 {
     switch(image) {
         case TftImage::IMAGE_THERMOMETER:
@@ -155,7 +155,7 @@ void TftFactory::loadFont(TftFont font)
     }
 }
 
-int TftFactory::getHeight(TftFont font)
+unsigned short TftFactory::getHeight(TftFont font)
 {
     switch (font) {
         case TftFont::SMALL:
@@ -167,7 +167,7 @@ int TftFactory::getHeight(TftFont font)
     }
 }
 
-void TftFactory::drawFromSpiff(int x, int y, String filename)
+void TftFactory::drawFromSpiff(unsigned short x, unsigned short y, String filename)
 {
     // @see https://github.com/Bodmer/TFT_eSPI/tree/master/examples/Generic/TFT_SPIFFS_BMP
     if ((x >= _driver -> width()) || (y >= _driver -> height())) return;

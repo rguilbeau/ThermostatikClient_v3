@@ -15,7 +15,7 @@ class ReceiverFactory {
 public:
     ReceiverFactory(
         String ssid, String password,
-        int timeout,
+        unsigned short timeout,
         AsyncWebServer *server
     );
 
@@ -33,7 +33,7 @@ public:
 
 private:
     unsigned long _lastRequest;
-    int _timeout;
+    unsigned short _timeout;
     bool _connected;
     bool _state;
     bool _receiverState;

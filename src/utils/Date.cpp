@@ -66,11 +66,11 @@ String Date::toLongFormat() {
     return dayOfWeek + " " + monthDay + " " + month + "  " + hours + ":" + minutes;
 }
 
-int Date::findDayIndex() {
+unsigned short Date::findDayIndex() {
     time_t s = this->getLocalTime();
     struct tm* t = localtime(&s);
 
-    int dayIndex = t->tm_wday;
+    short dayIndex = t->tm_wday;
     // start monday
     dayIndex -= 1;
     if(dayIndex == -1) {
@@ -87,6 +87,6 @@ unsigned short Date::findTimeSinceMidnight() {
     return (t->tm_hour * 60) + t->tm_min;
 }
 
-unsigned long Date::findTimeSinceStartWeek() {
+unsigned short Date::findTimeSinceStartWeek() {
     return findTimeSinceMidnight() + (findDayIndex() * 1440);
 }

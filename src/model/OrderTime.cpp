@@ -8,7 +8,7 @@ OrderTime::OrderTime()
     _used = false;
 }
 
-void OrderTime::update(int dayIndex, int time, int orderId)
+void OrderTime::update(unsigned short dayIndex, unsigned short time, unsigned short orderId)
 {
     _dayIndex = dayIndex;
     _time = time;
@@ -21,17 +21,17 @@ void OrderTime::unused()
     _used = false;
 }
 
-int OrderTime::getDayIndex()
+unsigned short OrderTime::getDayIndex()
 {
     return _dayIndex;
 }
 
-int OrderTime::getTime() 
+unsigned short OrderTime::getTime() 
 {
     return _time;
 }
 
-int OrderTime::getOrderId()
+unsigned short OrderTime::getOrderId()
 {
     return _orderId;
 }
@@ -41,7 +41,7 @@ bool OrderTime::isUsed()
     return _used;
 }
 
-unsigned long OrderTime::findTimeSinceStartWeek()
+unsigned short OrderTime::findTimeSinceStartWeek()
 {
     return _time + (_dayIndex * 1440);
 }

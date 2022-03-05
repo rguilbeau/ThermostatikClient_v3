@@ -13,8 +13,8 @@ public:
     ClockFactory();
 
     void setNtpHandler(NtpHandlerInterface *ntpHandler);
-    void setHandlerSize(int size);
-    void setHandler(int index, int delay, ClockHandlerInterface *handler);
+    void setHandlerSize(unsigned short size);
+    void setHandler(unsigned short index, unsigned short delay, ClockHandlerInterface *handler);
 
     void initNtp();
 
@@ -22,8 +22,8 @@ public:
 
 private:
     bool _ntpInitialized; 
-    int _handlerSize;
-    int *_handlersDelays;
+    unsigned short _handlerSize;
+    unsigned short *_handlersDelays;
     unsigned long *_lastCheck;
     ClockHandlerInterface **_handlers;
     NtpHandlerInterface *_ntpHandler;

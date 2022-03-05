@@ -20,15 +20,15 @@ void ClockFactory::setNtpHandler(NtpHandlerInterface *ntpHandler)
     _ntpHandler = ntpHandler;
 }
 
-void ClockFactory::setHandlerSize(int size)
+void ClockFactory::setHandlerSize(unsigned short size)
 {
     _handlerSize = size;
     _handlers = new ClockHandlerInterface*[size];
-    _handlersDelays = new int[size]; 
+    _handlersDelays = new unsigned short[size]; 
     _lastCheck = new unsigned long[size];
 }
 
-void ClockFactory::setHandler(int index, int delay, ClockHandlerInterface *handler)
+void ClockFactory::setHandler(unsigned short index, unsigned short delay, ClockHandlerInterface *handler)
 {
     if(index < _handlerSize) {
         _handlers[index] = handler;
@@ -54,7 +54,7 @@ void ClockFactory::loop()
     }
 
     unsigned long currentMillis = millis();
-    for(int i = 0; i < _handlerSize; i++) {
+    for(unsigned short i = 0; i < _handlerSize; i++) {
         if(_lastCheck[i] + _handlersDelays[i] < currentMillis) {
             _lastCheck[i] = currentMillis;
             _handlers[i]->clockHandle();

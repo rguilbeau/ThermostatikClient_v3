@@ -51,7 +51,7 @@ float DhtSmootherHandler::smooth(float temperature, float lastTemperature)
     return _lastTemperature;
 }
 
-void DhtSmootherHandler::sort(float a[], int size)
+void DhtSmootherHandler::sort(float a[], unsigned short size)
 {
     for(int i=0; i<(size-1); i++) {
         for(int o=0; o<(size-(i+1)); o++) {

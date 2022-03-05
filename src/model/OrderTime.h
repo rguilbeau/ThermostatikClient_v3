@@ -10,20 +10,20 @@ class OrderTime {
 public:
     OrderTime();
     
-    void update(int dayIndex, int time, int orderId);
+    void update(unsigned short dayIndex, unsigned short time, unsigned short orderId);
     void unused();
 
-    int getDayIndex();
-    int getTime();
-    int getOrderId();
+    unsigned short getDayIndex();
+    unsigned short getTime();
+    unsigned short getOrderId();
     bool isUsed();
-    unsigned long findTimeSinceStartWeek();
+    unsigned short findTimeSinceStartWeek();
     
 private:
     bool _used;
-    int _dayIndex;
-    int _time;
-    int _orderId;
+    unsigned short _dayIndex;
+    unsigned short _time;
+    unsigned short _orderId;
 };
 
 #endif

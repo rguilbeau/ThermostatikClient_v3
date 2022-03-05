@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(uint8_t pin, ButtonType buttonType, int debounce)
+Button::Button(uint8_t pin, ButtonType buttonType, unsigned short debounce)
 {
     _pin = pin;
     _buttonType = buttonType;

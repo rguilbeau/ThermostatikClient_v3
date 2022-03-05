@@ -3,7 +3,7 @@
 
 ReceiverFactory::ReceiverFactory(
     String ssid, String password, 
-    int timeout,
+    unsigned short timeout,
     AsyncWebServer *server
 ) {
     _ssid = ssid;

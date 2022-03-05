@@ -8,8 +8,8 @@
 #include "Order.h"
 #include "OrderTime.h"
 
-const int PROGRAMME_MAX_TIMES_ORDERS = 12 * 7;
-const int PROGRAMME_MAX_ORDERS = 10;
+const unsigned short PROGRAMME_MAX_TIMES_ORDERS = 12 * 7;
+const unsigned short PROGRAMME_MAX_ORDERS = 10;
 
 class Programme {
 
@@ -25,12 +25,12 @@ public:
     String getLabel();
     void setLabel(String label);
 
-    OrderTime *getOrderTime(int index);
-    Order *getOrder(int index);
-    Order *getOrderById(int orderId);
+    OrderTime *getOrderTime(unsigned short index);
+    Order *getOrder(unsigned short index);
+    Order *getOrderById(unsigned short orderId);
 
-    int getOrderTimeSize();
-    int getOrderSize();
+    unsigned short getOrderTimeSize();
+    unsigned short getOrderSize();
 
 private:
 

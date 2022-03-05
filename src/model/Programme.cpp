@@ -16,7 +16,7 @@ Programme::Programme()
     }
 }
 
-Order *Programme::getOrder(int index)
+Order *Programme::getOrder(unsigned short index)
 {
     if(index < PROGRAMME_MAX_ORDERS) {
         return _orders[index];
@@ -25,7 +25,7 @@ Order *Programme::getOrder(int index)
     }
 }
 
-OrderTime *Programme::getOrderTime(int index)
+OrderTime *Programme::getOrderTime(unsigned short index)
 {
     if(index < PROGRAMME_MAX_TIMES_ORDERS) {
         return _ordersTimes[index];
@@ -72,17 +72,17 @@ void Programme::setLabel(String label)
     _label = label;
 }
 
-int Programme::getOrderTimeSize()
+unsigned short Programme::getOrderTimeSize()
 {
     return PROGRAMME_MAX_TIMES_ORDERS;
 }
 
-int Programme::getOrderSize()
+unsigned short Programme::getOrderSize()
 {
     return PROGRAMME_MAX_ORDERS;
 }
 
-Order *Programme::getOrderById(int orderId)
+Order *Programme::getOrderById(unsigned short orderId)
 {
     for(int i = 0; i < PROGRAMME_MAX_ORDERS; i++) {
         Order *orderCur = getOrder(i);

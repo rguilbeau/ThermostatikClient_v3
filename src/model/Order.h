@@ -8,17 +8,17 @@ class Order {
 public:
     Order();
     
-    void update(int id, String lable, float temperature);
+    void update(unsigned short id, String lable, float temperature);
     void unused();
 
-    int getId();
+    unsigned short getId();
     String getLabel();
     float getTemperature();
     bool isUsed();
 
 private:
     bool _used;
-    int _id;
+    unsigned short _id;
     String _label;
     float _temperature;
 };

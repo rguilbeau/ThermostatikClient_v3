@@ -16,7 +16,7 @@ public:
 
     void setHandler(DhtHandlerInterface *dhtHandler);
     void setSmoother(DhtSmootherInterface *dhtSmoother);
-    
+
     float getTemperature();
 
     bool isNan();
@@ -32,7 +32,7 @@ private:
     unsigned short _delay;
     float _lastTemperature;
     unsigned long _lastCheck;
-    int _isNanCnt;
+    unsigned short _isNanCnt;
     bool _isNan;
     bool _nanNotified;
     float _tare;

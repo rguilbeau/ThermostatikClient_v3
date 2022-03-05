@@ -14,7 +14,7 @@ public:
 
 private:
 
-    void sort(float a[], int size);
+    void sort(float a[], unsigned short size);
     float smooth(float temperature, float lastTemperature, float factor);
     float fixDecimal(float temperature);
 

@@ -7,7 +7,7 @@
 
 struct TftText
 {
-    int width = 0;
+    unsigned short width = 0;
     TftColor color = TftColor::COLOR_WHITE;
     TftColor background = TftColor::BG_DARK;
     TftFont font = TftFont::SMALL;

@@ -14,14 +14,14 @@ OrderTime *ProgrammeService::findOrderTimeAt(Date date)
 {
     OrderTime *findedOrderTime = nullptr;
 
-    long relativeTime = date.findTimeSinceStartWeek();
-    long lastRelativeTime = -1;
+    short relativeTime = date.findTimeSinceStartWeek();
+    short lastRelativeTime = -1;
 
-    for(int i = 0; i < _programme->getOrderTimeSize(); i++) {
+    for(unsigned short i = 0; i < _programme->getOrderTimeSize(); i++) {
         OrderTime *orderTime = _programme->getOrderTime(i);
 
         if(orderTime != nullptr && orderTime->isUsed()) {
-            long orderRelativeTime = orderTime->findTimeSinceStartWeek();
+            short orderRelativeTime = orderTime->findTimeSinceStartWeek();
 
             if(orderRelativeTime <= relativeTime
                 && (lastRelativeTime == -1 || orderRelativeTime > lastRelativeTime)
@@ -38,16 +38,16 @@ OrderTime *ProgrammeService::findNextOrderTimeAt(Date date)
 {
     OrderTime *findedOrderTime = nullptr;
     OrderTime *currentOrderTime = findOrderTimeAt(date);
-    long lastRelativeTime = -1;
+    short lastRelativeTime = -1;
 
     if(currentOrderTime != nullptr) {
-        long currentRelativeTime = currentOrderTime->findTimeSinceStartWeek();
+        short currentRelativeTime = currentOrderTime->findTimeSinceStartWeek();
 
-        for(int i = 0; i < _programme->getOrderTimeSize(); i++) {
+        for(unsigned short i = 0; i < _programme->getOrderTimeSize(); i++) {
             OrderTime *orderTime = _programme->getOrderTime(i);
 
             if(orderTime != nullptr && orderTime->isUsed()) {
-                long orderRelativeTime = orderTime->findTimeSinceStartWeek();
+                short orderRelativeTime = orderTime->findTimeSinceStartWeek();
 
                 if(orderRelativeTime > currentRelativeTime
                     && (lastRelativeTime == -1 || orderRelativeTime < lastRelativeTime)

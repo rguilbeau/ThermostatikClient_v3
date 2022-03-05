@@ -8,7 +8,7 @@ Order::Order()
     _used = false;
 }
 
-void Order::update(int id, String label, float temperature)
+void Order::update(unsigned short id, String label, float temperature)
 {
     _used = true;
     _id = id;
@@ -21,7 +21,7 @@ void Order::unused()
     _used = false;
 }
 
-int Order::getId()
+unsigned short Order::getId()
 {
     return _id;
 }

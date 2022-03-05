@@ -9,7 +9,7 @@
 class Button {
 
 public:
-    Button(uint8_t pin, ButtonType buttonType, int debounce);
+    Button(uint8_t pin, ButtonType buttonType, unsigned short debounce);
 
     void setHandler(ButtonHandlerInterface *hander);
 
@@ -23,7 +23,7 @@ private:
     ButtonType _buttonType;
     uint8_t _pin;
     bool _pushed;
-    int _debounce;
+    unsigned short _debounce;
     unsigned long _lastCheck;
 };
 
