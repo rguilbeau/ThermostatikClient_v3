@@ -7056,7 +7056,29 @@
 
         <script>
             
-            function smooth(temperature, lastTemperature, fact) {
+            function regulate(currentStatus, currentTemperature, requestTemperature) {
+                var regulationStatus = currentStatus;
+                if(currentStatus && currentTemperature >= requestTemperature + 0.1) {
+                    regulationStatus = false;
+                } else if(!currentStatus && currentTemperature <= requestTemperature -0.1) {
+                    regulationStatus = true;
+                }
+                return regulationStatus;
+            }
+
+            console.log('true, 20.3', regulate(true, 20.3, 20.5));
+            console.log('true, 20.4', regulate(true, 20.4, 20.5));
+            console.log('true, 20.5', regulate(true, 20.5, 20.5));
+            console.log('true, 20.6,', regulate(true, 20.6, 20.5));
+            console.log('true, 20.7', regulate(true, 20.7, 20.5));
+            console.log('////');
+            console.log('false, 20.3', regulate(false, 20.3, 20.5));
+            console.log('false, 20.4', regulate(false, 20.4, 20.5));
+            console.log('false, 20.5', regulate(false, 20.5, 20.5));
+            console.log('false, 20.6', regulate(false, 20.6, 20.5));
+            console.log('false, 20.7', regulate(false, 20.7, 20.5));
+
+           /* function smooth(temperature, lastTemperature, fact) {
                 var smooth = (fact * temperature) + (1 - fact) * lastTemperature;
                 return round(smooth);
             }
@@ -7181,7 +7203,7 @@
                 }
             }*/
 
-            var ctx = document.getElementById('temperatures').getContext('2d');
+            /*var ctx = document.getElementById('temperatures').getContext('2d');
             var myChart = new Chart(ctx, {
                 type:'line',
                 options: {

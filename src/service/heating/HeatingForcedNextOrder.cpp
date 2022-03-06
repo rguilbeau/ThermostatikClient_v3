@@ -10,13 +10,13 @@ HeatingForcedNextOrder::~HeatingForcedNextOrder()
 
 }
 
-bool HeatingForcedNextOrder::regulationStatus(float currentTemperature)
+bool HeatingForcedNextOrder::regulationStatus(float currentTemperature, bool currentStatus)
 {
     #ifdef DEBUG
         Serial.print(F("Regulation : Forced next order"));
     #endif
 
-    return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature);
+    return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature, currentStatus);
 }
 
 bool HeatingForcedNextOrder::nextMode()

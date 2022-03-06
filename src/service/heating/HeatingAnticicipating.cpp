@@ -10,7 +10,7 @@ HeatingAnticipating::~HeatingAnticipating()
 
 }
 
-bool HeatingAnticipating::regulationStatus(float currentTemperature)
+bool HeatingAnticipating::regulationStatus(float currentTemperature, bool currentStatus)
 {
     Order *order = _programme->getAnticipatingOrder();
     #ifdef DEBUG
@@ -23,7 +23,7 @@ bool HeatingAnticipating::regulationStatus(float currentTemperature)
         }
     #endif
 
-    return _regulateByTemperature(order->getTemperature(), currentTemperature);
+    return _regulateByTemperature(order->getTemperature(), currentTemperature, currentStatus);
 }
 
 bool HeatingAnticipating::nextMode()

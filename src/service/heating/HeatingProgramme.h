@@ -9,7 +9,7 @@ public:
     HeatingProgramme(Device *device, Programme *programme);
     ~HeatingProgramme();
 
-    bool regulationStatus(float currentTemperature) override;
+    bool regulationStatus(float currentTemperature, bool currentStatus) override;
     bool nextMode() override;
     bool forceTemperature(float increment) override;
     OrderRender getRender() override;

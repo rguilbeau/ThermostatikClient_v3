@@ -10,13 +10,13 @@ HeatingForcedAlways::~HeatingForcedAlways()
 
 }
 
-bool HeatingForcedAlways::regulationStatus(float currentTemperature)
+bool HeatingForcedAlways::regulationStatus(float currentTemperature, bool currentStatus)
 {
     #ifdef DEBUG
         Serial.print(F("Regulation : Forced always"));
     #endif
 
-    return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature);
+    return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature, currentStatus);
 }
 
 bool HeatingForcedAlways::nextMode()

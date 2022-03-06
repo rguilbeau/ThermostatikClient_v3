@@ -10,13 +10,13 @@ HeatingForcedUntil::~HeatingForcedUntil()
 
 }
 
-bool HeatingForcedUntil::regulationStatus(float currentTemperature)
+bool HeatingForcedUntil::regulationStatus(float currentTemperature, bool currentStatus)
 {
     #ifdef DEBUG
         Serial.print(F("Regulation : Forced until"));
     #endif
 
-    return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature);
+    return _regulateByTemperature(_device->getForcedTemperature(), currentTemperature, currentStatus);
 }
 
 bool HeatingForcedUntil::nextMode()

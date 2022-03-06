@@ -84,7 +84,7 @@ void ReceiverFactory::setState(bool state)
 {
     _state = state;
 }
-
+ 
 bool ReceiverFactory::getState()
 {
     return _state;

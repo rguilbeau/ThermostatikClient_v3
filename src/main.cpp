@@ -13,25 +13,19 @@
 
 Container *container = nullptr;
 
-
-void startSerial() {
-   
-}
-
 void setup()
 {
-    container = Container::get();
-    container->tftFactory()->setBrightness(0);
-
     #ifdef DEBUG
-        startSerial();
-    #endif
-    
-    if(!SPIFFS.begin()) {
-        #ifdef DEBUG
+        Serial.begin(9600);
+        delay(1000);
+
+        if(!SPIFFS.begin()) {
             Serial.println(F("Unable to mount filesysteme !"));
-        #endif
-    }
+        }
+    #endif
+
+    container = Container::get();
+    container->tftFactory()->setBrightness(0);   
 
     WiFi.mode(WIFI_AP_STA);
 

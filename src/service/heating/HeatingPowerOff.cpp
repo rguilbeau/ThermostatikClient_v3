@@ -10,7 +10,7 @@ HeatingPowerOff::~HeatingPowerOff()
 
 }
 
-bool HeatingPowerOff::regulationStatus(float currentTemperature)
+bool HeatingPowerOff::regulationStatus(float currentTemperature, bool currentStatus)
 {
     #ifdef DEBUG
         Serial.println(F("Regulation : power off. Heating:0"));

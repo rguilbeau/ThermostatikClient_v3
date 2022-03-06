@@ -49,7 +49,7 @@ void HeatingHandler::orderUpdated()
 
     if(_device->isProgrammeMode()) {
         Heating *heating = Heating::getMode(_device, _programme);
-        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature(), _receiverFactory->getState());
 
         _receiverFactory->setState(regulationStatus);
         _tftService->setOrderRender(heating->getRender());
@@ -76,7 +76,7 @@ void HeatingHandler::orderAnticipating()
         _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
         
         Heating *heating = Heating::getMode(_device, _programme);
-        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature(), _receiverFactory->getState());
 
         _receiverFactory->setState(regulationStatus);
         _tftService->setOrderRender(heating->getRender());
@@ -108,7 +108,7 @@ void HeatingHandler::untilDateHit()
         _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
 
         Heating *heating = Heating::getMode(_device, _programme);
-        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+        bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature(), _receiverFactory->getState());
 
         _receiverFactory->setState(regulationStatus);
         _tftService->setOrderRender(heating->getRender());
@@ -128,7 +128,7 @@ void HeatingHandler::temperatureChanged(float temperature)
     _mqttFactory->publish(_topicService->getTemperatures(), payload.c_str());
 
     Heating *heating = Heating::getMode(_device, _programme);
-    bool regulationStatus = heating->regulationStatus(temperature);
+    bool regulationStatus = heating->regulationStatus(temperature, _receiverFactory->getState());
     _receiverFactory->setState(regulationStatus);
 
     TemperatureRender render;
@@ -196,7 +196,7 @@ void HeatingHandler::messageReceived(char *topic, char *message)
     _mqttFactory->publish(_topicService->getAnticipating(), payload.c_str());
 
     Heating *heating = Heating::getMode(_device, _programme);
-    bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+    bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature(), _receiverFactory->getState());
     
     _receiverFactory->setState(regulationStatus);
     _tftService->setOrderRender(heating->getRender());
@@ -230,7 +230,7 @@ void HeatingHandler::differedModeUpdated()
 
     Heating *heating = Heating::getMode(_device, _programme);
 
-    bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature());
+    bool regulationStatus = heating->regulationStatus(_dhtFactory->getTemperature(), _receiverFactory->getState());
     _receiverFactory->setState(regulationStatus);
     delete heating;
 }

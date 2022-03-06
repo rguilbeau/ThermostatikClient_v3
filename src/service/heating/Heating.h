@@ -18,7 +18,7 @@ public:
 
     virtual ~Heating() = 0;
 
-    virtual bool regulationStatus(float currentTemperature) = 0;
+    virtual bool regulationStatus(float currentTemperature, bool currentStatus) = 0;
 
     virtual bool nextMode() = 0;
     virtual bool forceTemperature(float increment) = 0;
@@ -32,7 +32,7 @@ protected:
     Programme *_programme;
 
     Heating(Device *device, Programme *programme);
-    bool _regulateByTemperature(float requestTemperature, float currentTemperature);
+    bool _regulateByTemperature(float requestTemperature, float currentTemperature, bool currentStatus);
 
     bool _isQuickRender;
 

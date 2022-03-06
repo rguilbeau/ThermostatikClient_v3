@@ -10,7 +10,7 @@ HeatingProgramme::~HeatingProgramme()
 
 }
 
-bool HeatingProgramme::regulationStatus(float currentTemperature)
+bool HeatingProgramme::regulationStatus(float currentTemperature, bool currentStatus)
 {
     Order *order = _programme->getLastOrder();
     
@@ -25,7 +25,7 @@ bool HeatingProgramme::regulationStatus(float currentTemperature)
     #endif
 
     if(order != nullptr) {
-        return _regulateByTemperature(order->getTemperature(), currentTemperature);
+        return _regulateByTemperature(order->getTemperature(), currentTemperature, currentStatus);
     } else {
         return false;
     }

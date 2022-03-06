@@ -35,14 +35,14 @@ Heating::~Heating()
 
 }
 
-bool Heating::_regulateByTemperature(float requestTemperature, float currentTemperature)
+bool Heating::_regulateByTemperature(float requestTemperature, float currentTemperature, bool currentStatus)
 {
-    bool regulationStatus;
+    bool regulationStatus = currentStatus;
 
-    if(requestTemperature > currentTemperature) {
-        regulationStatus = true;
-    } else {
+    if(currentStatus && currentTemperature >= requestTemperature + 0.1) {
         regulationStatus = false;
+    } else if(!currentStatus && currentTemperature <= requestTemperature -0.1) {
+        regulationStatus = true;
     }
 
     #ifdef DEBUG
