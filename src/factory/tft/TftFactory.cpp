@@ -128,16 +128,6 @@ uint32 TftFactory::getColor(TftColor color)
 
 void TftFactory::loadFont(TftFont font)
 {
-    /**
-     * --- HACK ---
-     * 
-     * Le yield() doit être commenté dans la librairie TFT_eSPI
-     * Dans la classe Smooth_font.cpp TFT_eSPI::loadMetrics(void)
-     * 
-     * Il est impossible de faire un yield() dans un callback asynchrone...
-     * @todo Trouver une autre solution pour gérer le chargement des fonts dans un callback asynchrone
-     * 
-     */
     if(!_fontLoaded || _tftFontLoaded != font) {
         switch (font) {
             case TftFont::SMALL:
