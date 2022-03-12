@@ -64,7 +64,7 @@ void setup()
 }
 
 void loop()
-{  
+{ 
     container->buttonMore()->loop();
     container->buttonMinus()->loop();
     container->buttonOk()->loop();
@@ -72,6 +72,7 @@ void loop()
     container->clockFactory()->loop();
     container->receiverFactory()->loop();
     container->sleepFactory()->loop();
+    container->tftService()->loop();
 
     #ifdef DEBUG
         freeMemoryService->loop();
