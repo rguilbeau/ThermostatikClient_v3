@@ -20,16 +20,6 @@ public:
         TftFactory *tftFactory
     );
 
-    ThermometerRender *_thermometerRender;
-    TemperatureRender *_temperatureRender;
-    TemperatureLabelRender *_temperatureLabelRender;
-    WifiStateRender *_wifiStateRender;
-    ServerStateRender *_serverStateRender;
-    ReceiverStateRender *_receiverStateRender;
-    OrderRender *_orderRender;
-    DateRender *_dateRender;
-    bool _isQuickRender;
-
     void loop();
 
     void displayDefault();
@@ -46,6 +36,25 @@ public:
 
 private:
     TftFactory *_tftFactory;
+
+    ThermometerRender _thermometerRender;
+    TemperatureRender _temperatureRender;
+    TemperatureLabelRender _temperatureLabelRender;
+    WifiStateRender _wifiStateRender;
+    ServerStateRender _serverStateRender;
+    ReceiverStateRender _receiverStateRender;
+    OrderRender _orderRender;
+    DateRender _dateRender;
+    bool _isQuickRender;
+
+    char _thermometerRenderMutations;
+    char _temperatureRenderMutations;
+    char _temperatureLabelRenderMutations;
+    char _wifiStateRenderMutations;
+    char _serverStateRenderMutations;
+    char _receiverStateRenderMutations;
+    char _orderRenderMutations;
+    char _dateRenderMutations;
 
     void _printThermometerRender();
     void _printTemperatureRender();

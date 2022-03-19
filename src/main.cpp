@@ -32,6 +32,7 @@ void setup()
     container = Container::get();
     container->tftFactory()->clear();
     container->tftService()->displayDefault();
+    container->tftFactory()->setBrightness(container->device()->getBrightnessMax());
     
     container->sleepFactory()->setHandler(container->sleepHandler());
     container->sleepFactory()->invokeHandler();

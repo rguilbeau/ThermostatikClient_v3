@@ -5,239 +5,255 @@ TftService::TftService (
 ) {
     _tftFactory = tftFactory;
 
-    _thermometerRender = nullptr;
-    _temperatureRender = nullptr;
-    _temperatureLabelRender = nullptr;
-    _wifiStateRender = nullptr;
-    _serverStateRender = nullptr;
-    _receiverStateRender = nullptr;
-    _orderRender = nullptr;
-    _dateRender = nullptr;
+    ThermometerRender thermometerRender;
+    _thermometerRender = thermometerRender;
+    
+    TemperatureRender temperatureRender;
+    _temperatureRender = temperatureRender;
+
+    TemperatureLabelRender temperatureLabelRender;
+    _temperatureLabelRender = temperatureLabelRender;
+    
+    WifiStateRender wifiStateRender;
+    _wifiStateRender = wifiStateRender;
+
+    ServerStateRender serverStateRender;
+    _serverStateRender = serverStateRender;
+
+    ReceiverStateRender receiverStateRender;
+    _receiverStateRender = receiverStateRender;
+
+    OrderRender orderRender;
+    _orderRender = orderRender;
+    
+    DateRender dateRender;
+    _dateRender = dateRender;
+
     _isQuickRender = false;
+
+    _thermometerRenderMutations++;
+    _temperatureRenderMutations++;
+    _temperatureLabelRenderMutations++;
+    _wifiStateRenderMutations++;
+    _serverStateRenderMutations++;
+    _receiverStateRenderMutations++;
+    _orderRenderMutations++;
+    _dateRenderMutations++;
 }
 
 void TftService::loop()
 {
-
-    if(_thermometerRender != nullptr) {
-        _printThermometerRender();
-        delete _thermometerRender;
-    }
-
-    if(_temperatureRender != nullptr) {
-        _printTemperatureRender();
-        delete _temperatureRender;
-    }
-
-    if(_temperatureLabelRender != nullptr) {
-        _printTemperatureLabelRender();
-        delete _temperatureLabelRender;
-    }
-
-    if(_wifiStateRender != nullptr) {
-        _printWifiStateRender();
-        delete _wifiStateRender;
-    }
-
-    if(_serverStateRender != nullptr) {
-        _printServerStateRender();
-        delete _serverStateRender;
-    }
-
-    if(_receiverStateRender != nullptr) {
-        _printReceiverStateRender();
-        delete _receiverStateRender;
-    }
-
-    if(_orderRender != nullptr) {
-        _printOrderRender();
-        delete _orderRender;
-    }
-
-    if(_dateRender != nullptr) {
-        _printMessageRender();
-        delete _dateRender;
-    }
-
+    _printThermometerRender();
+    _printTemperatureRender();
+    _printTemperatureLabelRender();
+    _printWifiStateRender();
+    _printServerStateRender();
+    _printReceiverStateRender();
+    _printOrderRender();
+    _printMessageRender();
     _isQuickRender = false;
 }
 
 void TftService::displayDefault()
 {
-    _thermometerRender = new ThermometerRender();
-    _temperatureRender = new TemperatureRender();
-    _temperatureLabelRender = new TemperatureLabelRender();
-    _receiverStateRender = new ReceiverStateRender();
-    _serverStateRender = new ServerStateRender();
-    _wifiStateRender = new WifiStateRender();
-    _orderRender = new OrderRender();
-    _dateRender = new DateRender();
-
     _tftFactory->fillRect(30, 105, 260, 2, TftColor::COLOR_GRAY);
     loop();
 }
 
 void TftService::setThermometerRender(ThermometerRender render) 
 {
-    delete _thermometerRender;
-    _thermometerRender = &render;
+    _thermometerRender = render;
+    _thermometerRenderMutations++;
 }
 
 void TftService::_printThermometerRender() 
 {
-    _tftFactory->draw(
-        35, 15,
-        _thermometerRender->image
-    );
+    if(_thermometerRenderMutations > 0) {
+        _tftFactory->draw(
+            35, 15,
+            _thermometerRender.image
+        );
+        _thermometerRenderMutations--;
+    }
 }
 
 void TftService::setTemperatureRender(TemperatureRender render)
 {
-    delete _temperatureRender;
-    _temperatureRender = &render;
+    _temperatureRender = render;
+    _temperatureRenderMutations++;
 }
 
 void TftService::_printTemperatureRender() 
 {
-    TftText text;
-    text.font = TftFont::LARGE;
-    text.color = TftColor::COLOR_WHITE;
-    text.width = 180;
+    if(_temperatureRenderMutations > 0) {
+        TftText text;
+        text.font = TftFont::LARGE;
+        text.color = TftColor::COLOR_WHITE;
+        text.width = 180;
 
-    if(_temperatureRender->isNan) {
-        text.text = F("--.- 'C");
-    } else {
-        text.text = TftFactory::formatTemperature(_temperatureRender->temperature);
+        if(_temperatureRender.isNan) {
+            text.text = F("--.- 'C");
+        } else {
+            text.text = TftFactory::formatTemperature(_temperatureRender.temperature);
+        }
+
+        _tftFactory->print(90, 20, text);
+        _temperatureRenderMutations--;
     }
-
-    _tftFactory->print(90, 20, text);
 }
 
 void TftService::setTemperatureLabelRender(TemperatureLabelRender render) 
 {
-    delete _temperatureLabelRender;
-    _temperatureLabelRender = &render;
+    _temperatureLabelRender = render;
+    _temperatureLabelRenderMutations++;
 }
 
 void TftService::_printTemperatureLabelRender() 
 {
-    TftText text;
-    text.font = TftFont::SMALL;
-    text.color = TftColor::COLOR_GRAY;
-    text.width = 180;
-    text.text = _temperatureLabelRender->text;
+    if(_temperatureLabelRenderMutations > 0) {
+        TftText text;
+        text.font = TftFont::SMALL;
+        text.color = TftColor::COLOR_GRAY;
+        text.width = 180;
+        text.text = _temperatureLabelRender.text;
 
-    _tftFactory->print(90, 60, text);
+        _tftFactory->print(90, 60, text);
+
+        _temperatureLabelRenderMutations--;
+    }
 }
 
 void TftService::setWifiStateRender(WifiStateRender render) 
 {
-    delete _wifiStateRender;
-    _wifiStateRender = &render;
+    _wifiStateRender = render;
+    _wifiStateRenderMutations++;
 }
 
 void TftService::_printWifiStateRender() 
 {
-    if(_wifiStateRender->connected) {
-        _tftFactory->fillRect(280, 10, 25, 25, TftColor::BG_DARK);
-    } else {
-        _tftFactory->draw(
-            280, 10,
-            TftImage::IMAGE_WIFI_OFF
-        );
+    if(_wifiStateRenderMutations > 0) {
+        if(_wifiStateRender.connected) {
+            _tftFactory->fillRect(280, 10, 25, 25, TftColor::BG_DARK);
+        } else {
+            _tftFactory->draw(
+                280, 10,
+                TftImage::IMAGE_WIFI_OFF
+            );
+        }
+
+        _wifiStateRenderMutations--;
     }
 }
 
 void TftService::setServerStateRender(ServerStateRender render) 
 {
-    delete _serverStateRender;
-    _serverStateRender = &render;
+    _serverStateRender = render;
+    _serverStateRenderMutations++;
 }
 
 void TftService::_printServerStateRender() 
 {
-    if(_serverStateRender->connected) {
-        _tftFactory->fillRect(280, 40, 25, 25, TftColor::BG_DARK);
-    } else {
-        _tftFactory->draw(
-            280, 40,
-            TftImage::IMAGE_SERVER_OFF
-        );
+    if(_serverStateRenderMutations > 0) {
+        if(_serverStateRender.connected) {
+            _tftFactory->fillRect(280, 40, 25, 25, TftColor::BG_DARK);
+        } else {
+            _tftFactory->draw(
+                280, 40,
+                TftImage::IMAGE_SERVER_OFF
+            );
+        }
+
+        _serverStateRenderMutations--;
     }
 }
 
 void TftService::setReceiverStateRender(ReceiverStateRender render) 
 {
-    delete _receiverStateRender;
-    _receiverStateRender = &render;
+    _receiverStateRender = render;
+    _receiverStateRenderMutations++;
 }
 
 void TftService::_printReceiverStateRender() 
 {
-    if(_receiverStateRender->connected) {
-        _tftFactory->fillRect(280, 70, 25, 25, TftColor::BG_DARK);
-    } else {
-        _tftFactory->draw(
-            280, 70,
-            TftImage::IMAGE_RECEIVER_OFF
-        );
+    if(_receiverStateRenderMutations > 0) {
+        if(_receiverStateRender.connected) {
+            _tftFactory->fillRect(280, 70, 25, 25, TftColor::BG_DARK);
+        } else {
+            _tftFactory->draw(
+                280, 70,
+                TftImage::IMAGE_RECEIVER_OFF
+            );
+        }
+
+        _receiverStateRenderMutations--;
     }
 }
 
 void TftService::setOrderRender(OrderRender render) 
 {
-    delete _orderRender;
-    _orderRender = &render;
+    Serial.println("set order render:" + render.temperature);
+    _orderRender = render;
     _isQuickRender = false;
+    _orderRenderMutations++;
 }
 
 void TftService::setOrderRender(OrderRender render, bool isQuickRender) 
 {
-    delete _orderRender;
-    _orderRender = &render;
+    _orderRender = render;
     _isQuickRender = isQuickRender;
+    _orderRenderMutations++;
 }
 
 void TftService::_printOrderRender() 
-{
-    _tftFactory->draw(30, 125, _orderRender->icon);
+{   
+    if(_orderRenderMutations > 0) {
+        Serial.println("==> " + _orderRender.temperature);
+        _tftFactory->draw(30, 125, _orderRender.icon);
 
-    TftText temperatureText;
-    temperatureText.font = TftFont::LARGE;
-    temperatureText.color = TftColor::COLOR_WHITE;
-    temperatureText.width = 150;
-    temperatureText.text = _orderRender->temperature;
-    _tftFactory->print(90, 125, temperatureText);
+        TftText temperatureText;
+        temperatureText.font = TftFont::LARGE;
+        temperatureText.color = TftColor::COLOR_WHITE;
+        temperatureText.width = 150;
+        temperatureText.text = _orderRender.temperature;
+        _tftFactory->print(90, 125, temperatureText);
 
-    if(!_isQuickRender) {
-        TftText labelText;
-        labelText.font = TftFont::SMALL;
-        labelText.color = TftColor::COLOR_GRAY;
-        labelText.width = 200;
-        labelText.text = _orderRender->label;
-        _tftFactory->print(90, 165, labelText);
+        if(!_isQuickRender) {
+            TftText labelText;
+            labelText.font = TftFont::SMALL;
+            labelText.color = TftColor::COLOR_GRAY;
+            labelText.width = 200;
+            labelText.text = _orderRender.label;
+            _tftFactory->print(90, 165, labelText);
 
-        TftText infoText;
-        infoText.font = TftFont::SMALL;
-        infoText.color = TftColor::COLOR_GRAY;
-        infoText.width = 200;
-        infoText.text = _orderRender->info;
-        _tftFactory->print(90, 185, infoText);
+            TftText infoText;
+            infoText.font = TftFont::SMALL;
+            infoText.color = TftColor::COLOR_GRAY;
+            infoText.width = 200;
+            infoText.text = _orderRender.info;
+            _tftFactory->print(90, 185, infoText);
+        }
+
+        _orderRenderMutations--;
+        Serial.println("order printed");
     }
 }
 
 void TftService::setMessageRender(DateRender render) 
 {
-    delete _dateRender;
-    _dateRender = &render;
+    _dateRender = render;
+    _dateRenderMutations++;
 }
 
 void TftService::_printMessageRender() 
 {
-    TftText date;
-    date.font = TftFont::SMALL;
-    date.color = TftColor::COLOR_WHITE;
-    date.width = 250;
-    date.text = _dateRender->date;
-    _tftFactory->print(20, 220, date);
+    if(_dateRenderMutations > 0) {
+        TftText date;
+        date.font = TftFont::SMALL;
+        date.color = TftColor::COLOR_WHITE;
+        date.width = 250;
+        date.text = _dateRender.date;
+        _tftFactory->print(20, 220, date);
+
+        _dateRenderMutations--;
+    }
 }
