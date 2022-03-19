@@ -31,14 +31,14 @@ TftService::TftService (
 
     _isQuickRender = false;
 
-    _thermometerRenderMutations++;
-    _temperatureRenderMutations++;
-    _temperatureLabelRenderMutations++;
-    _wifiStateRenderMutations++;
-    _serverStateRenderMutations++;
-    _receiverStateRenderMutations++;
-    _orderRenderMutations++;
-    _dateRenderMutations++;
+    _thermometerRenderMutations = 1;
+    _temperatureRenderMutations = 1;
+    _temperatureLabelRenderMutations = 1;
+    _wifiStateRenderMutations = 1;
+    _serverStateRenderMutations = 1;
+    _receiverStateRenderMutations = 1;
+    _orderRenderMutations = 1;
+    _dateRenderMutations = 1;
 }
 
 void TftService::loop()

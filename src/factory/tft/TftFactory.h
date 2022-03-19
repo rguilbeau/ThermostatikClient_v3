@@ -38,7 +38,7 @@ private:
     
     void loadFont(TftFont font);
     void drawFromSpiff(unsigned short x, unsigned short y, String image);
-    uint32 getColor(TftColor color);
+    uint32_t getColor(TftColor color);
     unsigned short getHeight(TftFont font);
     uint16_t read16(File &f);
     uint32_t read32(File &f);

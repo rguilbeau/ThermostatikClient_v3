@@ -1,4 +1,5 @@
 #include "Container.h"
+#include "Pin.h"
 
 Container *Container::instance = nullptr;
 
@@ -34,19 +35,19 @@ Container::Container()
     );
 
     _dhtFactory = new DhtFactory(
-        new DHTesp(), D0, 2000
+        new DHTesp(), PIN_DHT, 2000
     );
 
     _tftFactory = new TftFactory(
         new TFT_eSPI(),
-        D1
+        PIN_TFT_BRIGHTNESS
     );
 
     _sleepFactory = new SleepFactory(20000);
 
-    _buttonMore = new Button(D3, ButtonType::BUTTON_MORE, 10);
-    _buttonMinus = new Button(D6, ButtonType::BUTTON_MINUS, 10);
-    _buttonOk = new Button(D2, ButtonType::BUTTON_OK, 10);
+    _buttonMore = new Button(PIN_BUTTON_MORE, ButtonType::BUTTON_MORE, 10);
+    _buttonMinus = new Button(PIN_BUTTON_MINUS, ButtonType::BUTTON_MINUS, 10);
+    _buttonOk = new Button(PIN_BUTTON_OK, ButtonType::BUTTON_OK, 10);
 
     _topicService = new TopicService(DEVICE_NAME);
 

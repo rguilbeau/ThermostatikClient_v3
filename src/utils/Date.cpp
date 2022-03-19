@@ -45,12 +45,12 @@ String Date::toShortFormat() {
     struct tm* t = localtime(&s);
 
     String dayOfWeek = Date::sDaysOfWeek[t->tm_wday];
-    String monthDay = t->tm_mday < 10 ? F("0") + String(t->tm_mday) : String(t->tm_mday);
+    String monthDay = t->tm_mday < 10 ? "0" + String(t->tm_mday) : String(t->tm_mday);
     String month = Date::sMonthsOfYear[t->tm_mon];
-    String hours = t->tm_hour < 10 ? F("0") + String(t->tm_hour) : String(t->tm_hour);
-    String minutes = t->tm_min < 10 ? F("0") + String(t->tm_min) : String(t->tm_min);
+    String hours = t->tm_hour < 10 ? "0" + String(t->tm_hour) : String(t->tm_hour);
+    String minutes = t->tm_min < 10 ? "0" + String(t->tm_min) : String(t->tm_min);
 
-    return dayOfWeek.substring(0, 3) + F(". ") + monthDay + F(" ") + month.substring(0, 3) + F(".  ") + hours + F(":") + minutes;
+    return dayOfWeek.substring(0, 3) + ". " + monthDay + " " + month.substring(0, 3) + ".  " + hours + ":" + minutes;
 }
 
 String Date::toLongFormat() {
@@ -58,12 +58,12 @@ String Date::toLongFormat() {
     struct tm* t = localtime(&s);
 
     String dayOfWeek = Date::sDaysOfWeek[t->tm_wday];
-    String monthDay = t->tm_mday < 10 ? F("0") + String(t->tm_mday) : String(t->tm_mday);
+    String monthDay = t->tm_mday < 10 ? "0" + String(t->tm_mday) : String(t->tm_mday);
     String month = Date::sMonthsOfYear[t->tm_mon];
-    String hours = t->tm_hour < 10 ? F("0") + String(t->tm_hour) : String(t->tm_hour);
-    String minutes = t->tm_min < 10 ? F("0") + String(t->tm_min) : String(t->tm_min);
+    String hours = t->tm_hour < 10 ? "0" + String(t->tm_hour) : String(t->tm_hour);
+    String minutes = t->tm_min < 10 ? "0" + String(t->tm_min) : String(t->tm_min);
 
-    return dayOfWeek + F(" ") + monthDay + F(" ") + month + F("  ") + hours + F(":") + minutes;
+    return dayOfWeek + " " + monthDay + " " + month + "  " + hours + ":" + minutes;
 }
 
 unsigned short Date::findDayIndex() {

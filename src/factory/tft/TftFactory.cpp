@@ -1,5 +1,6 @@
 #include "TftFactory.h"
 
+
 const String TftFactory::FONT_NOTO_15 = "NotoSansBold15";
 const String TftFactory::FONT_NOTO_36 = "NotoSansBold36";
 
@@ -30,7 +31,13 @@ TftFactory::TftFactory(TFT_eSPI *driver, uint8_t pinBrightness)
     #endif
 
     _fontLoaded = false;
-    //pinMode(_pinBrightness, OUTPUT);
+
+    #ifdef ESP8266
+        //pinMode(_pinBrightness, OUTPUT);
+    #else 
+        ledcSetup(0, 5000, 8);
+        ledcAttachPin(_pinBrightness, 0);
+    #endif
 }
 
 void TftFactory::setBrightness(unsigned short percent) {
@@ -38,7 +45,12 @@ void TftFactory::setBrightness(unsigned short percent) {
     percent = percent > 100 ? 100 : percent;
 
     unsigned short analogValue = (int) ((percent * 255) / 100);
-    analogWrite(_pinBrightness, analogValue);
+
+    #ifdef ESP8266
+        analogWrite(_pinBrightness, analogValue);
+    #else
+        ledcWrite(0, analogValue);
+    #endif
 }
 
 void TftFactory::clear() {
@@ -50,7 +62,7 @@ void TftFactory::print(unsigned short x, unsigned short y, TftText text)
 {
     unsigned short height = getHeight(text.font);
     unsigned short color = getColor(text.color);
-    uint32 backgroundColor = getColor(text.background);
+    uint32_t backgroundColor = getColor(text.background);
 
     loadFont(text.font);
     _driver->fillRect(
@@ -111,7 +123,7 @@ void TftFactory::draw(unsigned short x, unsigned short y, TftImage image)
     }
 }
 
-uint32 TftFactory::getColor(TftColor color)
+uint32_t TftFactory::getColor(TftColor color)
 {
     switch (color)
     {

@@ -17,14 +17,20 @@ String MessageParserService::deviceToPayload(Device *device)
     String forcedTemperature = String(device->getForcedTemperature());
     String forcedUntil = String(device->getForcedUntil());
     String powerOn = device->isPowerOn() ? F("true") : F("false");
-
+    
     String payload = F("{");
-    payload += F("\"forced\":") + isForced + F(",");
-    payload += F("\"forcedTemperature\":") + forcedTemperature + F(",");
-    payload += F("\"forcedUntil\":") + forcedUntil + F(",");
-    payload += F("\"powerOn\":") + powerOn;
+    payload += F("\"forced\":");
+    payload += isForced;
+    payload += F(",");
+    payload += F("\"forcedTemperature\":") ;
+    payload += forcedTemperature;
+    payload += F(",");
+    payload += F("\"forcedUntil\":");
+    payload += forcedUntil;
+    payload += F(",");
+    payload += F("\"powerOn\":");
+    payload += powerOn;
     payload += F("}");
-
     return payload;
 }
 
@@ -33,8 +39,11 @@ String MessageParserService::temperatureToPayload(float temperature, bool isNan)
     String temperatureStr = String(temperature);
     String isNanStr = isNan ? F("true") : F("false");
     String payload = F("{");
-    payload += F("\"temperature\":") + temperatureStr + F(",");
-    payload += F("\"nan\":") + isNanStr;
+    payload += F("\"temperature\":");
+    payload += temperatureStr;
+    payload += F(",");
+    payload += F("\"nan\":");
+    payload += isNanStr;
     payload += F("}");
 
     return payload; 
@@ -45,7 +54,8 @@ String MessageParserService::heatingToPayload(bool heating)
     String heatingStr = heating ? F("true") : F("false");
 
     String payload = F("{");
-    payload += F("\"heating\":") + heatingStr;
+    payload += F("\"heating\":");
+    payload += heatingStr;
     payload += F("}");
 
     return payload; 
@@ -56,13 +66,18 @@ String MessageParserService::anticipatingToPayload(Order *order)
     String anticipatingLabel = F("null");
     String anticipatingTemperature = F("0");
     if(order != nullptr) {
-        anticipatingLabel = F("\"") + order->getLabel() + F("\"");
+        anticipatingLabel = F("\"");
+        anticipatingLabel += order->getLabel();
+        anticipatingLabel += F("\"");
         anticipatingTemperature = String(order->getTemperature());
     }
 
     String payload = F("{");
-    payload += F("\"anticipatingLabel\":") + anticipatingLabel + F(",");
-    payload += F("\"anticipatingTemperature\":") + anticipatingTemperature;
+    payload += F("\"anticipatingLabel\":");
+    payload += anticipatingLabel;
+    payload += F(",");
+    payload += F("\"anticipatingTemperature\":");
+    payload += anticipatingTemperature;
     payload += F("}");
 
     return payload;

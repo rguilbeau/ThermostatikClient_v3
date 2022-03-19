@@ -1,5 +1,10 @@
 #include "ReceiverFactory.h"
-#include "ESP8266WiFi.h"
+
+#ifdef ESP8266
+    #include "ESP8266WiFi.h"
+#else
+    #include "WiFi.h"
+#endif
 
 ReceiverFactory::ReceiverFactory(
     String ssid, String password, 
@@ -22,19 +27,12 @@ void ReceiverFactory::createAccessPoint()
         Serial.println(F("Receiver : create access point"));
     #endif
 
-    //IPAddress ip(192, 168, 1, 184);
-    //IPAddress gateway(192, 168, 1, 185);
-    //IPAddress subnet(255,255,255,0);
-
-    //bool configOk = WiFi.softAPConfig(ip, gateway, subnet);
-
-    #ifdef DEBUG
-        //if(!configOk) {
-        //    Serial.println("Receiver : config AP failed !");
-       // }
+    #ifdef ESP8266
+        WiFi.softAP(_ssid, _password);
+    #else
+        WiFi.softAP(_ssid.c_str(), _password.c_str());
     #endif
-
-    WiFi.softAP(_ssid, _password);
+    
     delay(100);
     
     #ifdef DEBUG

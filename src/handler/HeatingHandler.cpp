@@ -211,9 +211,14 @@ void HeatingHandler::modeUpdated(bool isQuickRender)
     _tftService->setOrderRender(heating->getRender(), isQuickRender);
     delete heating;
 
-    differedModeUpdatedTicker.once(2, std::bind(&HeatingHandler::differedModeUpdated, this));
+    #ifdef ESP8266
+        differedModeUpdatedTicker.once(2, std::bind(&HeatingHandler::differedModeUpdated, this));
+    #else
+        differedModeUpdatedTicker.once(2, +[](HeatingHandler *heatingHandler) {
+            heatingHandler->differedModeUpdated();
+        }, this);
+    #endif
 }
-
 
 void HeatingHandler::differedModeUpdated()
 {

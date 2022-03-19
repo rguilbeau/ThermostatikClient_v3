@@ -1,10 +1,16 @@
+#ifdef ESP8266
+    #include <ESP8266WiFi.h>
+#else
+    #include <WiFi.h>
+#endif
+
 #ifndef T_WIFI_FACTORY_H
 #define T_WIFI_FACTORY_H
 
 #include "Debug.h"
 
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
+
 
 #include "WifiConnectionHandlerInterface.h"
 
@@ -21,11 +27,13 @@ private:
     String _ssid;
     String _password;
 
-    void _onStationModeGotIP();
-    void _onStationModeDisconnected();
+    #ifdef ESP8266
+        void _onStationModeGotIP();
+        void _onStationModeDisconnected();
 
-    WiFiEventHandler _wifiConnectHandler;
-    WiFiEventHandler _wifiDisconnectHandler;
+        WiFiEventHandler _wifiConnectHandler;
+        WiFiEventHandler _wifiDisconnectHandler;
+    #endif
 
     WifiConnectionHandlerInterface *_wifiHandler;
 };

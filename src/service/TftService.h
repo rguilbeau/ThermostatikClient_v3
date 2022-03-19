@@ -47,14 +47,14 @@ private:
     DateRender _dateRender;
     bool _isQuickRender;
 
-    char _thermometerRenderMutations;
-    char _temperatureRenderMutations;
-    char _temperatureLabelRenderMutations;
-    char _wifiStateRenderMutations;
-    char _serverStateRenderMutations;
-    char _receiverStateRenderMutations;
-    char _orderRenderMutations;
-    char _dateRenderMutations;
+    short _thermometerRenderMutations;
+    short _temperatureRenderMutations;
+    short _temperatureLabelRenderMutations;
+    short _wifiStateRenderMutations;
+    short _serverStateRenderMutations;
+    short _receiverStateRenderMutations;
+    short _orderRenderMutations;
+    short _dateRenderMutations;
 
     void _printThermometerRender();
     void _printTemperatureRender();

@@ -58,7 +58,15 @@ void NetworkHandler::mqttDisconnected()
     _tftService->setServerStateRender(render);
 
     if(_wifiFactory->isConnected()) {
+
+        #ifdef ESP8266
         _mqttReconnectTimer.once(2, std::bind(&MqttFactory::connect, _mqttFactory));
+        #else
+         _mqttReconnectTimer.once(2, +[](MqttFactory *mqttFactory){
+             mqttFactory->connect();
+         }, _mqttFactory);
+        #endif
+
     } else {
         #ifdef DEBUG
             Serial.println(F("Network factory can't connect to MQTT : wifi is disconnected"));
@@ -73,7 +81,15 @@ void NetworkHandler::wifiConnected()
     _tftService->setWifiStateRender(render);
 
     _clockFactory->initNtp();
-    _mqttReconnectTimer.once(1, std::bind(&MqttFactory::connect, _mqttFactory));
+
+    #ifdef ESP8266
+        _mqttReconnectTimer.once(1, std::bind(&MqttFactory::connect, _mqttFactory));
+    #else
+        _mqttReconnectTimer.once(1, +[](MqttFactory *mqttFactory) {
+            mqttFactory->connect();
+        }, _mqttFactory);
+    #endif
+    
 }
 
 void NetworkHandler::wifiDisconnected()
@@ -83,7 +99,15 @@ void NetworkHandler::wifiDisconnected()
     _tftService->setWifiStateRender(render);
 
     _mqttReconnectTimer.detach();
-    _wifiReconnectTimer.once(2, std::bind(&WifiFactory::connect, _wifiFactory));
+
+    #ifdef ESP8266
+        _wifiReconnectTimer.once(2, std::bind(&WifiFactory::connect, _wifiFactory));
+    #else
+        _wifiReconnectTimer.once(2, +[](WifiFactory *wifiFactory) {
+            wifiFactory->connect();
+        }, _wifiFactory);
+    #endif
+
 }
 
 
