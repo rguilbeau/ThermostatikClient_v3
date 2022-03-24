@@ -9,7 +9,7 @@
 #else
 
 #define PIN_DHT 4
-#define PIN_TFT_BRIGHTNESS 5
+#define PIN_TFT_BRIGHTNESS 16
 #define PIN_BUTTON_MORE 25
 #define PIN_BUTTON_MINUS 26
 #define PIN_BUTTON_OK 27

@@ -25,30 +25,30 @@ void ButtonHandler::pushed(ButtonType buttontype, String name)
 
     if(!_sleepFactory->isWakeUp()) {
         _sleepFactory->wakeUp();
-    } else {
-        bool hasMuted = false;
+    }
     
-        Heating *heating = Heating::getMode(_device, _programme);
+    bool hasMuted = false;
 
-        switch (buttontype) {
-            case BUTTON_OK:
-                hasMuted = heating->nextMode();
-                break;
-            case BUTTON_MINUS:
-                hasMuted = heating->forceTemperature(-0.5); 
-                break;
-            case BUTTON_MORE:
-                hasMuted = heating->forceTemperature(+0.5);
-                break;
-            default:
-                break;
-        }
+    Heating *heating = Heating::getMode(_device, _programme);
 
-        bool isQuickRender = heating->isQuickRender();
-        delete heating;
+    switch (buttontype) {
+        case BUTTON_OK:
+            hasMuted = heating->nextMode();
+            break;
+        case BUTTON_MINUS:
+            hasMuted = heating->forceTemperature(-0.5); 
+            break;
+        case BUTTON_MORE:
+            hasMuted = heating->forceTemperature(+0.5);
+            break;
+        default:
+            break;
+    }
 
-        if(hasMuted && _modeHandler != nullptr) {
-            _modeHandler->modeUpdated(isQuickRender);
-        }
+    bool isQuickRender = heating->isQuickRender();
+    delete heating;
+
+    if(hasMuted && _modeHandler != nullptr) {
+        _modeHandler->modeUpdated(isQuickRender);
     }
 }
