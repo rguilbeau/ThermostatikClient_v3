@@ -16,7 +16,7 @@
 #include "factory/wifi/WifiConnectionHandlerInterface.h"
 #include "factory/receiver/ReceiverConnectionHandlerInterface.h"
 
-#include "factory/dht/DhtFactory.h"
+#include "factory/temperature_sensor/TemperatureSensorFactory.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
@@ -35,7 +35,7 @@ public:
         WifiFactory *wifiFactory,
         ReceiverFactory *receiverFactory,
         MqttFactory *mqttFactory, 
-        DhtFactory *dhtFactory,
+        TemperatureSensorFactory *temperatureSensorFactory,
         TopicService *topicService,
         MessageParserService *messageParserService,
         TftService *tftService
@@ -56,7 +56,7 @@ private:
     ClockFactory *_clockFactory;
     WifiFactory *_wifiFactory;
     ReceiverFactory *_receiverFactory;
-    DhtFactory *_dhtFactory;
+    TemperatureSensorFactory *_temperatureSensorFactory;
     MqttFactory *_mqttFactory;
     
     TopicService *_topicService;

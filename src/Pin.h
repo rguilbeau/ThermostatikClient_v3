@@ -1,6 +1,5 @@
 #ifdef ESP8266
 
-#define PIN_DHT D0
 #define PIN_TFT_BRIGHTNESS D1
 #define PIN_BUTTON_MORE D3
 #define PIN_BUTTON_MINUS D6
@@ -8,7 +7,7 @@
 
 #else
 
-#define PIN_DHT 4
+#define SHT_ADDR 0x44
 #define PIN_TFT_BRIGHTNESS 16
 #define PIN_BUTTON_MORE 25
 #define PIN_BUTTON_MINUS 26

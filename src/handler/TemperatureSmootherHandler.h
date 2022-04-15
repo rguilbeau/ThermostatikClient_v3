@@ -1,14 +1,16 @@
-#ifndef T_DHT_SMOOTHER_HANDLER_H
-#define T_DHT_SMOOTHER_HANDLER_H
+#ifndef T_TEMPERATURE_SMOOTHER_HANDLER_H
+#define T_TEMPERATURE_SMOOTHER_HANDLER_H
 
 #include <Arduino.h>
 
-#include "factory/dht/DhtSmootherInterface.h"
+#include "Debug.h"
 
-class DhtSmootherHandler : public DhtSmootherInterface {
+#include "factory/temperature_sensor/TemperatureSmootherInterface.h"
+
+class TemperatureSmootherHandler : public TemperatureSmootherInterface {
 
 public:
-    DhtSmootherHandler();
+    TemperatureSmootherHandler();
 
     float smooth(float temperature, float lastTemperature) override;
 

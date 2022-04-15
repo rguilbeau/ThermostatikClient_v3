@@ -14,7 +14,8 @@
                 "c:/Users/Romai/projets/ThermostatikClient_v3/lib/TFT_eSPI",
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src",
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src",
-                "c:/Users/Romai/projets/ThermostatikClient_v3/.pio/libdeps/esp32doit-devkit-v1/DHT sensor library for ESPx",
+                "c:/Users/Romai/projets/ThermostatikClient_v3/.pio/libdeps/esp32doit-devkit-v1/SHT31",
+                "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 "c:/Users/Romai/projets/ThermostatikClient_v3/.pio/libdeps/esp32doit-devkit-v1/ESPAsyncWebServer-esphome/src",
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
@@ -106,7 +107,6 @@
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
-                "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 ""
             ],
             "browse": {
@@ -118,7 +118,8 @@
                     "c:/Users/Romai/projets/ThermostatikClient_v3/lib/TFT_eSPI",
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/SPI/src",
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src",
-                    "c:/Users/Romai/projets/ThermostatikClient_v3/.pio/libdeps/esp32doit-devkit-v1/DHT sensor library for ESPx",
+                    "c:/Users/Romai/projets/ThermostatikClient_v3/.pio/libdeps/esp32doit-devkit-v1/SHT31",
+                    "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     "c:/Users/Romai/projets/ThermostatikClient_v3/.pio/libdeps/esp32doit-devkit-v1/ESPAsyncWebServer-esphome/src",
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
@@ -210,7 +211,6 @@
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
-                    "C:/Users/Romai/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     ""
                 ]
             },

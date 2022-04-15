@@ -34,8 +34,8 @@ Container::Container()
         MQTT_LOGIN, MQTT_PASSWORD
     );
 
-    _dhtFactory = new DhtFactory(
-        new DHTesp(), PIN_DHT, 2000
+    _temperatureSensorFactory = new TemperatureSensorFactory(
+        new SHT31(), SHT_ADDR, 5000
     );
 
     _tftFactory = new TftFactory(
@@ -60,16 +60,16 @@ Container::Container()
     );
 
     _messageParserService = new MessageParserService(
-        _dhtFactory
+        _temperatureSensorFactory
     );
 
     _programmeService = new ProgrammeService(
-        _device, _programme, _dhtFactory
+        _device, _programme, _temperatureSensorFactory
     );
 
     _networkHandler = new NetworkHandler(
         _clockFactory,_wifiFactory, _receiverFactory, _mqttFactory, 
-        _dhtFactory, _topicService, _messageParserService, _tftService
+        _temperatureSensorFactory, _topicService, _messageParserService, _tftService
     );
 
     _tftAnimationHandler = new TftAnimationHandler(_tftService);
@@ -78,7 +78,7 @@ Container::Container()
 
     _heatingHandler = new HeatingHandler(
         _programme, _device, 
-        _dhtFactory, _mqttFactory, _receiverFactory, _sleepFactory,
+        _temperatureSensorFactory, _mqttFactory, _receiverFactory, _sleepFactory,
         _messageParserService, _programmeService,
         _topicService, _tftService
     );
@@ -90,7 +90,7 @@ Container::Container()
 
     _orderHandler = new OrderHandler(
         _device, _programme, 
-        _dhtFactory, 
+        _temperatureSensorFactory, 
         _programmeService
     );
 
@@ -98,7 +98,7 @@ Container::Container()
         _device, _tftFactory
     );
 
-    _dhtSmootherHandler = new DhtSmootherHandler();
+    _temperatureSmootherHandler = new TemperatureSmootherHandler();
 }
 
 
@@ -106,7 +106,7 @@ ClockFactory *Container::clockFactory() { return _clockFactory; }
 WifiFactory *Container::wifiFactory() { return _wifiFactory; }
 ReceiverFactory *Container::receiverFactory() { return _receiverFactory; }
 MqttFactory *Container::mqttFactory() { return _mqttFactory; }
-DhtFactory *Container::dhtFactory() { return _dhtFactory; }
+TemperatureSensorFactory *Container::temperatureSensorFactory() { return _temperatureSensorFactory; }
 TftFactory *Container::tftFactory() { return _tftFactory; }
 SleepFactory *Container::sleepFactory() { return _sleepFactory; }
 
@@ -122,7 +122,7 @@ ButtonHandler *Container::buttonHandler() { return _buttonHandler; }
 TftDateHandler *Container::tftDateHandler() { return _tftDateHandler; }
 OrderHandler *Container::orderHandler() { return _orderHandler; }
 SleepHandler *Container::sleepHandler() { return _sleepHandler; }
-DhtSmootherHandler *Container::dhtSmootherHandler() { return _dhtSmootherHandler; }
+TemperatureSmootherHandler *Container::temperatureSmootherHandler() { return _temperatureSmootherHandler; }
 
 Device *Container::device() { return _device; }
 Programme *Container::programme() { return _programme; }

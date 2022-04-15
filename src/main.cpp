@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <SPI.h> // required for TFT
 #include "FS.h"
-
+#include <Wire.h> // required for temperature sensor
 #include "Container.h"
 #include "Debug.h"
 
@@ -43,8 +43,8 @@ void setup()
 
     container->receiverFactory()->setStateHandler(container->receiverStateHandler());
     container->mqttFactory()->setMessageHandler(container->heatingHandler());
-    container->dhtFactory()->setSmoother(container->dhtSmootherHandler());
-    container->dhtFactory()->setHandler(container->heatingHandler());
+    container->temperatureSensorFactory()->setSmoother(container->temperatureSmootherHandler());
+    container->temperatureSensorFactory()->setHandler(container->heatingHandler());
 
     container->buttonMore()->setHandler(container->buttonHandler());
     container->buttonMinus()->setHandler(container->buttonHandler());
@@ -69,7 +69,7 @@ void loop()
     container->buttonMore()->loop();
     container->buttonMinus()->loop();
     container->buttonOk()->loop();
-    container->dhtFactory()->loop();
+    container->temperatureSensorFactory()->loop();
     container->clockFactory()->loop();
     container->receiverFactory()->loop();
     container->sleepFactory()->loop();

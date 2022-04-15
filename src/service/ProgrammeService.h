@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#include "factory/dht/DhtFactory.h"
+#include "factory/temperature_sensor/TemperatureSensorFactory.h"
 
 #include "model/Device.h"
 #include "model/Programme.h"
@@ -18,7 +18,7 @@ public:
     ProgrammeService(
         Device *device,
         Programme *programme,
-        DhtFactory *dhtFactory
+        TemperatureSensorFactory *temperatureSensorFactory
     );
 
     OrderTime *findOrderTimeAt(Date date);
@@ -31,7 +31,7 @@ private:
     Device *_device;
     Programme *_programme;
 
-    DhtFactory *_dhtFactory;
+    TemperatureSensorFactory *_temperatureSensorFactory;
 };
 
 #endif

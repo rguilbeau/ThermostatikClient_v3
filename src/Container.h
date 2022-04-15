@@ -10,7 +10,7 @@
 #include "factory/wifi/WifiFactory.h"
 #include "factory/receiver/ReceiverFactory.h"
 #include "factory/mqtt/MqttFactory.h"
-#include "factory/dht/DhtFactory.h"
+#include "factory/temperature_sensor/TemperatureSensorFactory.h"
 #include "factory/clock/ClockFactory.h"
 #include "factory/button/Button.h"
 #include "factory/tft/TftFactory.h"
@@ -24,7 +24,7 @@
 #include "handler/ButtonHandler.h"
 #include "handler/OrderHandler.h"
 #include "handler/SleepHandler.h"
-#include "handler/DhtSmootherHandler.h"
+#include "handler/TemperatureSmootherHandler.h"
 
 #include "service/MessageParserService.h"
 #include "service/TopicService.h"
@@ -44,7 +44,7 @@ public:
     WifiFactory *wifiFactory();
     ReceiverFactory *receiverFactory();
     MqttFactory *mqttFactory();
-    DhtFactory *dhtFactory();
+    TemperatureSensorFactory *temperatureSensorFactory();
     TftFactory *tftFactory();
     SleepFactory *sleepFactory();
 
@@ -56,7 +56,7 @@ public:
     TftDateHandler *tftDateHandler();
     OrderHandler *orderHandler();
     SleepHandler *sleepHandler();
-    DhtSmootherHandler *dhtSmootherHandler();
+    TemperatureSmootherHandler *temperatureSmootherHandler();
 
     Button *buttonMore();
     Button *buttonMinus();
@@ -76,7 +76,7 @@ private:
     WifiFactory *_wifiFactory;
     ReceiverFactory *_receiverFactory;
     MqttFactory *_mqttFactory;
-    DhtFactory *_dhtFactory;
+    TemperatureSensorFactory *_temperatureSensorFactory;
     TftFactory *_tftFactory;
     SleepFactory *_sleepFactory;
 
@@ -88,7 +88,7 @@ private:
     TftDateHandler *_tftDateHandler;
     OrderHandler *_orderHandler;
     SleepHandler *_sleepHandler;
-    DhtSmootherHandler *_dhtSmootherHandler;
+    TemperatureSmootherHandler *_temperatureSmootherHandler;
     
     Button *_buttonMore;
     Button *_buttonMinus;

@@ -1,13 +1,14 @@
-#include "DhtSmootherHandler.h"
+#include "TemperatureSmootherHandler.h"
 
-DhtSmootherHandler::DhtSmootherHandler()
+TemperatureSmootherHandler::TemperatureSmootherHandler()
 {
     _readsIndex = -1;
     _lastTemperature = 0;
 }
 
-float DhtSmootherHandler::smooth(float temperature, float lastTemperature)
+float TemperatureSmootherHandler::smooth(float temperature, float lastTemperature)
 {
+    temperature = fixDecimal(temperature);
     _lastTemperature = fixDecimal(lastTemperature);
 
     if(_readsIndex == -1) {
@@ -30,7 +31,7 @@ float DhtSmootherHandler::smooth(float temperature, float lastTemperature)
 
         if(_lastTemperature != smoothTemperature) {
             #ifdef DEBUG
-                Serial.print(F("DHT smoother reads["));
+                Serial.print(F("Temperature smoother reads["));
                 Serial.print(String(_reads[0]));
                 Serial.print(F(", "));
                 Serial.print(String(_reads[1]));
@@ -51,7 +52,7 @@ float DhtSmootherHandler::smooth(float temperature, float lastTemperature)
     return _lastTemperature;
 }
 
-void DhtSmootherHandler::sort(float a[], unsigned short size)
+void TemperatureSmootherHandler::sort(float a[], unsigned short size)
 {
     for(int i=0; i<(size-1); i++) {
         for(int o=0; o<(size-(i+1)); o++) {
@@ -64,12 +65,12 @@ void DhtSmootherHandler::sort(float a[], unsigned short size)
     }
 }
 
-float DhtSmootherHandler::smooth(float temperature, float lastTemperature, float factor)
+float TemperatureSmootherHandler::smooth(float temperature, float lastTemperature, float factor)
 {
     return fixDecimal((factor * temperature) + (1 - factor) * lastTemperature);
 }
 
-float DhtSmootherHandler::fixDecimal(float temperature)
+float TemperatureSmootherHandler::fixDecimal(float temperature)
 {
     return round(temperature * 10) / 10;
 }

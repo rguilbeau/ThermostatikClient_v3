@@ -1,9 +1,9 @@
-#ifndef T_DHT_HANDLER_INTERFACE_H
-#define T_DHT_HANDLER_INTERFACE_H
+#ifndef T_TEMPERATURE_SENSOR_HANDLER_INTERFACE_H
+#define T_TEMPERATURE_SENSOR_HANDLER_INTERFACE_H
 
 #include <Arduino.h>
 
-class DhtHandlerInterface {
+class TemperatureSensorHandlerInterface {
 
 public:
 

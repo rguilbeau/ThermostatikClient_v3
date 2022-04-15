@@ -7,8 +7,8 @@
 
 #include "handler/interface/UntilDateHandlerInterface.h"
 #include "handler/interface/OrderUpdatedHandlerInterface.h"
-#include "factory/dht/DhtFactory.h"
-#include "factory/dht/DhtHandlerInterface.h"
+#include "factory/temperature_sensor/TemperatureSensorFactory.h"
+#include "factory/temperature_sensor/TemperatureSensorHandlerInterface.h"
 #include "factory/mqtt/MqttFactory.h"
 #include "factory/mqtt/MqttMessageHandlerInterface.h"
 #include "factory/receiver/ReceiverFactory.h"
@@ -28,7 +28,7 @@
 class HeatingHandler : 
     public UntilDateHandlerInterface, 
     public OrderUpdatedHandlerInterface,
-    public DhtHandlerInterface,
+    public TemperatureSensorHandlerInterface,
     public MqttMessageHandlerInterface,
     public ModeHandlerInterface
 {
@@ -38,7 +38,7 @@ public:
     HeatingHandler(
         Programme *programme,
         Device *device,
-        DhtFactory *dhtFactory,
+        TemperatureSensorFactory *temperatureSensorFactory,
         MqttFactory *mqttFactory,
         ReceiverFactory *receiverFactory,
         SleepFactory *sleepFactory,
@@ -61,7 +61,7 @@ private:
     Programme *_programme;
     Device *_device;
 
-    DhtFactory *_dhtFactory;
+    TemperatureSensorFactory *_temperatureSensorFactory;
     MqttFactory *_mqttFactory;
     ReceiverFactory *_receiverFactory;
     SleepFactory *_sleepFactory;

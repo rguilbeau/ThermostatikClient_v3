@@ -3,11 +3,11 @@
 ProgrammeService::ProgrammeService(
     Device *device,
     Programme *programme,
-    DhtFactory *dhtFactory
+    TemperatureSensorFactory *temperatureSensorFactory
 ) {
     _device = device;
     _programme = programme;
-    _dhtFactory = dhtFactory;
+    _temperatureSensorFactory = temperatureSensorFactory;
 }
 
 OrderTime *ProgrammeService::findOrderTimeAt(Date date)
@@ -76,7 +76,7 @@ Order *ProgrammeService::findCurrentOrder()
 
 Order *ProgrammeService::findAnticipatingOrder()
 {
-    if(_device->getHeatingAnticipation() > 0 && !_dhtFactory->isNan()) {
+    if(_device->getHeatingAnticipation() > 0 && !_temperatureSensorFactory->isNan()) {
         Date now;
         OrderTime *anticipatingOrderTime = findNextOrderTimeAt(now);
         Order *anticipatingOrder = anticipatingOrderTime != nullptr 
@@ -88,7 +88,7 @@ Order *ProgrammeService::findAnticipatingOrder()
             long currentTime = now.findTimeSinceStartWeek();
             long diffTime = anticipatingTime - currentTime;
 
-            if(_dhtFactory->getTemperature() + (_device->getHeatingAnticipation() * diffTime) <= anticipatingOrder->getTemperature()) {
+            if(_temperatureSensorFactory->getTemperature() + (_device->getHeatingAnticipation() * diffTime) <= anticipatingOrder->getTemperature()) {
                 return anticipatingOrder;
             }
         }

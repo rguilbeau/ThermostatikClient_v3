@@ -19,7 +19,7 @@ public:
     OrderHandler(
         Device *device,
         Programme *programme,
-        DhtFactory *dhtFactory,
+        TemperatureSensorFactory *temperatureSensorFactory,
         ProgrammeService *programmeService
     );
 
@@ -32,7 +32,7 @@ private:
     Device *_device;
     Programme *_programme;
     
-    DhtFactory *_dhtFactory;
+    TemperatureSensorFactory *_temperatureSensorFactory;
 
     ProgrammeService *_programmeService;
 

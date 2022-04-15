@@ -3,12 +3,12 @@
 OrderHandler::OrderHandler(
     Device *device,
     Programme *programme,
-    DhtFactory *dhtFactory,
+    TemperatureSensorFactory *temperatureSensorFactory,
     ProgrammeService *programmeService
 ) {
     _device = device;
     _programme = programme;
-    _dhtFactory = dhtFactory;
+    _temperatureSensorFactory = temperatureSensorFactory;
     _programmeService = programmeService;
     _lastCheckMin = -1;
 }

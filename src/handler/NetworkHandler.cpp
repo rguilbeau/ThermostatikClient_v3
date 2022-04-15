@@ -5,14 +5,14 @@ NetworkHandler::NetworkHandler(
     WifiFactory *wifiFactory,
     ReceiverFactory *receiverFactory,
     MqttFactory *mqttFactory, 
-    DhtFactory *dhtFactory,
+    TemperatureSensorFactory *temperatureSensorFactory,
     TopicService *topicService,
     MessageParserService *messageParserService,
     TftService *tftService
 ) {
     _wifiFactory = wifiFactory; 
     _mqttFactory = mqttFactory;
-    _dhtFactory = dhtFactory;
+    _temperatureSensorFactory = temperatureSensorFactory;
     _topicService = topicService;
     _messageParserService = messageParserService;
     _receiverFactory = receiverFactory;
@@ -36,8 +36,8 @@ void NetworkHandler::mqttConnected()
 
     // send current temperature
     String payloadTemperature = _messageParserService->temperatureToPayload(
-        _dhtFactory->getTemperature(),
-        _dhtFactory->isNan()
+        _temperatureSensorFactory->getTemperature(),
+        _temperatureSensorFactory->isNan()
     );
     _mqttFactory->publish(_topicService->getTemperatures(), payloadTemperature.c_str());
 

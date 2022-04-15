@@ -5,9 +5,9 @@
 #include "MessageParserService.h"
 
 MessageParserService::MessageParserService(
-    DhtFactory *dhtFactory
+    TemperatureSensorFactory *temperatureSensorFactory
 ) {
-    _dhtFactory = dhtFactory;
+    _temperatureSensorFactory = temperatureSensorFactory;
     _json_Capacity = 84*JSON_ARRAY_SIZE(3) + 3*JSON_ARRAY_SIZE(8) + JSON_ARRAY_SIZE(84) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(5) + 200;
 }
 
@@ -103,7 +103,7 @@ void MessageParserService::parseDevice(char *payload, Device *device)
     Date::timezone = json[F("timezoneOffset")].as<int>();
     Date::summerTime = json[F("summerTime")].as<bool>();
     
-    _dhtFactory->setTare(json[F("tareThermometer")].as<float>());
+    _temperatureSensorFactory->setTare(json[F("tareThermometer")].as<float>());
 }
 
 void MessageParserService::parseProgramme(char *payload, Programme *programme)
