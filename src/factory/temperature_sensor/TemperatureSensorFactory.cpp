@@ -25,6 +25,11 @@ void TemperatureSensorFactory::setSmoother(TemperatureSmootherInterface *tempera
     _temperatureSmoother = temperatureSmoother;
 }
 
+void TemperatureSensorFactory::setTemperatureBrutHandler(TemperatureSensorBrutHandlerInterface *temperatureBrutHandler)
+{
+    _temperatureBrutHandler = temperatureBrutHandler;
+}
+
 void TemperatureSensorFactory::setTare(float tare)
 {
     _tare = tare;
@@ -68,6 +73,10 @@ bool TemperatureSensorFactory::_readTemperature()
 
     _sht->read();
     float temperature = _sht->getTemperature() + _tare;
+
+    if(_temperatureBrutHandler != nullptr) {
+        _temperatureBrutHandler->temperatureBrutChanged(temperature);
+    }
 
     if(_sht->getError() == SHT31_OK && !isnan(temperature)) {
         _isNanCnt = 0;

@@ -45,6 +45,7 @@ void setup()
     container->mqttFactory()->setMessageHandler(container->heatingHandler());
     container->temperatureSensorFactory()->setSmoother(container->temperatureSmootherHandler());
     container->temperatureSensorFactory()->setHandler(container->heatingHandler());
+    container->temperatureSensorFactory()->setTemperatureBrutHandler(container->heatingHandler());
 
     container->buttonMore()->setHandler(container->buttonHandler());
     container->buttonMinus()->setHandler(container->buttonHandler());

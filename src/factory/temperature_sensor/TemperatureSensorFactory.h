@@ -5,8 +5,10 @@
 #include <SHT31.h>
 #include "Debug.h"
 
+#include "service/TftService.h"
 #include "TemperatureSensorHandlerInterface.h"
 #include "TemperatureSmootherInterface.h"
+#include "TemperatureSensorBrutHandlerInterface.h"
 
 class TemperatureSensorFactory {
 
@@ -15,6 +17,7 @@ public:
 
     void setHandler(TemperatureSensorHandlerInterface *temperatureSensorHandler);
     void setSmoother(TemperatureSmootherInterface *temperatureSmoother);
+    void setTemperatureBrutHandler(TemperatureSensorBrutHandlerInterface *temperatureBrutHandler);
 
     float getTemperature();
 
@@ -39,7 +42,8 @@ private:
     bool _readTemperature();
 
     TemperatureSensorHandlerInterface *_temperatureSensorHandler;
-    TemperatureSmootherInterface*_temperatureSmoother;
+    TemperatureSmootherInterface *_temperatureSmoother;
+    TemperatureSensorBrutHandlerInterface *_temperatureBrutHandler;
 };
 
 #endif

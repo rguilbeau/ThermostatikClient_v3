@@ -139,6 +139,13 @@ void HeatingHandler::temperatureChanged(float temperature)
     delete heating;
 }
 
+void HeatingHandler::temperatureBrutChanged(float temperature)
+{
+    TemperatureBrutRender render;
+    render.temperature = temperature;
+    _tftService->setBrutTemperature(render);
+}
+
 void HeatingHandler::temperatureIsNan()
 {
     #ifdef DEBUG

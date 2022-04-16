@@ -29,6 +29,9 @@ TftService::TftService (
     DateRender dateRender;
     _dateRender = dateRender;
 
+    TemperatureBrutRender temperatureBrutRender;
+    _temperatureBrutRender = temperatureBrutRender;
+
     _isQuickRender = false;
 
     _thermometerRenderMutations = 1;
@@ -39,6 +42,7 @@ TftService::TftService (
     _receiverStateRenderMutations = 1;
     _orderRenderMutations = 1;
     _dateRenderMutations = 1;
+    _temperatureBrutMutations = 1;
 }
 
 void TftService::loop()
@@ -51,6 +55,8 @@ void TftService::loop()
     _printReceiverStateRender();
     _printOrderRender();
     _printMessageRender();
+    _printTemperatureBrutRender();
+
     _isQuickRender = false;
 }
 
@@ -81,6 +87,12 @@ void TftService::setTemperatureRender(TemperatureRender render)
 {
     _temperatureRender = render;
     _temperatureRenderMutations++;
+}
+
+void TftService::setBrutTemperature(TemperatureBrutRender render)
+{
+    _temperatureBrutRender = render;
+    _temperatureBrutMutations++;
 }
 
 void TftService::_printTemperatureRender() 
@@ -255,5 +267,19 @@ void TftService::_printMessageRender()
         _tftFactory->print(20, 220, date);
 
         _dateRenderMutations--;
+    }
+}
+
+void TftService::_printTemperatureBrutRender()
+{
+    if(_temperatureBrutMutations > 0) {
+        TftText temperatureBrut;
+        temperatureBrut.font = TftFont::SMALL;
+        temperatureBrut.color = TftColor::COLOR_GRAY;
+        temperatureBrut.width = 50;
+        temperatureBrut.text = _temperatureBrutRender.temperature;
+        _tftFactory->print(270, 220, temperatureBrut);
+
+        _temperatureBrutMutations--;
     }
 }

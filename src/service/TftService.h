@@ -12,6 +12,7 @@
 #include "render/TemperatureRender.h"
 #include "render/ThermometerRender.h"
 #include "render/WifiStateRender.h"
+#include "render/TemperatureBrutRender.h"
 
 class TftService {
 
@@ -33,6 +34,7 @@ public:
     void setOrderRender(OrderRender render);
     void setOrderRender(OrderRender render, bool isQuickRender);
     void setMessageRender(DateRender render);
+    void setBrutTemperature(TemperatureBrutRender render);
 
 private:
     TftFactory *_tftFactory;
@@ -45,6 +47,7 @@ private:
     ReceiverStateRender _receiverStateRender;
     OrderRender _orderRender;
     DateRender _dateRender;
+    TemperatureBrutRender _temperatureBrutRender;
     bool _isQuickRender;
 
     short _thermometerRenderMutations;
@@ -55,6 +58,7 @@ private:
     short _receiverStateRenderMutations;
     short _orderRenderMutations;
     short _dateRenderMutations;
+    short _temperatureBrutMutations;
 
     void _printThermometerRender();
     void _printTemperatureRender();
@@ -64,6 +68,7 @@ private:
     void _printReceiverStateRender();
     void _printOrderRender();
     void _printMessageRender();
+    void _printTemperatureBrutRender();
 };
 
 #endif

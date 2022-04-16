@@ -30,7 +30,8 @@ class HeatingHandler :
     public OrderUpdatedHandlerInterface,
     public TemperatureSensorHandlerInterface,
     public MqttMessageHandlerInterface,
-    public ModeHandlerInterface
+    public ModeHandlerInterface,
+    public TemperatureSensorBrutHandlerInterface
 {
 
 public:
@@ -53,6 +54,8 @@ public:
     
     void untilDateHit() override;
     void temperatureChanged(float temperature) override;
+    void temperatureBrutChanged(float temperature) override;
+    
     void temperatureIsNan() override; 
     void messageReceived(char *topic, char *message) override;
     void modeUpdated(bool isQuickRender) override;
